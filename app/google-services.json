@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "515321044793",
+    "firebase_url": "https://coordinacion-de-servicios.firebaseio.com",
+    "project_id": "coordinacion-de-servicios",
+    "storage_bucket": "coordinacion-de-servicios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515321044793:android:c2eba7e6361d4390",
+        "android_client_info": {
+          "package_name": "com.raesba.tfg_coordinacionservicios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515321044793-rhap9jl00gnr4l6k5seimmjarjlu519i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raesba.tfg_coordinacionservicios",
+            "certificate_hash": "84c727523e438e4f22df365665255cc4bf4d306d"
+          }
+        },
+        {
+          "client_id": "515321044793-jgmqehv2fa4ahcjdlb6ffvrt38b9qn2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIXMd6J0pFTrubs2xwtpymbQHE3IPqY0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515321044793-jgmqehv2fa4ahcjdlb6ffvrt38b9qn2u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
