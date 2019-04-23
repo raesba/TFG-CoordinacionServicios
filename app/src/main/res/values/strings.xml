@@ -2,4 +2,7 @@
     <string name="app_name">TFG - Coordinacion Servicios</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_proveedor_registro">ProveedorRegistroActivity</string>
+    <string name="boton_info">Información</string>
+    <string name="boton_calendario">Calendario</string>
+    <string name="boton_transaccion">Transacción</string>
 </resources>

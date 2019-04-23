@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".PerfilProveedorActivity"
+            android:label="Perfil Proveedor"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".LoginActivity"
             android:label="TFG - Coordinación de Servicios"
             android:theme="@style/AppTheme.NoActionBar">
@@ -22,16 +26,19 @@
         <activity
             android:name=".ProveedorRegistroActivity"
             android:label="Datos de Proveedores"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ListaActivity"
             android:label="Listado de Proveedores"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
     </application>
 

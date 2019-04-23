@@ -257,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
             if (tipoUsuario == 0){
                 intent = new Intent(this, ListaActivity.class);
             } else if (tipoUsuario == 1){
-                intent = new Intent(this, ProveedorRegistroActivity.class);
+                intent = new Intent(this, PerfilProveedorActivity.class);
             } else {
                 Log.d("LOGIN", "Opción no válida");
             }
