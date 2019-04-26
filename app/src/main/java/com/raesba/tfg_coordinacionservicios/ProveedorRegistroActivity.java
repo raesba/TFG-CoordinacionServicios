@@ -13,7 +13,7 @@ import android.widget.EditText;
 public class ProveedorRegistroActivity extends AppCompatActivity {
 
     private EditText email;
-//    private EditText contrasena;
+    //    private EditText contrasena;
     private EditText nombre;
     private EditText dni;
     private EditText direccion;
@@ -28,6 +28,8 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
 
     private Proveedor proveedor;
 
+    private DatabaseManager databaseManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_proveedor_registro);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        databaseManager = DatabaseManager.getInstance();
 
         nombre = findViewById(R.id.nombre);
         email = findViewById(R.id.email);
@@ -47,38 +51,52 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
         profesion= findViewById(R.id.profesion);
         precioHora = findViewById(R.id.precioHora);
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().getSerializable("proveedor") != null){
-            proveedor = (Proveedor) getIntent().getExtras().getSerializable("proveedor");
+//        if (getIntent().getExtras() != null && getIntent().getExtras().getSerializable("proveedor") != null){
+//            proveedor = (Proveedor) getIntent().getExtras().getSerializable("proveedor");
+//
+//
+//
+//            nombre.setText(proveedor.getNombre());
+//            email.setText(proveedor.getEmail());
+//            dni.setText(proveedor.getDni());
+//            direccion.setText(proveedor.getDireccion());
+//            poblacion.setText(proveedor.getPoblacion());
+//            provincia.setText(proveedor.getProvincia());
+//            telefonoFijo.setText(proveedor.getTelefonoFijo());
+//            movil.setText(proveedor.getMovil());
+//            profesion.setText(proveedor.getProfesion());
+//            precioHora.setText(String.valueOf(proveedor.getPrecioHora()));
+//
+//
 
-            nombre.setText(proveedor.getNombre());
-            email.setText(proveedor.getEmail());
-            dni.setText(proveedor.getDni());
-            direccion.setText(proveedor.getDireccion());
-            poblacion.setText(proveedor.getPoblacion());
-            provincia.setText(proveedor.getProvincia());
-            telefonoFijo.setText(proveedor.getTelefonoFijo());
-            movil.setText(proveedor.getMovil());
-            profesion.setText(proveedor.getProfesion());
-            precioHora.setText(String.valueOf(proveedor.getPrecioHora()));
-            
+//
+//
+//        } else {
+//            proveedor = new Proveedor();
+//            nuevo = true;
+//        }
 
-            nombre.setEnabled(nuevo);
-            email.setEnabled(false);
-            dni.setEnabled(nuevo);
-            direccion.setEnabled(nuevo);
-            poblacion.setEnabled(nuevo);
-            provincia.setEnabled(nuevo);
-            telefonoFijo.setEnabled(nuevo);
-            movil.setEnabled(nuevo);
-            profesion.setEnabled(nuevo);
-            precioHora.setEnabled(nuevo);
 
-            nuevo = false;
+        if (getIntent().getExtras() != null){
+            if (getIntent().hasExtra("uid")){
+                String uid = getIntent().getStringExtra("uid");
+
+                databaseManager.getProveedor(uid, new GetProveedorCallback() {
+                    @Override
+                    public void onSuccess(Proveedor proveedor, boolean currentUser) {
+                        setUI(proveedor, currentUser);
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                    }
+                });
+            }
 
 
         } else {
-            proveedor = new Proveedor();
-            nuevo = true;
+
         }
 
         Button botonGuardar = findViewById(R.id.buttonGuardarProveedorRegistro);
@@ -104,5 +122,38 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void setUI(Proveedor proveedor, boolean currentUser) {
+        this.proveedor = proveedor;
+
+        nombre.setText(proveedor.getNombre());
+        email.setText(proveedor.getEmail());
+        dni.setText(proveedor.getDni());
+        direccion.setText(proveedor.getDireccion());
+        poblacion.setText(proveedor.getPoblacion());
+        provincia.setText(proveedor.getProvincia());
+        telefonoFijo.setText(proveedor.getTelefonoFijo());
+        movil.setText(proveedor.getMovil());
+        profesion.setText(proveedor.getProfesion());
+        precioHora.setText(String.valueOf(proveedor.getPrecioHora()));
+
+        nuevo = currentUser;
+
+        if (currentUser){
+            nombre.setEnabled(nuevo);
+            email.setEnabled(false);
+            dni.setEnabled(nuevo);
+            direccion.setEnabled(nuevo);
+            poblacion.setEnabled(nuevo);
+            provincia.setEnabled(nuevo);
+            telefonoFijo.setEnabled(nuevo);
+            movil.setEnabled(nuevo);
+            profesion.setEnabled(nuevo);
+            precioHora.setEnabled(nuevo);
+
+        } else {
+
+        }
     }
 }

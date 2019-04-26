@@ -2,9 +2,7 @@ package com.raesba.tfg_coordinacionservicios;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,20 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.graphics.Color;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,10 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     // TIPO DE USUARIO: EMPRESA 0 PROVEEDOR 1
     private long tipoUsuario = -1;
 
-    private FirebaseAuth mAuth;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference().child("usuarios");
-
+    private DatabaseManager databaseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-// Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         entrar = findViewById(R.id.entrar);
         registrarse = findViewById(R.id.registrarse);
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if (currentUser != null){
-            mAuth.signOut();
-        }
 
         entrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,23 +52,18 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                mAuth.signInWithEmailAndPassword(usuarioIntroducido, passwordIntroducida)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                databaseManager.checkLogin(usuarioIntroducido, passwordIntroducida, new LoginCallback() {
+                    @Override
+                    public void onLoginSuccess(String uid, int userType) {
+                        tipoUsuario = userType;
+                        startActivityWithTipoUsuario(uid);
+                    }
 
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "signInWithEmail:success");
-                                    compruebaTipoUsuario();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                    @Override
+                    public void onLoginFailed(String error) {
+                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -114,35 +81,8 @@ public class LoginActivity extends AppCompatActivity {
                 createDialog();
             }
         });
-    }
 
-    private void compruebaTipoUsuario() {
-        FirebaseDatabase.getInstance().getReference().child("usuarios")
-                .orderByChild("email")
-                .equalTo(usuarioIntroducido)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getValue() != null){
-                            if ( dataSnapshot.getChildrenCount() > 0){
-                                HashMap<String, Object> usuario = (HashMap<String, Object>) dataSnapshot.getChildren().iterator().next().getValue();
-                                if (usuario != null){
-                                    tipoUsuario = (long) usuario.get("tipo_usuario");
-                                    startActivityWithTipoUsuario();
-                                }
-
-                            }
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "El usuario no está en la base de datos", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+        databaseManager = DatabaseManager.getInstance();
     }
 
     private void createDialog(){
@@ -177,79 +117,21 @@ public class LoginActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void iniciarRegistro(){
+    private void iniciarRegistro() {
+        databaseManager.createUser(usuarioIntroducido, passwordIntroducida, tipoUsuario, new LoginCallback() {
+            @Override
+            public void onLoginSuccess(String uid, int userType) {
+                startActivityWithTipoUsuario(uid);
+            }
 
-        mAuth.createUserWithEmailAndPassword(usuarioIntroducido, passwordIntroducida)
-                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            // Name, email address, and profile photo Url
-                            String name = user.getDisplayName();
-                            String email = user.getEmail();
-                            Uri photoUrl = user.getPhotoUrl();
-
-                            // Check if user's email is verified
-                            boolean emailVerified = user.isEmailVerified();
-
-                            String uid = user.getUid();
-
-                            HashMap<String, Object> usuario = new HashMap<>();
-                            usuario.put("nombre", name);
-                            usuario.put("email", email);
-                            usuario.put("verificado", emailVerified);
-                            usuario.put("uid", uid);
-                            usuario.put("tipo_usuario", tipoUsuario);
-
-                            String uidKey = myRef.push().getKey();
-
-                            myRef.child(uidKey).setValue(usuario);
-
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
-                            if (tipoUsuario == 0){
-                                reference = reference.child("empresas");
-                            } else if (tipoUsuario == 1){
-                                reference = reference.child("proveedores");
-                            }
-
-                            reference.child(uidKey).setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(getApplicationContext(),"Redirecting...",Toast.LENGTH_LONG).show();
-                                        startActivityWithTipoUsuario();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(),"Error al escribir en la bbdd",Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
-
-
-                            // The user's ID, unique to the Firebase project. Do NOT use this value to
-                            // authenticate with your backend server, if you have one. Use
-                            // FirebaseUser.getIdToken() instead.
-
-
-
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
-
+            @Override
+            public void onLoginFailed(String error) {
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void startActivityWithTipoUsuario(){
+    private void startActivityWithTipoUsuario(String uid){
 
         if (tipoUsuario != -1){
             Intent intent = null;
@@ -258,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent = new Intent(this, ListaActivity.class);
             } else if (tipoUsuario == 1){
                 intent = new Intent(this, PerfilProveedorActivity.class);
+                intent.putExtra("uid", uid);
             } else {
                 Log.d("LOGIN", "Opción no válida");
             }

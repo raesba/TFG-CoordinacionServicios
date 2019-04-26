@@ -14,6 +14,8 @@ public class PerfilProveedorActivity extends AppCompatActivity {
 
     private Button botonInformacion, botonCalendario, botonTransaccion;
 
+    private String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,10 @@ public class PerfilProveedorActivity extends AppCompatActivity {
         botonInformacion = findViewById(R.id.button_info);
         botonCalendario = findViewById(R.id.button_calendario);
         botonTransaccion = findViewById(R.id.button_transaccion);
+
+        if (getIntent().hasExtra("uid")){
+            uid = getIntent().getStringExtra("uid");
+        }
 
         botonCalendario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +50,7 @@ public class PerfilProveedorActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(), ProveedorRegistroActivity.class);
+                intent.putExtra("uid", uid);
                 startActivity(intent);
             }
         });

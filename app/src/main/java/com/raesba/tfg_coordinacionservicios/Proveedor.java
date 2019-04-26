@@ -13,6 +13,7 @@ public class Proveedor implements Serializable {
     private String password;
     private String nombre;
     private String dni;
+    private String uid;
     private String direccion;
     private String poblacion;
     private String provincia;
@@ -66,6 +67,14 @@ public class Proveedor implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getNombre() {
