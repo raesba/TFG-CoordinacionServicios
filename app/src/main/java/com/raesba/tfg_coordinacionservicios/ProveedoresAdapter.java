@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ProveedoresAdapter extends RecyclerView.Adapter<ProveedoresAdapter.ProveedoresViewHolder>{
+public class ProveedoresAdapter extends
+        RecyclerView.Adapter<ProveedoresAdapter.ProveedoresViewHolder>{
 
 
     private ArrayList<Proveedor> proveedores;
@@ -22,7 +23,8 @@ public class ProveedoresAdapter extends RecyclerView.Adapter<ProveedoresAdapter.
     @NonNull
     @Override
     public ProveedoresViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_proveedor, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_proveedor,
+                viewGroup, false);
         ProveedoresViewHolder proveedoresViewHolder = new ProveedoresViewHolder(view);
         return proveedoresViewHolder;
     }
@@ -42,7 +44,8 @@ public class ProveedoresAdapter extends RecyclerView.Adapter<ProveedoresAdapter.
         return proveedores.size();
     }
 
-    public class ProveedoresViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ProveedoresViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
 
         private TextView email;
         private TextView nombre;
@@ -94,7 +97,7 @@ public class ProveedoresAdapter extends RecyclerView.Adapter<ProveedoresAdapter.
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), ProveedorRegistroActivity.class);
-            intent.putExtra("proveedor", proveedor);
+            intent.putExtra(Constantes.EXTRA_PROVEEDOR, proveedor);
             v.getContext().startActivity(intent);
         }
     }

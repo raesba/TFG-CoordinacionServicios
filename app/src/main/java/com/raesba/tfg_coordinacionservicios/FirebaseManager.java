@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,27 +45,39 @@ public class FirebaseManager {
                 if (task.isSuccessful()){
                     getUserType(user, callback);
                 } else {
-                    callback.onLoginFailed("Error al hacer el login");
+                    callback.onLoginFailed(Constantes.ERROR_LOGIN);
                 }
             }
         });
     }
 
-    public void createUser(String user, String password, long tipoUsuario, final LoginCallback callback){
+    public void createUser(final String user, String password, final long tipoUsuario, final LoginCallback
+            callback){
         auth.createUserWithEmailAndPassword(user, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    callback.onLoginSuccess("0", 0);
+                    FirebaseUser userAuthentication = auth.getCurrentUser();
+                    UserAuth userAuth = new UserAuth();
+
+                    userAuth.setUid(userAuthentication.getUid());
+                    userAuth.setEmail(userAuthentication.getEmail());
+                    userAuth.setTipoUsuario((int) tipoUsuario);
+                    userAuth.setVerificado(userAuthentication.isEmailVerified());
+
+                    createNewUserInDatabase(userAuth, callback);
                 } else {
-                    callback.onLoginFailed("Error al hacer el login");
+                    callback.onLoginFailed(Constantes.ERROR_LOGIN);
                 }
             }
         });
     }
 
     public void getUserType(String user, final LoginCallback callback){
-        firebaseDatabase.getReference().child("usuarios")
+
+//        "tipo_usuario"
+
+          /*firebaseDatabase.getReference().child("usuarios")
                 .orderByChild("email")
                 .equalTo(user)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,27 +85,62 @@ public class FirebaseManager {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() != null){
                             if ( dataSnapshot.getChildrenCount() > 0){
-                                HashMap<String, Object> usuario = (HashMap<String, Object>) dataSnapshot.getChildren().iterator().next().getValue();
+                                HashMap<String, Object> usuario = (HashMap<String, Object>)
+                                        dataSnapshot.getChildren().iterator().next().getValue();
                                 if (usuario != null){
-                                    long tipoUsuario = (long) usuario.get("tipo_usuario");
-                                    callback.onLoginSuccess((String) usuario.get("uid"), (int) tipoUsuario);
+                                    long tipoUsuario = (long) usuario.get
+                                            ("tipo_usuario");
+                                    callback.onLoginSuccess
+                                            ((String) usuario.get("uid"),
+                                                    (int) tipoUsuario);
                                 }
 
                             }
                         } else {
-                            callback.onLoginFailed("Error al leer de la base de datos");
+                            callback.onLoginFailed(Constantes.ERROR_LECTURA_BBDD);
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        callback.onLoginFailed("Petición a la base de datos cancelada");
+                        callback.onLoginFailed(Constantes.ERROR_CANCELAR_BBDD);
+                    }
+                });*/
+        firebaseDatabase.getReference().child(Constantes.FIREBASE_USUARIOS_KEY)
+                .orderByChild(Constantes.FIREBASE_USUARIOS_EMAIL)
+                .equalTo(user)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null){
+                            if ( dataSnapshot.getChildrenCount() > 0){
+                                HashMap<String, Object> usuario = (HashMap<String, Object>)
+                                        dataSnapshot.getChildren().iterator().next().getValue();
+                                if (usuario != null){
+                                    long tipoUsuario = (long) usuario.get
+                                            (Constantes.FIREBASE_USUARIOS_TIPOUSUARIO);
+                                    callback.onLoginSuccess
+                                            ((String) usuario.get(Constantes.FIREBASE_USUARIOS_UID),
+                                            (int) tipoUsuario);
+                                }
+
+                            }
+                        } else {
+                            callback.onLoginFailed(Constantes.ERROR_LECTURA_BBDD);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        callback.onLoginFailed(Constantes.ERROR_CANCELAR_BBDD);
                     }
                 });
     }
 
     public void getProveedor(String uid, final GetProveedorCallback callback){
-        firebaseDatabase.getReference().child("proveedores").orderByChild("uid").equalTo(uid).limitToFirst(1)
+        /*firebaseDatabase.getReference().child("proveedores")
+                .orderByChild("uid")
+                .equalTo(uid).limitToFirst(1)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -115,6 +163,74 @@ public class FirebaseManager {
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });*/
+        firebaseDatabase.getReference().child(Constantes.FIREBASE_PROVEEDORES_KEY)
+                .orderByChild(Constantes.FIREBASE_PROVEEDORES_UID)
+                .equalTo(uid).limitToFirst(1)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.getValue() != null){
+                            Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                            Proveedor proveedor = iterator.next().getValue(Proveedor.class);
+
+                            boolean currentUser;
+                            if (proveedor.getUid().equals(auth.getCurrentUser().getUid())){
+                                currentUser = true;
+                            } else {
+                                currentUser = false;
+                            }
+
+                            callback.onSuccess(proveedor, currentUser);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void createNewUserInDatabase(final UserAuth userAuth, final LoginCallback callback){
+
+        String key = firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_USUARIOS_KEY)
+                .push()
+                .getKey();
+
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_USUARIOS_KEY)
+                .child(key)
+                .setValue(userAuth);
+
+        String tipoUsuarioKey = Constantes.FIREBASE_PROVEEDORES_KEY;
+
+        if (userAuth.getTipoUsuario() == 0){
+            // HAGO REGISTRO EMPRESA
+            tipoUsuarioKey = Constantes.FIREBASE_EMPRESAS_KEY;
+        } else if (userAuth.getTipoUsuario() == 1){
+            // HAGO REGISTRO PROVEEDOR
+            tipoUsuarioKey = Constantes.FIREBASE_PROVEEDORES_KEY;
+        } else {
+            callback.onLoginFailed(Constantes.ERROR_TIPOUSUARIO_NO_VALIDO);
+            return;
+        }
+
+        firebaseDatabase.getReference()
+                .child(tipoUsuarioKey)
+                .child(key)
+                .setValue(userAuth)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            callback.onLoginSuccess(userAuth.getUid(), userAuth.getTipoUsuario());
+                        } else {
+                            callback.onLoginFailed(Constantes.ERROR_ESCRITURA_BBDD);
+                        }
                     }
                 });
     }

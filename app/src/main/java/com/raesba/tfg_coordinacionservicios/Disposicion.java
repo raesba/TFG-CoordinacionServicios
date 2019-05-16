@@ -12,7 +12,8 @@ public class Disposicion {
     public Disposicion() {
     }
 
-    public Disposicion(int idDisposicion, String fechaDisponible, int idProveedor, int profesion, long horaInicio, long horaFin) {
+    public Disposicion(int idDisposicion, String fechaDisponible, int idProveedor, int profesion,
+                       long horaInicio, long horaFin) {
         this.idDisposicion = idDisposicion;
         this.fechaDisponible = fechaDisponible;
         this.idProveedor = idProveedor;

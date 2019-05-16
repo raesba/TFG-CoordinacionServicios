@@ -1,7 +1,6 @@
 package com.raesba.tfg_coordinacionservicios;
 
 import android.support.annotation.NonNull;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,8 +30,9 @@ public class DatabaseManager {
         firebaseManager.checkLogin(user, password, callback);
     }
 
-    public void createUser(String user, String password, long tipoUsuario, final LoginCallback callback){
-       firebaseManager.createUser(user, password, tipoUsuario, callback);
+    public void createUser(String user, String password, long userType, final LoginCallback
+            callback){
+        firebaseManager.createUser(user, password, userType, callback);
     }
 
     public void getProveedor(String uid, GetProveedorCallback callback) {

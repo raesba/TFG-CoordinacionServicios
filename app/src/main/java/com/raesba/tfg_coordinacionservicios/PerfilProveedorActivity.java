@@ -27,21 +27,27 @@ public class PerfilProveedorActivity extends AppCompatActivity {
         botonCalendario = findViewById(R.id.button_calendario);
         botonTransaccion = findViewById(R.id.button_transaccion);
 
-        if (getIntent().hasExtra("uid")){
+        /*if(getIntent().hasExtra("uid")){
             uid = getIntent().getStringExtra("uid");
+        }*/
+
+        if (getIntent().hasExtra(Constantes.FIREBASE_PROVEEDORES_UID)){
+            uid = getIntent().getStringExtra(Constantes.FIREBASE_PROVEEDORES_UID);
         }
 
         botonCalendario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PerfilProveedorActivity.this, "EN PROCESO........", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PerfilProveedorActivity.this, Constantes.MSG_PROCESANDO,
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
         botonTransaccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PerfilProveedorActivity.this, "EN PROCESO........", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PerfilProveedorActivity.this, Constantes.MSG_PROCESANDO,
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -49,8 +55,12 @@ public class PerfilProveedorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), ProveedorRegistroActivity.class);
-                intent.putExtra("uid", uid);
+                /*Intent intent = new Intent(getApplicationContext(),ProveedorRegistroActivity.class);
+                intent.putExtra("uid"  , uid);
+                startActivity(intent);*/
+
+                Intent intent = new Intent(getApplicationContext(),ProveedorRegistroActivity.class);
+                intent.putExtra(Constantes.FIREBASE_PROVEEDORES_UID, uid);
                 startActivity(intent);
             }
         });

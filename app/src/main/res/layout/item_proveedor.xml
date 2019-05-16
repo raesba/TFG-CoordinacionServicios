@@ -13,13 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Nombre:"-->
-            <!--android:textSize="24sp"-->
-            <!--android:textStyle="bold" />-->
-
         <TextView
             android:id="@+id/nombre"
             android:layout_width="match_parent"
@@ -39,7 +32,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email:"
+            android:layout_marginLeft="0dp"
+            android:text="@string/textView_email"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -47,9 +41,9 @@
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="90dp"
-            android:gravity="center"
-            android:text="Correo Electrónico"
+            android:layout_marginLeft="88dp"
+            android:text="@string/textView_email_lista"
+            android:textColor="@color/design_default_color_primary"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -58,11 +52,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <TextView
             android:id="@+id/textView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dirección:"
+            android:text="@string/textView_direccion"
             android:textSize="24sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="0dp"
@@ -72,31 +67,33 @@
             android:id="@+id/direccion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="45dp"
             android:gravity="center"
-            android:text="Dirección"
+            android:text="@string/textView_direccion_lista"
+            android:textColor="@color/design_default_color_primary"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            tools:layout_editor_absoluteY="0dp"
-            />
+            tools:layout_editor_absoluteY="0dp" />
 
         <TextView
             android:id="@+id/poblacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/design_default_color_primary"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/direccion"
             app:layout_constraintTop_toBottomOf="@+id/direccion"
-            tools:text="Población" />
+            tools:text="@string/textView_poblacion_lista" />
 
         <TextView
             android:id="@+id/provincia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/design_default_color_primary"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/poblacion"
             app:layout_constraintTop_toBottomOf="@+id/poblacion"
-            tools:text="Provincia" />
+            tools:text="@string/textView_provincia_lista" />
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
@@ -107,7 +104,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Teléfono: "
+            android:layout_marginLeft="0dp"
+            android:text="@string/textView_telefono"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -115,10 +113,11 @@
             android:id="@+id/telefonoFijo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:gravity="center"
-            android:text="Teléfono Fijo"
-            android:textSize="18sp" />
+            android:layout_marginLeft="49dp"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="18sp"
+            android:text="@string/textView_telefono_lista"
+ />
     </LinearLayout>
 
     <LinearLayout
@@ -129,7 +128,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Móvil: "
+            android:layout_marginLeft="0dp"
+            android:text="@string/textView_movil"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -137,10 +137,10 @@
             android:id="@+id/movil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="85dp"
-            android:gravity="center"
-            android:text="Teléfono Móvil"
-            android:textSize="18sp" />
+            android:layout_marginLeft="86dp"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="18sp"
+            android:text="@string/textView_movil_lista" />
     </LinearLayout>
 
     <LinearLayout
@@ -151,7 +151,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profesión: "
+            android:layout_marginLeft="0dp"
+            android:text="@string/textView_profesion"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -160,9 +161,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:gravity="center"
-            android:text="Profesión"
-            android:textSize="18sp" />
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="18sp"
+            android:text="@string/textView_profesion_lista" />
     </LinearLayout>
 
     <LinearLayout
@@ -173,7 +174,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Precio Hora: "
+            android:layout_marginLeft="0dp"
+            android:text="@string/textView_precioHora"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -181,16 +183,17 @@
             android:id="@+id/precioHora"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="18dp"
             android:gravity="center"
-            android:text="Precio Hora"
-            android:textSize="18sp" />
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="18sp"
+            android:text="@string/textView_precioHora_lista" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" €"
-            android:textSize="18sp"/>
+            android:text="@string/textView_euro"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </LinearLayout>

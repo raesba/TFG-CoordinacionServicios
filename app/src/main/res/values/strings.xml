@@ -2,7 +2,77 @@
     <string name="app_name">TFG - Coordinacion Servicios</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_proveedor_registro">ProveedorRegistroActivity</string>
-    <string name="boton_info">Información</string>
-    <string name="boton_calendario">Calendario</string>
-    <string name="boton_transaccion">Transacción</string>
+
+    <!--Botones-->
+    <!--content_login.xml-->
+    <string name="button_info">Información</string>
+    <string name="button_calendario">Calendario</string>
+    <string name="button_transaccion">Transacción</string>
+    <string name="button_login">Entrar</string>
+    <string name="button_registro">Registrarse</string>
+
+    <!--content_proveedor_registro.xml-->
+    <string name="button_descripcion">Descripción</string>
+    <string name="button_guardar">Guardar</string>
+
+    <!--EditText y TextView
+    content_login.xml-->
+    <string name="textView_titulo_Login">Coordinación de Servicios</string>
+    <string name="textView_usuario">Usuario</string>
+    <string name="editText_usuario">Introduzca Email</string>
+    <string name="textView_contrasena">Contraseña</string>
+    <string name="editText_contrasena">Introduzca Contraseña</string>
+
+    <!--content_proveedor_registro.xml-->
+    <string name="textView_nombre">Nombre: </string>
+    <string name="editText_nombre">Indica tu Nombre o Razón Social</string>
+    <string name="textView_dni">DNI: </string>
+    <string name="editText_dni">Indica tu DNI o CIF</string>
+    <string name="textView_email">Email: </string>
+    <string name="editText_email">Indica tu Correo Electrónico</string>
+    <string name="textView_direccion">Dirección: </string>
+    <string name="editText_direccion">Indica tu Dirección</string>
+    <string name="textView_poblacion">Población: </string>
+    <string name="editText_poblacion">Indica tu Población</string>
+    <string name="textView_provincia">Provincia: </string>
+    <string name="editText_provincia">Indica tu Provincia</string>
+    <string name="textView_telefono">Teléfono: </string>
+    <string name="editText_telefono">Indica tu Teléfono</string>
+    <string name="textView_movil">Móvil: </string>
+    <string name="editText_movil">Indica tu Móvil</string>
+    <string name="textView_profesion">Profesión: </string>
+    <string name="editText_profesion">Indica tu Profesión/Oficio</string>
+    <string name="textView_pHora">P. Hora: </string>
+    <string name="editText_precioHora">Indica tu Coste Horario</string>
+    <string name="textView_euro"> " €"</string>
+
+    <!--item_proveedor.xml-->
+    <string name="textView_precioHora">Precio Hora: </string>
+    <string name="textView_email_lista">Correo electrónico</string>
+    <string name="textView_direccion_lista">Dirección</string>
+    <string name="textView_poblacion_lista">Población</string>
+    <string name="textView_provincia_lista">Provincia</string>
+    <string name="textView_telefono_lista">Teléfono Fijo</string>
+    <string name="textView_movil_lista">Teléfono Móvil</string>
+    <string name="textView_profesion_lista">Profesión</string>
+    <string name="textView_precioHora_lista">Precio Hora</string>
+
+
+    <!--<string name="textView"></string>-->
+    <!--<string name="editText"></string>-->
+    <!--<string name="textView"></string>-->
+    <!--<string name="editText"></string>-->
+    <!--<string name="textView"></string>-->
+    <!--<string name="editText"></string>-->
+    <!--<string name="textView"></string>-->
+    <!--<string name="editText"></string>-->
+    <!--<string name="textView"></string>-->
+    <!--<string name="editText"></string>-->
+    <!--<string name="textView"></string>-->
+    <!--<string name="editText"></string>-->
+    <!--<string name="textView"></string>-->
+    <!--<string name="editText"></string>-->
+    <!--<string name="textView"></string>-->
+    <!--<string name="editText"></string>-->
+
 </resources>

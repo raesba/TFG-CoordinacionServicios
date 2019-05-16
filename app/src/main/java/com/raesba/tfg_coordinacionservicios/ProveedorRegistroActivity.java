@@ -2,8 +2,6 @@ package com.raesba.tfg_coordinacionservicios;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,7 +22,7 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
     private EditText profesion;
     private EditText precioHora;
     private EditText descripcion;
-    private boolean nuevo = false;
+    private boolean newProvider = false;
 
     private Proveedor proveedor;
 
@@ -73,13 +71,33 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
 //
 //        } else {
 //            proveedor = new Proveedor();
-//            nuevo = true;
+//            newProvider = true;
 //        }
 
-
-        if (getIntent().getExtras() != null){
+            /*if (getIntent().getExtras() != null){
             if (getIntent().hasExtra("uid")){
                 String uid = getIntent().getStringExtra("uid");
+
+                databaseManager.getProveedor(uid, new GetProveedorCallback() {
+                    @Override
+                    public void onSuccess(Proveedor proveedor, boolean currentUser) {
+                        setUI(proveedor, currentUser);
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+
+                    }
+                });
+            }
+
+
+        } else {
+
+        }*/
+        if (getIntent().getExtras() != null){
+            if (getIntent().hasExtra(Constantes.FIREBASE_PROVEEDORES_UID)){
+                String uid = getIntent().getStringExtra(Constantes.FIREBASE_PROVEEDORES_UID);
 
                 databaseManager.getProveedor(uid, new GetProveedorCallback() {
                     @Override
@@ -117,7 +135,7 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
                 proveedor.setPrecioHora(Float.parseFloat(precioHora.getText().toString()));
 
                 Intent intent = new Intent();
-                intent.putExtra("proveedor", proveedor);
+                intent.putExtra(Constantes.EXTRA_PROVEEDOR, proveedor);
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -138,19 +156,19 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
         profesion.setText(proveedor.getProfesion());
         precioHora.setText(String.valueOf(proveedor.getPrecioHora()));
 
-        nuevo = currentUser;
+        newProvider = currentUser;
 
         if (currentUser){
-            nombre.setEnabled(nuevo);
+            nombre.setEnabled(newProvider);
             email.setEnabled(false);
-            dni.setEnabled(nuevo);
-            direccion.setEnabled(nuevo);
-            poblacion.setEnabled(nuevo);
-            provincia.setEnabled(nuevo);
-            telefonoFijo.setEnabled(nuevo);
-            movil.setEnabled(nuevo);
-            profesion.setEnabled(nuevo);
-            precioHora.setEnabled(nuevo);
+            dni.setEnabled(newProvider);
+            direccion.setEnabled(newProvider);
+            poblacion.setEnabled(newProvider);
+            provincia.setEnabled(newProvider);
+            telefonoFijo.setEnabled(newProvider);
+            movil.setEnabled(newProvider);
+            profesion.setEnabled(newProvider);
+            precioHora.setEnabled(newProvider);
 
         } else {
 

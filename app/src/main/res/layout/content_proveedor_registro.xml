@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Nombre: "
+                    android:text="@string/textView_nombre"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -46,11 +46,14 @@
                     android:id="@+id/nombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=" Indica tu Nombre o Razón Social"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="25dp"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_nombre"
                     android:inputType="textPersonName"
-                    android:textSize="18sp" />
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -63,7 +66,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="DNI: "
+                    android:text="@string/textView_dni"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -71,10 +74,13 @@
                     android:id="@+id/dni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=" Indica tu DNI o CIF"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="72dp"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_dni"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,7 +93,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Email: "
+                    android:text="@string/textView_email"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -95,10 +101,13 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=" Indica tu Correo Electrónico"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="52dp"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_email"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,7 +120,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Dirección: "
+                    android:text="@string/textView_direccion"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -119,10 +128,13 @@
                     android:id="@+id/direccion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=" Indica tu Dirección"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_direccion"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,7 +147,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Población: "
+                    android:text="@string/textView_poblacion"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -143,10 +155,13 @@
                     android:id="@+id/poblacion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
-                    android:hint=" Indica tu Población"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_poblacion"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -159,7 +174,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Provincia: "
+                    android:text="@string/textView_provincia"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -167,10 +182,13 @@
                     android:id="@+id/provincia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="11dp"
-                    android:hint=" Indica tu Provincia"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_provincia"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -183,7 +201,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Teléfono "
+                    android:text="@string/textView_telefono"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -191,10 +209,13 @@
                     android:id="@+id/telefonoFijo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="23dp"
-                    android:hint=" Indica tu Teléfono"
-                    android:textSize="18sp" />
+                    android:hint="@string/editText_telefono"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -207,7 +228,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Móvil: "
+                    android:text="@string/textView_movil"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -215,10 +236,13 @@
                     android:id="@+id/movil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="53dp"
-                    android:hint=" Indica tu Móvil"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_movil"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -231,7 +255,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Profesión: "
+                    android:text="@string/textView_profesion"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -239,10 +263,13 @@
                     android:id="@+id/profesion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="7dp"
-                    android:hint=" Indica tu Profesión/Oficio"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_profesion"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -255,7 +282,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="P. Hora: "
+                    android:text="@string/textView_pHora"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -263,17 +290,20 @@
                     android:id="@+id/precioHora"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="32dp"
-                    android:hint=" Indica tu Coste Horario"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_precioHora"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:text=" €"
+                    android:text="@string/textView_euro"
                     android:textSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -283,27 +313,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/buttonDescripcionProveedorRegistro"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:text="Descripción"
-                        app:layout_anchor="@+id/include"
-                        app:layout_anchorGravity="left|bottom" />
+                <Button
+                    android:id="@+id/buttonDescripcionProveedorRegistro"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:text="@string/button_descripcion"
+                    app:layout_anchor="@+id/include"
+                    app:layout_anchorGravity="left|bottom" />
 
-                    <Button
-                        android:id="@+id/buttonGuardarProveedorRegistro"
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginVertical="15dp"
-                        android:text="Guardar"
-                        app:layout_anchor="@+id/include"
-                        app:layout_anchorGravity="right|bottom" />
+                <Button
+                    android:id="@+id/buttonGuardarProveedorRegistro"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="2"
+                    android:text="@string/button_guardar"
+                    app:layout_anchor="@+id/include"
+                    app:layout_anchorGravity="right|bottom" />
 
 
 

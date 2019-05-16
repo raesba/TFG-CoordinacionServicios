@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/muro_blanco_ladrillo"
     tools:context=".ProveedorRegistroActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -23,7 +24,6 @@
     <include
         android:id="@+id/include"
         layout="@layout/content_proveedor_registro" />
-
 
 
 </android.support.design.widget.CoordinatorLayout>

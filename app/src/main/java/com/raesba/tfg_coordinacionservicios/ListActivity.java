@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class ListaActivity extends AppCompatActivity implements ChildEventListener {
+public class ListActivity extends AppCompatActivity implements ChildEventListener {
 
     private ArrayList<Proveedor> proveedores;
     private ProveedoresAdapter adapter;
@@ -39,45 +39,11 @@ public class ListaActivity extends AppCompatActivity implements ChildEventListen
 
         boolean test = false;
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("proveedores");
+        /*databaseReference = FirebaseDatabase.getInstance().getReference().
+                child("proveedores");*/
 
-//        for (int i = 0; i<5; i++){
-//            Proveedor proveedor = new Proveedor();
-//            proveedor.setEmail("USUARIO" + (i+1) + "@gmail.com");
-//            proveedor.setPassword("Pw000" + (i+1));
-//            if (i == 0){proveedor.setNombre("José del Barrio Cobian");}
-//                else if (i == 1){proveedor.setNombre("Marez");}
-//                    else if (i == 2){proveedor.setNombre("Mava 2000");}
-//                        else if (i == 3){proveedor.setNombre("BrickLayer");}
-//                            else if (i == 4){proveedor.setNombre("3 Jotas");}
-//            else {proveedor.setNombre("Nombre" + (i+1));}
-//
-//            proveedor.setDni("5000000" + (i+1));
-//            proveedor.setDireccion("Direccion" + (i+1));
-//            proveedor.setPoblacion("Poblacion" + (i+1));
-//
-//            if (i == 0){proveedor.setProvincia("Madrid");}
-//                else if (i == 1){proveedor.setProvincia("Barcelona");}
-//                    else if (i == 2){proveedor.setProvincia("Bilbao");}
-//                        else if (i == 3){proveedor.setProvincia("Sevilla");}
-//                            else if (i == 4){proveedor.setProvincia("Valladolid");}
-//            else {proveedor.setProvincia("Provincia" + (i+1));}
-//
-//            proveedor.setTelefonoFijo("???????");
-//            proveedor.setMovil("60660600" + (i+1));
-//            if (i == 0){proveedor.setProfesion("Cerrajero");}
-//            if (i == 1){proveedor.setProfesion("Fontanero");}
-//            if (i == 2){proveedor.setProfesion("Albañil");}
-//            if (i == 3){proveedor.setProfesion("Calefactor");}
-//            if (i == 4){proveedor.setProfesion("Electricista");}
-//            if (i == 0){proveedor.setPrecioHora(21);}
-//            if (i == 1){proveedor.setPrecioHora(25);}
-//            if (i == 2){proveedor.setPrecioHora(18);}
-//            if (i == 3){proveedor.setPrecioHora(28);}
-//            if (i == 4){proveedor.setPrecioHora(35);}
-//            proveedor.setDescripcion("Descripcion " + (i+1));
-//            proveedores.add(proveedor);
-//        }
+        databaseReference = FirebaseDatabase.getInstance().getReference().
+                child(Constantes.FIREBASE_PROVEEDORES_KEY);
 
         adapter = new ProveedoresAdapter(proveedores);
         recyclerView.setAdapter(adapter);
@@ -121,7 +87,7 @@ public class ListaActivity extends AppCompatActivity implements ChildEventListen
 
             if (resultCode == RESULT_OK){
 
-                Proveedor proveedor = (Proveedor) data.getExtras().getSerializable("proveedor");
+                Proveedor proveedor = (Proveedor) data.getExtras().getSerializable(Constantes.EXTRA_PROVEEDOR);
                 adapter.addProveedor(proveedor);
             }
         }

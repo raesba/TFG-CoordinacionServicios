@@ -48,11 +48,13 @@ public class LoginActivity extends AppCompatActivity {
                 passwordIntroducida = password.getText().toString();
 
                 if (usuarioIntroducido.equals("") || passwordIntroducida.equals("")){
-                    Toast.makeText(getApplicationContext(), "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), Constantes.ERROR_CAMPO_VACIO,
+                            Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                databaseManager.checkLogin(usuarioIntroducido, passwordIntroducida, new LoginCallback() {
+                databaseManager.checkLogin(usuarioIntroducido, passwordIntroducida,
+                        new LoginCallback() {
                     @Override
                     public void onLoginSuccess(String uid, int userType) {
                         tipoUsuario = userType;
@@ -74,7 +76,8 @@ public class LoginActivity extends AppCompatActivity {
                 passwordIntroducida = password.getText().toString();
 
                 if (usuarioIntroducido.equals("") || passwordIntroducida.equals("")){
-                    Toast.makeText(getApplicationContext(), "Los campos no pueden estar vacíos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), Constantes.ERROR_CAMPO_VACIO,
+                            Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -88,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
     private void createDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("¿Eres empresa o proveedor?")
-                .setPositiveButton("SOY EMPRESA", new DialogInterface.OnClickListener() {
+        builder.setTitle(Constantes.PREGUNTA_QUIEN)
+                .setPositiveButton(Constantes.DIALOGO_EMPRESA, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         tipoUsuario = 0;
@@ -97,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                         iniciarRegistro();
                     }
                 })
-                .setNegativeButton("SOY PROVEEDOR", new DialogInterface.OnClickListener() {
+                .setNegativeButton(Constantes.DIALOGO_PROVEEDOR, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         tipoUsuario = 1;
@@ -109,7 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         tipoUsuario = -1;
-                        Toast.makeText(getApplicationContext(), "Registro cancelado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), Constantes.ERROR_CANCELAR_DIALOGO,
+                                Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
                 })
@@ -118,7 +122,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void iniciarRegistro() {
-        databaseManager.createUser(usuarioIntroducido, passwordIntroducida, tipoUsuario, new LoginCallback() {
+        databaseManager.createUser(usuarioIntroducido, passwordIntroducida, tipoUsuario,
+                new LoginCallback() {
             @Override
             public void onLoginSuccess(String uid, int userType) {
                 startActivityWithTipoUsuario(uid);
@@ -136,23 +141,33 @@ public class LoginActivity extends AppCompatActivity {
         if (tipoUsuario != -1){
             Intent intent = null;
 
-            if (tipoUsuario == 0){
-                intent = new Intent(this, ListaActivity.class);
+           /* if (tipoUsuario == 0){
+                intent = new Intent(this, ListActivity.class);
             } else if (tipoUsuario == 1){
                 intent = new Intent(this, PerfilProveedorActivity.class);
                 intent.putExtra("uid", uid);
             } else {
-                Log.d("LOGIN", "Opción no válida");
+                Log.d("LOGIN", Constantes.MSG_OPCION_INVALIDA);
+            }*/
+
+            if (tipoUsuario == 0){
+                intent = new Intent(this, ListActivity.class);
+            } else if (tipoUsuario == 1){
+                intent = new Intent(this, PerfilProveedorActivity.class);
+                intent.putExtra(Constantes.FIREBASE_USUARIOS_UID, uid);
+            } else {
+                Log.d(TAG, Constantes.MSG_OPCION_INVALIDA);
             }
 
 
             if (intent != null){
-                Toast.makeText(getApplicationContext(),"Redirecting...",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),Constantes.MSG_REDIRIGIENDO,
+                        Toast.LENGTH_LONG).show();
                 startActivity(intent);
                 finish();
             }
         } else {
-            Log.w("LOGIN", "Opción no válida");
+            Log.w(TAG, Constantes.MSG_OPCION_INVALIDA);
         }
     }
 }
