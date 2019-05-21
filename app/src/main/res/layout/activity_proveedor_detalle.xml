@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/muro_blanco_ladrillo"
-    tools:context=".PerfilProveedorActivity">
+    tools:context=".ProveedorDetalleActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +20,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_perfil_proveedor" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_proveedor_detalle" />
 
 
 </android.support.design.widget.CoordinatorLayout>

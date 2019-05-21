@@ -11,7 +11,7 @@
     <string name="button_login">Entrar</string>
     <string name="button_registro">Registrarse</string>
 
-    <!--content_proveedor_registro.xml-->
+    <!--content_proveedor_detallexml-->
     <string name="button_descripcion">Descripción</string>
     <string name="button_guardar">Guardar</string>
 
@@ -23,7 +23,7 @@
     <string name="textView_contrasena">Contraseña</string>
     <string name="editText_contrasena">Introduzca Contraseña</string>
 
-    <!--content_proveedor_registro.xml-->
+    <!--content_proveedor_detallexml-->
     <string name="textView_nombre">Nombre: </string>
     <string name="editText_nombre">Indica tu Nombre o Razón Social</string>
     <string name="textView_dni">DNI: </string>
@@ -46,7 +46,7 @@
     <string name="editText_precioHora">Indica tu Coste Horario</string>
     <string name="textView_euro"> " €"</string>
 
-    <!--item_proveedor.xml-->
+    <!--item_lista_proveedor.xmlor.xml-->
     <string name="textView_precioHora">Precio Hora: </string>
     <string name="textView_email_lista">Correo electrónico</string>
     <string name="textView_direccion_lista">Dirección</string>
@@ -56,7 +56,6 @@
     <string name="textView_movil_lista">Teléfono Móvil</string>
     <string name="textView_profesion_lista">Profesión</string>
     <string name="textView_precioHora_lista">Precio Hora</string>
-
 
     <!--<string name="textView"></string>-->
     <!--<string name="editText"></string>-->

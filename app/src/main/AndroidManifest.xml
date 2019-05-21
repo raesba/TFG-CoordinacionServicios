@@ -25,11 +25,11 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".ProveedorRegistroActivity"
+            android:name=".ProveedorDetalleActivity"
             android:label="Datos de Proveedores"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ListActivity"
+            android:name=".ListaProveedorActivity"
             android:label="Listado de Proveedores"
             android:theme="@style/AppTheme.NoActionBar">
 

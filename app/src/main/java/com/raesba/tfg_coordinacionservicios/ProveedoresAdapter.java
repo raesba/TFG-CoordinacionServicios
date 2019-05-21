@@ -23,7 +23,7 @@ public class ProveedoresAdapter extends
     @NonNull
     @Override
     public ProveedoresViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_proveedor,
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_lista_proveedor,
                 viewGroup, false);
         ProveedoresViewHolder proveedoresViewHolder = new ProveedoresViewHolder(view);
         return proveedoresViewHolder;
@@ -96,8 +96,8 @@ public class ProveedoresAdapter extends
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), ProveedorRegistroActivity.class);
-            intent.putExtra(Constantes.EXTRA_PROVEEDOR, proveedor);
+            Intent intent = new Intent(v.getContext(), ProveedorDetalleActivity.class);
+            intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, proveedor.getUid());
             v.getContext().startActivity(intent);
         }
     }

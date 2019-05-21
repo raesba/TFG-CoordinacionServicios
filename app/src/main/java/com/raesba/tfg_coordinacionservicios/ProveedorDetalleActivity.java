@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ProveedorRegistroActivity extends AppCompatActivity {
+public class ProveedorDetalleActivity extends AppCompatActivity {
 
     private EditText email;
     //    private EditText contrasena;
@@ -22,6 +22,9 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
     private EditText profesion;
     private EditText precioHora;
     private EditText descripcion;
+
+    private Button botonGuardar;
+
     private boolean newProvider = false;
 
     private Proveedor proveedor;
@@ -32,7 +35,7 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_proveedor_registro);
+        setContentView(R.layout.activity_proveedor_detalle);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -49,55 +52,9 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
         profesion= findViewById(R.id.profesion);
         precioHora = findViewById(R.id.precioHora);
 
-//        if (getIntent().getExtras() != null && getIntent().getExtras().getSerializable("proveedor") != null){
-//            proveedor = (Proveedor) getIntent().getExtras().getSerializable("proveedor");
-//
-//
-//
-//            nombre.setText(proveedor.getNombre());
-//            email.setText(proveedor.getEmail());
-//            dni.setText(proveedor.getDni());
-//            direccion.setText(proveedor.getDireccion());
-//            poblacion.setText(proveedor.getPoblacion());
-//            provincia.setText(proveedor.getProvincia());
-//            telefonoFijo.setText(proveedor.getTelefonoFijo());
-//            movil.setText(proveedor.getMovil());
-//            profesion.setText(proveedor.getProfesion());
-//            precioHora.setText(String.valueOf(proveedor.getPrecioHora()));
-//
-//
-
-//
-//
-//        } else {
-//            proveedor = new Proveedor();
-//            newProvider = true;
-//        }
-
-            /*if (getIntent().getExtras() != null){
-            if (getIntent().hasExtra("uid")){
-                String uid = getIntent().getStringExtra("uid");
-
-                databaseManager.getProveedor(uid, new GetProveedorCallback() {
-                    @Override
-                    public void onSuccess(Proveedor proveedor, boolean currentUser) {
-                        setUI(proveedor, currentUser);
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-
-                    }
-                });
-            }
-
-
-        } else {
-
-        }*/
         if (getIntent().getExtras() != null){
-            if (getIntent().hasExtra(Constantes.FIREBASE_PROVEEDORES_UID)){
-                String uid = getIntent().getStringExtra(Constantes.FIREBASE_PROVEEDORES_UID);
+            if (getIntent().hasExtra(Constantes.EXTRA_PROVEEDOR_UID)){
+                String uid = getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID);
 
                 databaseManager.getProveedor(uid, new GetProveedorCallback() {
                     @Override
@@ -117,7 +74,7 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
 
         }
 
-        Button botonGuardar = findViewById(R.id.buttonGuardarProveedorRegistro);
+        botonGuardar = findViewById(R.id.buttonGuardarProveedorRegistro);
         botonGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,20 +115,31 @@ public class ProveedorRegistroActivity extends AppCompatActivity {
 
         newProvider = currentUser;
 
-        if (currentUser){
-            nombre.setEnabled(newProvider);
-            email.setEnabled(false);
-            dni.setEnabled(newProvider);
-            direccion.setEnabled(newProvider);
-            poblacion.setEnabled(newProvider);
-            provincia.setEnabled(newProvider);
-            telefonoFijo.setEnabled(newProvider);
-            movil.setEnabled(newProvider);
-            profesion.setEnabled(newProvider);
-            precioHora.setEnabled(newProvider);
+        nombre.setEnabled(newProvider);
+        email.setEnabled(false);
+        dni.setEnabled(newProvider);
+        direccion.setEnabled(newProvider);
+        poblacion.setEnabled(newProvider);
+        provincia.setEnabled(newProvider);
+        telefonoFijo.setEnabled(newProvider);
+        movil.setEnabled(newProvider);
+        profesion.setEnabled(newProvider);
+        precioHora.setEnabled(newProvider);
 
-        } else {
-
+        if (!currentUser){
+            botonGuardar.setVisibility(View.GONE);
+            nombre.setHint("");
+            email.setHint("");
+            dni.setHint("");
+            direccion.setHint("");
+            poblacion.setHint("");
+            provincia.setHint("");
+            telefonoFijo.setHint("");
+            movil.setHint("");
+            profesion.setHint("");
+            precioHora.setHint("");
         }
+
+
     }
 }

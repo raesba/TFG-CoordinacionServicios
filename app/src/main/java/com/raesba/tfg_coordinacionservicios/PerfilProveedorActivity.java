@@ -2,8 +2,6 @@ package com.raesba.tfg_coordinacionservicios;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,7 +17,7 @@ public class PerfilProveedorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil_proveedor);
+        setContentView(R.layout.activity_proveedor_perfil);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -31,8 +29,8 @@ public class PerfilProveedorActivity extends AppCompatActivity {
             uid = getIntent().getStringExtra("uid");
         }*/
 
-        if (getIntent().hasExtra(Constantes.FIREBASE_PROVEEDORES_UID)){
-            uid = getIntent().getStringExtra(Constantes.FIREBASE_PROVEEDORES_UID);
+        if (getIntent().hasExtra(Constantes.EXTRA_PROVEEDOR_UID)){
+            uid = getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID);
         }
 
         botonCalendario.setOnClickListener(new View.OnClickListener() {
@@ -55,12 +53,12 @@ public class PerfilProveedorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                /*Intent intent = new Intent(getApplicationContext(),ProveedorRegistroActivity.class);
+                /*Intent intent = new Intent(getApplicationContext(),ProveedorDetalleActivity.class);
                 intent.putExtra("uid"  , uid);
                 startActivity(intent);*/
 
-                Intent intent = new Intent(getApplicationContext(),ProveedorRegistroActivity.class);
-                intent.putExtra(Constantes.FIREBASE_PROVEEDORES_UID, uid);
+                Intent intent = new Intent(getApplicationContext(), ProveedorDetalleActivity.class);
+                intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, uid);
                 startActivity(intent);
             }
         });

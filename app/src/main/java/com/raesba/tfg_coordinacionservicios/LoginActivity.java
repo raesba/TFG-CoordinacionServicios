@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
@@ -20,6 +21,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Button entrar;
     private Button registrarse;
+
+    private ProgressBar progressBar;
 
     private String usuarioIntroducido;
     private String passwordIntroducida;
@@ -40,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         entrar = findViewById(R.id.entrar);
         registrarse = findViewById(R.id.registrarse);
+        progressBar = findViewById(R.id.progress_bar);
 
         entrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,16 +57,19 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                progressBar.setVisibility(View.VISIBLE);
                 databaseManager.checkLogin(usuarioIntroducido, passwordIntroducida,
                         new LoginCallback() {
                     @Override
                     public void onLoginSuccess(String uid, int userType) {
                         tipoUsuario = userType;
+                        progressBar.setVisibility(View.GONE);
                         startActivityWithTipoUsuario(uid);
                     }
 
                     @Override
                     public void onLoginFailed(String error) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -122,15 +129,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void iniciarRegistro() {
+        progressBar.setVisibility(View.VISIBLE);
         databaseManager.createUser(usuarioIntroducido, passwordIntroducida, tipoUsuario,
                 new LoginCallback() {
             @Override
             public void onLoginSuccess(String uid, int userType) {
+                progressBar.setVisibility(View.GONE);
                 startActivityWithTipoUsuario(uid);
             }
 
             @Override
             public void onLoginFailed(String error) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
             }
         });
@@ -142,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = null;
 
            /* if (tipoUsuario == 0){
-                intent = new Intent(this, ListActivity.class);
+                intent = new Intent(this, ListaProveedorActivity.class);
             } else if (tipoUsuario == 1){
                 intent = new Intent(this, PerfilProveedorActivity.class);
                 intent.putExtra("uid", uid);
@@ -151,10 +161,10 @@ public class LoginActivity extends AppCompatActivity {
             }*/
 
             if (tipoUsuario == 0){
-                intent = new Intent(this, ListActivity.class);
+                intent = new Intent(this, ListaProveedorActivity.class);
             } else if (tipoUsuario == 1){
                 intent = new Intent(this, PerfilProveedorActivity.class);
-                intent.putExtra(Constantes.FIREBASE_USUARIOS_UID, uid);
+                intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, uid);
             } else {
                 Log.d(TAG, Constantes.MSG_OPCION_INVALIDA);
             }

@@ -138,33 +138,6 @@ public class FirebaseManager {
     }
 
     public void getProveedor(String uid, final GetProveedorCallback callback){
-        /*firebaseDatabase.getReference().child("proveedores")
-                .orderByChild("uid")
-                .equalTo(uid).limitToFirst(1)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        if (dataSnapshot.getValue() != null){
-                            Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-                            Proveedor proveedor = iterator.next().getValue(Proveedor.class);
-
-                            boolean currentUser;
-                            if (proveedor.getUid().equals(auth.getCurrentUser().getUid())){
-                                currentUser = true;
-                            } else {
-                                currentUser = false;
-                            }
-
-                            callback.onSuccess(proveedor, currentUser);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });*/
         firebaseDatabase.getReference().child(Constantes.FIREBASE_PROVEEDORES_KEY)
                 .orderByChild(Constantes.FIREBASE_PROVEEDORES_UID)
                 .equalTo(uid).limitToFirst(1)

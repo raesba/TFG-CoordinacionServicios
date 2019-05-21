@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class ListActivity extends AppCompatActivity implements ChildEventListener {
+public class ListaProveedorActivity extends AppCompatActivity implements ChildEventListener {
 
     private ArrayList<Proveedor> proveedores;
     private ProveedoresAdapter adapter;
@@ -29,11 +27,12 @@ public class ListActivity extends AppCompatActivity implements ChildEventListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista);
+        setContentView(R.layout.activity_lista_proveedor);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.lista_proveedores);
+        // Recycler view es una lista pero mejor ListView
 
         proveedores = new ArrayList<>();
 
@@ -49,33 +48,17 @@ public class ListActivity extends AppCompatActivity implements ChildEventListene
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        View.OnClickListener mi_listener = new View.OnClickListener() {
+        /*View.OnClickListener mi_listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), ProveedorRegistroActivity.class);
-                startActivityForResult(intent, 0);
-
-/*                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-            }
-        };
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        /*fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getApplicationContext(), ProveedorRegistroActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ProveedorDetalleActivity.class);
                 startActivityForResult(intent, 0);
 
 *//*                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*//*
             }
-        });*/
-
-        fab.setOnClickListener(mi_listener);
+        };*/
 
         getProveedores();
     }
