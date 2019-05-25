@@ -51,6 +51,7 @@ public final class Constantes {
     public static final String MSG_REDIRIGIENDO ="Redirigiendo...";
     public static final String MSG_ESPERA ="Espere un momento, por favor...";
     public static final String MSG_PROCESANDO ="EN CONSTRUCCIÓN.....";
+    public static final String MSG_GUARDADO ="Datos guardados";
 
     //LoginActivity
     public static final String PREGUNTA_QUIEN = "¿Eres empresa o proveedor?";
@@ -60,6 +61,14 @@ public final class Constantes {
     //Extras
     public final static String EXTRA_PROVEEDOR_UID = "uid";
     public final static String EXTRA_PROVEEDOR = "proveedor";
+
+    // ProveedorDetalleActivity
+    public static final String TITULO_DESCRIPCION = "DESCRIPCION" ;
+    public static final String PISTA_DESCRIPCION = "Indica tu descripción";
+    public static final String PISTA_DESCRIPCION_VACIA = "No hay descripción";
+    public static final String DIALOGO_OK = "OK";
+    public static final String DIALOGO_GUARDAR = "GUARDAR";
+    public static final String DIALOGO_CANCELAR = "CANCELAR";
 
 
 //    public final static String

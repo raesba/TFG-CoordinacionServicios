@@ -1,14 +1,21 @@
-package com.raesba.tfg_coordinacionservicios;
+package com.raesba.tfg_coordinacionservicios.ui.proveedordetalle;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-public class ProveedorDetalleActivity extends AppCompatActivity {
+import com.raesba.tfg_coordinacionservicios.Constantes;
+import com.raesba.tfg_coordinacionservicios.DatabaseManager;
+import com.raesba.tfg_coordinacionservicios.Proveedor;
+import com.raesba.tfg_coordinacionservicios.R;
+import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
+
+public class ProveedorDetalleActivity extends BaseActivity implements ProveedorDetalleContract.Vista {
 
     private EditText email;
     //    private EditText contrasena;
@@ -24,12 +31,15 @@ public class ProveedorDetalleActivity extends AppCompatActivity {
     private EditText descripcion;
 
     private Button botonGuardar;
+    private Button botonDescripcion;
 
     private boolean newProvider = false;
 
     private Proveedor proveedor;
 
     private DatabaseManager databaseManager;
+
+    private ProveedorDetallePresenter presenter;
 
 
     @Override
@@ -51,30 +61,27 @@ public class ProveedorDetalleActivity extends AppCompatActivity {
         movil = findViewById(R.id.movil);
         profesion= findViewById(R.id.profesion);
         precioHora = findViewById(R.id.precioHora);
+        botonDescripcion = findViewById(R.id.buttonDescripcionProveedorRegistro);
+
+        presenter = new ProveedorDetallePresenter(databaseManager);
 
         if (getIntent().getExtras() != null){
             if (getIntent().hasExtra(Constantes.EXTRA_PROVEEDOR_UID)){
                 String uid = getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID);
-
-                databaseManager.getProveedor(uid, new GetProveedorCallback() {
-                    @Override
-                    public void onSuccess(Proveedor proveedor, boolean currentUser) {
-                        setUI(proveedor, currentUser);
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-
-                    }
-                });
+                presenter.getDatosProveedor(uid);
             }
-
-
         } else {
-
+            Toast.makeText(this, Constantes.ERROR_LECTURA_BBDD, Toast.LENGTH_LONG).show();
+            finish();
         }
 
         botonGuardar = findViewById(R.id.buttonGuardarProveedorRegistro);
+        botonDescripcion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog();
+            }
+        });
         botonGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,18 +95,73 @@ public class ProveedorDetalleActivity extends AppCompatActivity {
                 proveedor.setTelefonoFijo(telefonoFijo.getText().toString());
                 proveedor.setMovil(movil.getText().toString());
                 proveedor.setProfesion(profesion.getText().toString());
-
                 proveedor.setPrecioHora(Float.parseFloat(precioHora.getText().toString()));
 
-                Intent intent = new Intent();
-                intent.putExtra(Constantes.EXTRA_PROVEEDOR, proveedor);
-                setResult(RESULT_OK, intent);
+                databaseManager.updateProveedor(proveedor);
+
+                Toast.makeText(getApplicationContext(), Constantes.MSG_GUARDADO, Toast.LENGTH_LONG).show();
+
                 finish();
             }
         });
     }
 
-    private void setUI(Proveedor proveedor, boolean currentUser) {
+    private void createDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(Constantes.TITULO_DESCRIPCION);
+
+        if (newProvider){
+            final EditText descripcion = new EditText(this);
+            descripcion.setHint(Constantes.PISTA_DESCRIPCION);
+            descripcion.setText(proveedor.getDescripcion());
+            builder.setView(descripcion);
+            builder.setPositiveButton(Constantes.DIALOGO_GUARDAR, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String descripcionText = descripcion.getText().toString();
+                    proveedor.setDescripcion(descripcionText);
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton(Constantes.DIALOGO_CANCELAR, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+        } else {
+            if (proveedor.getDescripcion() == null || proveedor.getDescripcion().equals("")){
+                builder.setMessage(Constantes.PISTA_DESCRIPCION_VACIA);
+            } else {
+                builder.setMessage(proveedor.getDescripcion());
+            }
+            builder.setPositiveButton(Constantes.DIALOGO_OK, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        }
+
+        builder.create().show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.vistaActiva(this);
+    }
+
+    @Override
+    protected void onStop() {
+        presenter.vistaInactiva();
+        super.onStop();
+    }
+
+    @Override
+    public void mostrarDatosProveedor(Proveedor proveedor, boolean currentUser) {
         this.proveedor = proveedor;
 
         nombre.setText(proveedor.getNombre());
@@ -139,7 +201,5 @@ public class ProveedorDetalleActivity extends AppCompatActivity {
             profesion.setHint("");
             precioHora.setHint("");
         }
-
-
     }
 }

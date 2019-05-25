@@ -1,7 +1,6 @@
 package com.raesba.tfg_coordinacionservicios;
 
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -10,13 +9,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 public class FirebaseManager {
 
@@ -62,7 +59,7 @@ public class FirebaseManager {
 
                     userAuth.setUid(userAuthentication.getUid());
                     userAuth.setEmail(userAuthentication.getEmail());
-                    userAuth.setTipoUsuario((int) tipoUsuario);
+                    userAuth.setTipo_usuario((int) tipoUsuario);
                     userAuth.setVerificado(userAuthentication.isEmailVerified());
 
                     createNewUserInDatabase(userAuth, callback);
@@ -174,6 +171,8 @@ public class FirebaseManager {
                 .push()
                 .getKey();
 
+        userAuth.setClave(key);
+
         firebaseDatabase.getReference()
                 .child(Constantes.FIREBASE_USUARIOS_KEY)
                 .child(key)
@@ -181,10 +180,10 @@ public class FirebaseManager {
 
         String tipoUsuarioKey = Constantes.FIREBASE_PROVEEDORES_KEY;
 
-        if (userAuth.getTipoUsuario() == 0){
+        if (userAuth.getTipo_usuario() == 0){
             // HAGO REGISTRO EMPRESA
             tipoUsuarioKey = Constantes.FIREBASE_EMPRESAS_KEY;
-        } else if (userAuth.getTipoUsuario() == 1){
+        } else if (userAuth.getTipo_usuario() == 1){
             // HAGO REGISTRO PROVEEDOR
             tipoUsuarioKey = Constantes.FIREBASE_PROVEEDORES_KEY;
         } else {
@@ -200,11 +199,18 @@ public class FirebaseManager {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-                            callback.onLoginSuccess(userAuth.getUid(), userAuth.getTipoUsuario());
+                            callback.onLoginSuccess(userAuth.getUid(), userAuth.getTipo_usuario());
                         } else {
                             callback.onLoginFailed(Constantes.ERROR_ESCRITURA_BBDD);
                         }
                     }
                 });
+    }
+
+    public void updateProveedor(Proveedor proveedor) {
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_PROVEEDORES_KEY)
+                .child(proveedor.getClave())
+                .setValue(proveedor);
     }
 }

@@ -89,7 +89,8 @@ public class ListaProveedorActivity extends AppCompatActivity implements ChildEv
 
     @Override
     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+        Proveedor proveedor = dataSnapshot.getValue(Proveedor.class);
+        adapter.updateProveedor(proveedor);
     }
 
     @Override

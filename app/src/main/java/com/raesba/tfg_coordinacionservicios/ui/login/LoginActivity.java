@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios;
+package com.raesba.tfg_coordinacionservicios.ui.login;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.raesba.tfg_coordinacionservicios.Constantes;
+import com.raesba.tfg_coordinacionservicios.DatabaseManager;
+import com.raesba.tfg_coordinacionservicios.ListaProveedorActivity;
+import com.raesba.tfg_coordinacionservicios.LoginCallback;
+import com.raesba.tfg_coordinacionservicios.PerfilProveedorActivity;
+import com.raesba.tfg_coordinacionservicios.R;
 
 public class LoginActivity extends AppCompatActivity {
 

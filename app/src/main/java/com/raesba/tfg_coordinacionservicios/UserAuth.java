@@ -1,12 +1,15 @@
 package com.raesba.tfg_coordinacionservicios;
 
+import com.google.firebase.database.PropertyName;
+
 import java.io.Serializable;
 
 public class UserAuth implements Serializable {
     private String uid;
     private String email;
-    private int tipoUsuario;
+    private int tipo_usuario;
     private boolean verificado;
+    private String clave;
 
     public UserAuth() {
     }
@@ -27,12 +30,12 @@ public class UserAuth implements Serializable {
         this.email = email;
     }
 
-    public int getTipoUsuario() {
-        return tipoUsuario;
+    public int getTipo_usuario() {
+        return tipo_usuario;
     }
 
-    public void setTipoUsuario(int tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setTipo_usuario(int tipo_usuario) {
+        this.tipo_usuario = tipo_usuario;
     }
 
     public boolean isVerificado() {
@@ -41,5 +44,13 @@ public class UserAuth implements Serializable {
 
     public void setVerificado(boolean verificado) {
         this.verificado = verificado;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 }

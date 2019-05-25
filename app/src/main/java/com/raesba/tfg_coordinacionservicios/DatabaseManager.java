@@ -1,12 +1,5 @@
 package com.raesba.tfg_coordinacionservicios;
 
-import android.support.annotation.NonNull;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 public class DatabaseManager {
 
     private static DatabaseManager instance;
@@ -37,5 +30,9 @@ public class DatabaseManager {
 
     public void getProveedor(String uid, GetProveedorCallback callback) {
         firebaseManager.getProveedor(uid, callback);
+    }
+
+    public void updateProveedor(Proveedor proveedor){
+        firebaseManager.updateProveedor(proveedor);
     }
 }

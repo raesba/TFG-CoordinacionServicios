@@ -8,16 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.raesba.tfg_coordinacionservicios.ui.proveedordetalle.ProveedorDetalleActivity;
+
 import java.util.ArrayList;
 
 public class ProveedoresAdapter extends
         RecyclerView.Adapter<ProveedoresAdapter.ProveedoresViewHolder>{
 
 
-    private ArrayList<Proveedor> proveedores;
+    private ArrayList<Proveedor> listaProveedores;
 
-    public ProveedoresAdapter(ArrayList<Proveedor> proveedores) {
-        this.proveedores = proveedores;
+    public ProveedoresAdapter(ArrayList<Proveedor> listaProveedores) {
+        this.listaProveedores = listaProveedores;
     }
 
     @NonNull
@@ -31,17 +33,29 @@ public class ProveedoresAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull ProveedoresViewHolder proveedoresViewHolder, int i) {
-        proveedoresViewHolder.bindItem(proveedores.get(i));
+        proveedoresViewHolder.bindItem(listaProveedores.get(i));
     }
 
-    public void addProveedor(Proveedor proveedor) {
-        this.proveedores.add(proveedor);
+    public void addProveedor(Proveedor nuevoProveedor) {
+        this.listaProveedores.add(nuevoProveedor);
         this.notifyItemInserted(getItemCount() - 1);
     }
 
     @Override
     public int getItemCount() {
-        return proveedores.size();
+        return listaProveedores.size();
+    }
+
+    public void updateProveedor(Proveedor proveedorActualizado) {
+        for (int i = 0; i< listaProveedores.size(); i++){
+            Proveedor proveedorAntiguo = listaProveedores.get(i);
+
+            if (proveedorAntiguo.getUid().equals(proveedorActualizado.getUid())){
+                listaProveedores.set(i, proveedorActualizado);
+                this.notifyItemChanged(i);
+                break;
+            }
+        }
     }
 
     public class ProveedoresViewHolder extends RecyclerView.ViewHolder
