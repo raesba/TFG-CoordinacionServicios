@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios;
+package com.raesba.tfg_coordinacionservicios.ui.listaproveedor;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
+import com.raesba.tfg_coordinacionservicios.R;
 
 import java.util.ArrayList;
 

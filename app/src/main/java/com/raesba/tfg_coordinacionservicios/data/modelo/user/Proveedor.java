@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios;
+package com.raesba.tfg_coordinacionservicios.data.modelo.user;
 
 import java.io.Serializable;
 

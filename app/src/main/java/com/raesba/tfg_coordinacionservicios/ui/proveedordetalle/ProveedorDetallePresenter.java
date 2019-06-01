@@ -1,9 +1,12 @@
 package com.raesba.tfg_coordinacionservicios.ui.proveedordetalle;
 
-import com.raesba.tfg_coordinacionservicios.DatabaseManager;
-import com.raesba.tfg_coordinacionservicios.GetProveedorCallback;
-import com.raesba.tfg_coordinacionservicios.Proveedor;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
+import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.base.BasePresenter;
+
+import java.util.ArrayList;
 
 public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleContract.Vista>
                                         implements ProveedorDetalleContract.Presenter {
@@ -25,6 +28,28 @@ public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleCon
             }
             @Override
             public void onFailure(String error) {
+                if (vista != null){
+                    vista.mostrarToast(error);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getProfesiones() {
+        databaseManager.getProfesiones(new GetProfesionesCallback() {
+            @Override
+            public void onProfesionesFinish(ArrayList<String> profesiones) {
+                if (vista != null){
+                    vista.mostrarProfesiones(profesiones);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                if (vista != null){
+                    vista.mostrarToast(error);
+                }
             }
         });
     }

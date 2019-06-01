@@ -259,17 +259,35 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/profesion"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginTop="5dp"
-                    android:hint="@string/editText_profesion"
-                    android:textColorHighlight="#ff7eff15"
-                    android:textColorHint="#ffff25e6"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/profesion_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginTop="5dp"
+                        android:textColorHighlight="#ff7eff15"
+                        android:textSize="18sp"
+                        android:textStyle="italic" />
+
+                    <EditText
+                        android:id="@+id/profesion_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginTop="5dp"
+                        android:hint="@string/editText_profesion"
+                        android:textColorHighlight="#ff7eff15"
+                        android:textColorHint="#ffff25e6"
+                        android:textSize="18sp"
+                        android:textStyle="italic" />
+
+                </FrameLayout>
+
+
             </LinearLayout>
 
             <LinearLayout

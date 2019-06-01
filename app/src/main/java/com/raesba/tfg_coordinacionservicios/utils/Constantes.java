@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios;
+package com.raesba.tfg_coordinacionservicios.utils;
 
 public final class Constantes {
 
@@ -36,6 +36,9 @@ public final class Constantes {
     public static final String FIREBASE_EMPRESAS_MOVIL = "movil";
     public static final String FIREBASE_EMPRESAS_TIPOUSUARIO = "tipo_usuario";
     public static final String FIREBASE_EMPRESAS_VERIFICADO = "verificado";
+
+    public static final String FIREBASE_CONFIG_KEY = "config";
+    public static final String FIREBASE_PROFESIONES_KEY = "profesiones";
 
     //Errores
     public static final String ERROR_LOGIN = "Error al hacer el login";

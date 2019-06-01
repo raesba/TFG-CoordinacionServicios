@@ -1,5 +1,6 @@
-package com.raesba.tfg_coordinacionservicios;
+package com.raesba.tfg_coordinacionservicios.data.managers;
 
+import android.app.admin.DeviceAdminInfo;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -11,7 +12,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.ui.login.LoginCallback;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.UserAuth;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -212,5 +220,35 @@ public class FirebaseManager {
                 .child(Constantes.FIREBASE_PROVEEDORES_KEY)
                 .child(proveedor.getClave())
                 .setValue(proveedor);
+    }
+
+    public void getProfesiones(final GetProfesionesCallback callback) {
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_CONFIG_KEY)
+                .child(Constantes.FIREBASE_PROFESIONES_KEY)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        try{
+                            ArrayList<String> profesiones = new ArrayList<>();
+                            // Iterator<DataSnapshot> listaSnapshots = dataSnapshot.getChildren().iterator();
+                            // Bucle for/each, quiere decir -> Para cada elemento "profesion", del tipo DataSnapshot, del iterador "dataSnapshot.getChildren"
+                            for (DataSnapshot profesionDataSnapshot : dataSnapshot.getChildren()){
+                                String profesion = (String) profesionDataSnapshot.getValue();
+                                profesiones.add(profesion);
+                            }
+
+                            callback.onProfesionesFinish(profesiones);
+                        } catch (Exception e){
+                            callback.onError(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        callback.onError(databaseError.getMessage());
+                    }
+                });
     }
 }

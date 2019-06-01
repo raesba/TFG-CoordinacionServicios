@@ -13,11 +13,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.raesba.tfg_coordinacionservicios.Constantes;
-import com.raesba.tfg_coordinacionservicios.DatabaseManager;
-import com.raesba.tfg_coordinacionservicios.ListaProveedorActivity;
-import com.raesba.tfg_coordinacionservicios.LoginCallback;
-import com.raesba.tfg_coordinacionservicios.PerfilProveedorActivity;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
+import com.raesba.tfg_coordinacionservicios.ui.listaproveedor.ListaProveedorActivity;
+import com.raesba.tfg_coordinacionservicios.ui.perfilproveedor.PerfilProveedorActivity;
 import com.raesba.tfg_coordinacionservicios.R;
 
 public class LoginActivity extends AppCompatActivity {

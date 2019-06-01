@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PerfilProveedorActivity"
+            android:name=".ui.perfilproveedor.PerfilProveedorActivity"
             android:label="Perfil Proveedor"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
@@ -29,7 +29,7 @@
             android:label="Datos de Proveedores"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ListaProveedorActivity"
+            android:name=".ui.listaproveedor.ListaProveedorActivity"
             android:label="Listado de Proveedores"
             android:theme="@style/AppTheme.NoActionBar">
 

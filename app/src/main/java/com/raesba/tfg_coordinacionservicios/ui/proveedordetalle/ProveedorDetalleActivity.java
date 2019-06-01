@@ -5,15 +5,19 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.raesba.tfg_coordinacionservicios.Constantes;
-import com.raesba.tfg_coordinacionservicios.DatabaseManager;
-import com.raesba.tfg_coordinacionservicios.Proveedor;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
+
+import java.util.ArrayList;
 
 public class ProveedorDetalleActivity extends BaseActivity implements ProveedorDetalleContract.Vista {
 
@@ -26,7 +30,8 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
     private EditText provincia;
     private EditText telefonoFijo;
     private EditText movil;
-    private EditText profesion;
+    private EditText profesion_et;
+    private Spinner profesion_spinner;
     private EditText precioHora;
     private EditText descripcion;
 
@@ -40,6 +45,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
     private DatabaseManager databaseManager;
 
     private ProveedorDetallePresenter presenter;
+    private ArrayList<String> profesiones;
 
 
     @Override
@@ -59,7 +65,8 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
         provincia = findViewById(R.id.provincia);
         telefonoFijo = findViewById(R.id.telefonoFijo);
         movil = findViewById(R.id.movil);
-        profesion= findViewById(R.id.profesion);
+        profesion_et = findViewById(R.id.profesion_et);
+        profesion_spinner = findViewById(R.id.profesion_spinner);
         precioHora = findViewById(R.id.precioHora);
         botonDescripcion = findViewById(R.id.buttonDescripcionProveedorRegistro);
 
@@ -94,7 +101,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
                 proveedor.setProvincia(provincia.getText().toString());
                 proveedor.setTelefonoFijo(telefonoFijo.getText().toString());
                 proveedor.setMovil(movil.getText().toString());
-                proveedor.setProfesion(profesion.getText().toString());
+                proveedor.setProfesion(profesiones.get(profesion_spinner.getSelectedItemPosition()));
                 proveedor.setPrecioHora(Float.parseFloat(precioHora.getText().toString()));
 
                 databaseManager.updateProveedor(proveedor);
@@ -172,7 +179,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
         provincia.setText(proveedor.getProvincia());
         telefonoFijo.setText(proveedor.getTelefonoFijo());
         movil.setText(proveedor.getMovil());
-        profesion.setText(proveedor.getProfesion());
+//        profesion.setText(proveedor.getProfesion());
         precioHora.setText(String.valueOf(proveedor.getPrecioHora()));
 
         newProvider = currentUser;
@@ -185,7 +192,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
         provincia.setEnabled(newProvider);
         telefonoFijo.setEnabled(newProvider);
         movil.setEnabled(newProvider);
-        profesion.setEnabled(newProvider);
+//        profesion.setEnabled(newProvider);
         precioHora.setEnabled(newProvider);
 
         if (!currentUser){
@@ -198,8 +205,30 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
             provincia.setHint("");
             telefonoFijo.setHint("");
             movil.setHint("");
-            profesion.setHint("");
+            profesion_et.setHint("");
             precioHora.setHint("");
+            profesion_et.setVisibility(View.VISIBLE);
+            profesion_et.setEnabled(newProvider);
+            profesion_et.setText(proveedor.getProfesion());
+            profesion_spinner.setVisibility(View.GONE);
+        } else {
+            presenter.getProfesiones();
+            profesion_et.setVisibility(View.GONE);
+            profesion_spinner.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void mostrarProfesiones(ArrayList<String> profesiones) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item_adapter, profesiones);
+        profesion_spinner.setAdapter(adapter);
+        this.profesiones = profesiones;
+
+        for (int i = 0; i <profesiones.size(); i++){
+            if (proveedor.getProfesion().equals(profesiones.get(i))){
+                profesion_spinner.setSelection(i);
+                break;
+            }
         }
     }
 }

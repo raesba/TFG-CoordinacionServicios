@@ -1,4 +1,9 @@
-package com.raesba.tfg_coordinacionservicios;
+package com.raesba.tfg_coordinacionservicios.data.managers;
+
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.ui.login.LoginCallback;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
 public class DatabaseManager {
 
@@ -34,5 +39,9 @@ public class DatabaseManager {
 
     public void updateProveedor(Proveedor proveedor){
         firebaseManager.updateProveedor(proveedor);
+    }
+
+    public void getProfesiones(GetProfesionesCallback callback){
+        firebaseManager.getProfesiones(callback);
     }
 }
