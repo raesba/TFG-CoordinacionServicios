@@ -46,7 +46,8 @@ public final class Constantes {
     public static final String ERROR_CANCELAR_DIALOGO = "Registro cancelado";
     public static final String ERROR_LECTURA_BBDD = "Error al leer de la base de datos";
     public static final String ERROR_CANCELAR_BBDD = "Petición a la base de datos cancelada";
-    public static final String ERROR_ESCRITURA_BBDD = "Error al escribir en la base de datos";
+    public static final String ERROR_ESCRITURA_BBDD_USUARIOS = "Error al escribir en la base de datos de usuarios";
+    public static final String ERROR_ESCRITURA_BBDD_PROVEEDOR_EMPRESA = "Error al escribir en la base de datos de proveedor/empresa";
     public static final String ERROR_TIPOUSUARIO_NO_VALIDO = "Error por tipo de usuario no válido";
 
     //Mensajes

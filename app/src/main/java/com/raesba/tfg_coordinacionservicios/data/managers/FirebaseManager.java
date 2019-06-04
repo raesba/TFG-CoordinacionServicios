@@ -1,6 +1,5 @@
 package com.raesba.tfg_coordinacionservicios.data.managers;
 
-import android.app.admin.DeviceAdminInfo;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -184,8 +183,20 @@ public class FirebaseManager {
         firebaseDatabase.getReference()
                 .child(Constantes.FIREBASE_USUARIOS_KEY)
                 .child(key)
-                .setValue(userAuth);
+                .setValue(userAuth)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            createUsuarioConTipo(userAuth, callback);
+                        } else {
+                            callback.onLoginFailed(Constantes.ERROR_ESCRITURA_BBDD_USUARIOS);
+                        }
+                    }
+                });
+    }
 
+    private void createUsuarioConTipo(final UserAuth userAuth, final LoginCallback callback){
         String tipoUsuarioKey = Constantes.FIREBASE_PROVEEDORES_KEY;
 
         if (userAuth.getTipo_usuario() == 0){
@@ -201,7 +212,7 @@ public class FirebaseManager {
 
         firebaseDatabase.getReference()
                 .child(tipoUsuarioKey)
-                .child(key)
+                .child(userAuth.getClave())
                 .setValue(userAuth)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -209,7 +220,7 @@ public class FirebaseManager {
                         if (task.isSuccessful()){
                             callback.onLoginSuccess(userAuth.getUid(), userAuth.getTipo_usuario());
                         } else {
-                            callback.onLoginFailed(Constantes.ERROR_ESCRITURA_BBDD);
+                            callback.onLoginFailed(Constantes.ERROR_ESCRITURA_BBDD_PROVEEDOR_EMPRESA);
                         }
                     }
                 });

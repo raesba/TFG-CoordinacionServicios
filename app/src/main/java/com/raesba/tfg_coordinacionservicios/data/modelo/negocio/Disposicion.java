@@ -4,7 +4,7 @@ public class Disposicion {
 
     private int idDisposicion;
     private String fechaDisponible;
-    private int idProveedor;
+    private String idProveedor;
     private int profesion;
     private long horaInicio;
     private long horaFin;
@@ -12,7 +12,7 @@ public class Disposicion {
     public Disposicion() {
     }
 
-    public Disposicion(int idDisposicion, String fechaDisponible, int idProveedor, int profesion,
+    public Disposicion(int idDisposicion, String fechaDisponible, String idProveedor, int profesion,
                        long horaInicio, long horaFin) {
         this.idDisposicion = idDisposicion;
         this.fechaDisponible = fechaDisponible;
@@ -38,11 +38,11 @@ public class Disposicion {
         this.fechaDisponible = fechaDisponible;
     }
 
-    public int getIdProveedor() {
+    public String getIdProveedor() {
         return idProveedor;
     }
 
-    public void setIdProveedor(int idProveedor) {
+    public void setIdProveedor(String idProveedor) {
         this.idProveedor = idProveedor;
     }
 

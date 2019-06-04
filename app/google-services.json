@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "515321044793-1sd9lbsbllokkhcvjpv6ao49vilf628h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raesba.tfg_coordinacionservicios",
+            "certificate_hash": "77a0d1576441d06e09e82b94032c57be37f6a279"
+          }
+        },
+        {
           "client_id": "515321044793-rhap9jl00gnr4l6k5seimmjarjlu519i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
