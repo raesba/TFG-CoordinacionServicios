@@ -11,11 +11,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.raesba.tfg_coordinacionservicios.utils.Constantes;
-import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
-import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
+import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
 

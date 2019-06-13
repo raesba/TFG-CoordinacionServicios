@@ -1,7 +1,5 @@
 package com.raesba.tfg_coordinacionservicios.data.modelo.user;
 
-import com.google.firebase.database.PropertyName;
-
 import java.io.Serializable;
 
 public class UserAuth implements Serializable {

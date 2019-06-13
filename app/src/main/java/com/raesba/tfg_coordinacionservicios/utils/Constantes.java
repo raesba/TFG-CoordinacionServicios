@@ -65,6 +65,8 @@ public final class Constantes {
     //Extras
     public final static String EXTRA_PROVEEDOR_UID = "uid";
     public final static String EXTRA_PROVEEDOR = "proveedor";
+    public final static String EXTRA_EMPRESA_UID = "uid";
+    public final static String EXTRA_EMPRESA = "empresa";
 
     // ProveedorDetalleActivity
     public static final String TITULO_DESCRIPCION = "DESCRIPCION" ;

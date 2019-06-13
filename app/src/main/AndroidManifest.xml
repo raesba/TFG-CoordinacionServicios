@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.empresadetalle.EmpresaDetalleActivity"
+            android:label="@string/title_activity_empresa_detalle"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.perfilempresa.PerfilEmpresaActivity"
+            android:label="@string/title_activity_perfil_empresa"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.login.LoginActivity"
             android:label="TFG - Coordinación de Servicios"
             android:theme="@style/AppTheme.NoActionBar">
@@ -22,8 +30,7 @@
         <activity
             android:name=".ui.perfilproveedor.PerfilProveedorActivity"
             android:label="Perfil Proveedor"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.proveedordetalle.ProveedorDetalleActivity"
             android:label="Datos de Proveedores"

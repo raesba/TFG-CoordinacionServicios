@@ -11,12 +11,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
-import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
-import com.raesba.tfg_coordinacionservicios.ui.login.LoginCallback;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.UserAuth;
+import com.raesba.tfg_coordinacionservicios.ui.login.LoginCallback;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -261,5 +263,34 @@ public class FirebaseManager {
                         callback.onError(databaseError.getMessage());
                     }
                 });
+    }
+
+    public void getEmpresa(String uid, final GetEmpresaCallback callback) {
+        firebaseDatabase.getReference().child(Constantes.FIREBASE_EMPRESAS_KEY)
+                .orderByChild(Constantes.FIREBASE_EMPRESAS_UID)
+                .equalTo(uid).limitToFirst(1)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.getValue() != null){
+                            Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                            Empresa empresa = iterator.next().getValue(Empresa.class);
+                            callback.onSuccess(empresa);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void updateEmpresa(Empresa empresa) {
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_EMPRESAS_KEY)
+                .child(empresa.getClave())
+                .setValue(empresa);
     }
 }

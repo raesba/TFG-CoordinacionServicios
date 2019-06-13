@@ -56,6 +56,11 @@
     <string name="textView_movil_lista">Teléfono Móvil</string>
     <string name="textView_profesion_lista">Profesión</string>
     <string name="textView_precioHora_lista">Precio Hora</string>
+    <string name="title_activity_perfil_empresa">PerfilEmpresaActivity</string>
+    <string name="button_busqueda">Búsqueda</string>
+    <string name="title_activity_empresa_detalle">EmpresaDetalleActivity</string>
+    <string name="textView_cif">CIF:</string>
+    <string name="editText_cif">Introduce tu CIF</string>
 
     <!--<string name="textView"></string>-->
     <!--<string name="editText"></string>-->

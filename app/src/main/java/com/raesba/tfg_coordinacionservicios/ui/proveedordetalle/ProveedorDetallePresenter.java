@@ -1,10 +1,10 @@
 package com.raesba.tfg_coordinacionservicios.ui.proveedordetalle;
 
-import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
-import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
-import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.base.BasePresenter;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
 import java.util.ArrayList;
 

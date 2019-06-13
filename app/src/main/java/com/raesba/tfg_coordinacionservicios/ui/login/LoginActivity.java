@@ -13,11 +13,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.ui.listaproveedor.ListaProveedorActivity;
+import com.raesba.tfg_coordinacionservicios.ui.perfilempresa.PerfilEmpresaActivity;
 import com.raesba.tfg_coordinacionservicios.ui.perfilproveedor.PerfilProveedorActivity;
-import com.raesba.tfg_coordinacionservicios.R;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -167,14 +168,14 @@ public class LoginActivity extends AppCompatActivity {
             }*/
 
             if (tipoUsuario == 0){
-                intent = new Intent(this, ListaProveedorActivity.class);
+                intent = new Intent(this, PerfilEmpresaActivity.class);
+                intent.putExtra(Constantes.EXTRA_EMPRESA_UID, uid);
             } else if (tipoUsuario == 1){
                 intent = new Intent(this, PerfilProveedorActivity.class);
                 intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, uid);
             } else {
                 Log.d(TAG, Constantes.MSG_OPCION_INVALIDA);
             }
-
 
             if (intent != null){
                 Toast.makeText(getApplicationContext(),Constantes.MSG_REDIRIGIENDO,

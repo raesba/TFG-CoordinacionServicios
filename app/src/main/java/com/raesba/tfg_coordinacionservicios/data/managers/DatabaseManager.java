@@ -1,9 +1,11 @@
 package com.raesba.tfg_coordinacionservicios.data.managers;
 
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
-import com.raesba.tfg_coordinacionservicios.ui.login.LoginCallback;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
+import com.raesba.tfg_coordinacionservicios.ui.login.LoginCallback;
 
 public class DatabaseManager {
 
@@ -43,5 +45,13 @@ public class DatabaseManager {
 
     public void getProfesiones(GetProfesionesCallback callback){
         firebaseManager.getProfesiones(callback);
+    }
+
+    public void getEmpresa(String uid, GetEmpresaCallback callback) {
+        firebaseManager.getEmpresa(uid, callback);
+    }
+
+    public void updateEmpresa(Empresa empresa) {
+        firebaseManager.updateEmpresa(empresa);
     }
 }

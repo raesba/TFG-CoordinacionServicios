@@ -1,8 +1,8 @@
 package com.raesba.tfg_coordinacionservicios.ui.proveedordetalle;
 
-import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.base.InterfaceBasePresenter;
 import com.raesba.tfg_coordinacionservicios.base.InterfaceBaseVista;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
 import java.util.ArrayList;
 
