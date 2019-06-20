@@ -25,4 +25,13 @@
         layout="@layout/content_proveedor_detalle" />
 
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/nuevaTransaccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        app:fabSize="normal"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_margin="16dp"/>
+
 </android.support.design.widget.CoordinatorLayout>

@@ -1,7 +1,10 @@
 package com.raesba.tfg_coordinacionservicios.ui.proveedordetalle;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,6 +18,7 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
+import com.raesba.tfg_coordinacionservicios.ui.nuevatransaccion.NuevaTransaccionActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
@@ -34,6 +38,8 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
     private Spinner profesion_spinner;
     private EditText precioHora;
     private EditText descripcion;
+
+    private FloatingActionButton nuevaTransaccion;
 
     private Button botonGuardar;
     private Button botonDescripcion;
@@ -69,6 +75,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
         profesion_spinner = findViewById(R.id.profesion_spinner);
         precioHora = findViewById(R.id.precioHora);
         botonDescripcion = findViewById(R.id.buttonDescripcionProveedorRegistro);
+        nuevaTransaccion = findViewById(R.id.nuevaTransaccion);
 
         presenter = new ProveedorDetallePresenter(databaseManager);
 
@@ -104,11 +111,23 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
                 proveedor.setProfesion(profesiones.get(profesion_spinner.getSelectedItemPosition()));
                 proveedor.setPrecioHora(Float.parseFloat(precioHora.getText().toString()));
 
+                //TODO:Pasar al presenter
                 databaseManager.updateProveedor(proveedor);
 
                 Toast.makeText(getApplicationContext(), Constantes.MSG_GUARDADO, Toast.LENGTH_LONG).show();
 
                 finish();
+            }
+        });
+
+        nuevaTransaccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO:Pasar al presenter
+                Intent intent = new Intent(ProveedorDetalleActivity.this, NuevaTransaccionActivity.class);
+                intent.putExtra(Constantes.EXTRA_EMPRESA_UID, databaseManager.getUid());
+                intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, proveedor.getUid());
+                startActivity(intent);
             }
         });
     }
@@ -167,6 +186,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
         super.onStop();
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void mostrarDatosProveedor(Proveedor proveedor, boolean currentUser) {
         this.proveedor = proveedor;
@@ -215,6 +235,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
             presenter.getProfesiones();
             profesion_et.setVisibility(View.GONE);
             profesion_spinner.setVisibility(View.VISIBLE);
+            nuevaTransaccion.setVisibility(View.GONE);
         }
     }
 

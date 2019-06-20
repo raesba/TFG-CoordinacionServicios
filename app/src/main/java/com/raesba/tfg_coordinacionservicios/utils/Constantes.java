@@ -40,6 +40,8 @@ public final class Constantes {
     public static final String FIREBASE_CONFIG_KEY = "config";
     public static final String FIREBASE_PROFESIONES_KEY = "profesiones";
 
+    public static final String FIREBASE_TRANSACCIONES_KEY = "transacciones";
+
     //Errores
     public static final String ERROR_LOGIN = "Error al hacer el login";
     public static final String ERROR_CAMPO_VACIO = "Los campos no pueden estar vacíos";
@@ -49,6 +51,7 @@ public final class Constantes {
     public static final String ERROR_ESCRITURA_BBDD_USUARIOS = "Error al escribir en la base de datos de usuarios";
     public static final String ERROR_ESCRITURA_BBDD_PROVEEDOR_EMPRESA = "Error al escribir en la base de datos de proveedor/empresa";
     public static final String ERROR_TIPOUSUARIO_NO_VALIDO = "Error por tipo de usuario no válido";
+    public static final String ERROR_ESCRITURA_TRANSACCION = "No se ha podido escribir la transacción";
 
     //Mensajes
     public static final String MSG_OPCION_INVALIDA ="Opción no válida";
@@ -56,6 +59,7 @@ public final class Constantes {
     public static final String MSG_ESPERA ="Espere un momento, por favor...";
     public static final String MSG_PROCESANDO ="EN CONSTRUCCIÓN.....";
     public static final String MSG_GUARDADO ="Datos guardados";
+    public static final String MSG_TRANSACCION_ENVIADA = "Transacción enviada con éxito";
 
     //LoginActivity
     public static final String PREGUNTA_QUIEN = "¿Eres empresa o proveedor?";
@@ -63,9 +67,9 @@ public final class Constantes {
     public static final String DIALOGO_PROVEEDOR = "SOY PROVEEDOR";
 
     //Extras
-    public final static String EXTRA_PROVEEDOR_UID = "uid";
+    public final static String EXTRA_PROVEEDOR_UID = "proveedorUid";
     public final static String EXTRA_PROVEEDOR = "proveedor";
-    public final static String EXTRA_EMPRESA_UID = "uid";
+    public final static String EXTRA_EMPRESA_UID = "empresaUid";
     public final static String EXTRA_EMPRESA = "empresa";
 
     // ProveedorDetalleActivity

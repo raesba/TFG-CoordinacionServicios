@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.nuevatransaccion.NuevaTransaccionActivity"
+    tools:showIn="@layout/activity_nueva_transaccion">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_Proveedor_Registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="NUEVA TRANSACCIÓN"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+            <!--android:visibility="gone"-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/textView_nombre"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_nombre"
+                    android:inputType="textPersonName"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic"
+                    android:enabled="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/textView_fecha"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/fecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="72dp"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_fecha"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/textView_direccion"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/direccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="52dp"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_direccion"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/textView_pEstimado"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/precioEstimado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_precioEstimado"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/textView_euro"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/textView_observaciones"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/observaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/editText_observaciones"
+                    android:textColorHighlight="#ff7eff15"
+                    android:textColorHint="#ffff25e6"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

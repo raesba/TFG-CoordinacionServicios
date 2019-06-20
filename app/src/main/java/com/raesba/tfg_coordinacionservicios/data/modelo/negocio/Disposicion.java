@@ -2,31 +2,21 @@ package com.raesba.tfg_coordinacionservicios.data.modelo.negocio;
 
 public class Disposicion {
 
-    private int idDisposicion;
+    private String idDisposicion;
     private String fechaDisponible;
     private String idProveedor;
-    private int profesion;
+    private String profesion;
     private long horaInicio;
     private long horaFin;
 
     public Disposicion() {
     }
 
-    public Disposicion(int idDisposicion, String fechaDisponible, String idProveedor, int profesion,
-                       long horaInicio, long horaFin) {
-        this.idDisposicion = idDisposicion;
-        this.fechaDisponible = fechaDisponible;
-        this.idProveedor = idProveedor;
-        this.profesion = profesion;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-    }
-
-    public int getIdDisposicion() {
+    public String getIdDisposicion() {
         return idDisposicion;
     }
 
-    public void setIdDisposicion(int idDisposicion) {
+    public void setIdDisposicion(String idDisposicion) {
         this.idDisposicion = idDisposicion;
     }
 
@@ -46,11 +36,11 @@ public class Disposicion {
         this.idProveedor = idProveedor;
     }
 
-    public int getProfesion() {
+    public String getProfesion() {
         return profesion;
     }
 
-    public void setProfesion(int profesion) {
+    public void setProfesion(String profesion) {
         this.profesion = profesion;
     }
 

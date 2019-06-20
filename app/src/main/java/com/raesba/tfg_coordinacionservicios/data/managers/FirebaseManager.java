@@ -14,6 +14,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
+import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.UserAuth;
@@ -127,7 +129,7 @@ public class FirebaseManager {
                                             (Constantes.FIREBASE_USUARIOS_TIPOUSUARIO);
                                     callback.onLoginSuccess
                                             ((String) usuario.get(Constantes.FIREBASE_USUARIOS_UID),
-                                            (int) tipoUsuario);
+                                                    (int) tipoUsuario);
                                 }
 
                             }
@@ -228,6 +230,7 @@ public class FirebaseManager {
                 });
     }
 
+    //TODO: Añadir callback para que avance de actividad solo si sale bien.
     public void updateProveedor(Proveedor proveedor) {
         firebaseDatabase.getReference()
                 .child(Constantes.FIREBASE_PROVEEDORES_KEY)
@@ -292,5 +295,36 @@ public class FirebaseManager {
                 .child(Constantes.FIREBASE_EMPRESAS_KEY)
                 .child(empresa.getClave())
                 .setValue(empresa);
+    }
+
+    public String  getUid() {
+        if (auth.getCurrentUser() != null){
+            return auth.getCurrentUser().getUid();
+        } else {
+            return "";
+        }
+    }
+
+    public void pushTransaccion(Transaccion transaccion, final OnCompletadoCallback callback) {
+        String key = firebaseDatabase.getReference().child(Constantes.FIREBASE_TRANSACCIONES_KEY).push().getKey();
+
+        if (key != null){
+            firebaseDatabase.getReference()
+                    .child(Constantes.FIREBASE_TRANSACCIONES_KEY)
+                    .child(key)
+                    .setValue(transaccion)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                callback.onFinalizadoCorrectamente(Constantes.MSG_TRANSACCION_ENVIADA);
+                            } else {
+                                callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
+                            }
+                        }
+                    });
+
+            //TODO: (JUANJE) Añadir esta key a proveedor y a empresa
+        }
     }
 }

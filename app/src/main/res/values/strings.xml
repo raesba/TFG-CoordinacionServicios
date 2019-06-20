@@ -61,6 +61,13 @@
     <string name="title_activity_empresa_detalle">EmpresaDetalleActivity</string>
     <string name="textView_cif">CIF:</string>
     <string name="editText_cif">Introduce tu CIF</string>
+    <string name="title_activity_nueva_transaccion">NuevaTransaccionActivity</string>
+    <string name="textView_fecha">FECHA</string>
+    <string name="editText_fecha">Introduzca la fecha...</string>
+    <string name="textView_pEstimado">PRECIO OFRECIDO</string>
+    <string name="editText_precioEstimado">Introduzca el precio ofrecido...</string>
+    <string name="editText_observaciones">Escriba las observaciones de la oferta...</string>
+    <string name="textView_observaciones">OBSERVACIONES:</string>
 
     <!--<string name="textView"></string>-->
     <!--<string name="editText"></string>-->

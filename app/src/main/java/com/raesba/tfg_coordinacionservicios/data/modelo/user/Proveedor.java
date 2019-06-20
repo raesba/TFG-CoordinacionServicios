@@ -10,7 +10,6 @@ public class Proveedor extends Usuario implements Serializable  {
     private float precioHora;
     private String descripcion;
 
-
     public Proveedor() {
     }
 

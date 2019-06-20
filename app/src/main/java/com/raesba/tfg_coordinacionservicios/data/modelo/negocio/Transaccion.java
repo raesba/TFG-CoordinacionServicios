@@ -2,12 +2,14 @@ package com.raesba.tfg_coordinacionservicios.data.modelo.negocio;
 
 public class Transaccion {
 
-    private int idTransaccion;
-    private String fecha;
-    private int idProveedor;
-    private int idEmpresa;
-    private int idDisposicion;
+    private String idTransaccion;
+    private long fechaCreacion;
+    private String idProveedor;
+    private String idEmpresa;
+    private String idDisposicion;
+    private String fechaDisposicion;
     private boolean aceptado;
+    private String direccion;
     private double latitud;
     private double longitud;
     private double precioEstimado;
@@ -16,60 +18,52 @@ public class Transaccion {
     public Transaccion() {
     }
 
-    public Transaccion(int idTransaccion, String fecha, int idProveedor, int idEmpresa,
-                       int idDisposicion, boolean aceptado, double latitud, double longitud,
-                       double precioEstimado, String observaciones) {
-
-        this.idDisposicion = idDisposicion;
-        this.fecha = fecha;
-        this.idProveedor = idProveedor;
-        this.idEmpresa = idEmpresa;
-        this.idDisposicion = idDisposicion;
-        this.aceptado = aceptado;
-        this.latitud = latitud;
-        this.longitud = longitud;
-        this.precioEstimado = precioEstimado;
-        this.observaciones = observaciones;
-    }
-
-    public int getIdTransaccion() {
+    public String getIdTransaccion() {
         return idTransaccion;
     }
 
-    public void setIdTransaccion(int idTransaccion) {
+    public void setIdTransaccion(String idTransaccion) {
         this.idTransaccion = idTransaccion;
     }
 
-    public String getFecha() {
-        return fecha;
+    public long getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaCreacion(long fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public int getIdProveedor() {
+    public String getIdProveedor() {
         return idProveedor;
     }
 
-    public void setIdProveedor(int idProveedor) {
+    public void setIdProveedor(String idProveedor) {
         this.idProveedor = idProveedor;
     }
 
-    public int getIdEmpresa() {
+    public String getIdEmpresa() {
         return idEmpresa;
     }
 
-    public void setIdEmpresa(int idEmpresa) {
+    public void setIdEmpresa(String idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 
-    public int getIdDisposicion() {
+    public String getIdDisposicion() {
         return idDisposicion;
     }
 
-    public void setIdDisposicion(int idDisposicion) {
+    public void setIdDisposicion(String idDisposicion) {
         this.idDisposicion = idDisposicion;
+    }
+
+    public String getFechaDisposicion() {
+        return fechaDisposicion;
+    }
+
+    public void setFechaDisposicion(String fechaDisposicion) {
+        this.fechaDisposicion = fechaDisposicion;
     }
 
     public boolean isAceptado() {
@@ -78,6 +72,14 @@ public class Transaccion {
 
     public void setAceptado(boolean aceptado) {
         this.aceptado = aceptado;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public double getLatitud() {
