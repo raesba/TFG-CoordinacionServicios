@@ -27,7 +27,7 @@ public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleCon
                 }
             }
             @Override
-            public void onFailure(String error) {
+            public void onError(String error) {
                 if (vista != null){
                     vista.mostrarToast(error);
                 }
@@ -39,7 +39,7 @@ public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleCon
     public void getProfesiones() {
         databaseManager.getProfesiones(new GetProfesionesCallback() {
             @Override
-            public void onProfesionesFinish(ArrayList<String> profesiones) {
+            public void onSuccess(ArrayList<String> profesiones) {
                 if (vista != null){
                     vista.mostrarProfesiones(profesiones);
                 }

@@ -15,9 +15,8 @@ import android.widget.Toast;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
-import com.raesba.tfg_coordinacionservicios.ui.listaproveedor.ListaProveedorActivity;
-import com.raesba.tfg_coordinacionservicios.ui.perfilempresa.PerfilEmpresaActivity;
-import com.raesba.tfg_coordinacionservicios.ui.perfilproveedor.PerfilProveedorActivity;
+import com.raesba.tfg_coordinacionservicios.ui.empresaperfil.EmpresaPerfilActivity;
+import com.raesba.tfg_coordinacionservicios.ui.proveedorperfil.ProveedorPerfilActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 public class LoginActivity extends AppCompatActivity {
@@ -159,19 +158,19 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = null;
 
            /* if (tipoUsuario == 0){
-                intent = new Intent(this, ListaProveedorActivity.class);
+                intent = new Intent(this, ProveedorListaActivity.class);
             } else if (tipoUsuario == 1){
-                intent = new Intent(this, PerfilProveedorActivity.class);
+                intent = new Intent(this, ProveedorPerfilActivity.class);
                 intent.putExtra("uid", uid);
             } else {
                 Log.d("LOGIN", Constantes.MSG_OPCION_INVALIDA);
             }*/
 
             if (tipoUsuario == 0){
-                intent = new Intent(this, PerfilEmpresaActivity.class);
+                intent = new Intent(this, EmpresaPerfilActivity.class);
                 intent.putExtra(Constantes.EXTRA_EMPRESA_UID, uid);
             } else if (tipoUsuario == 1){
-                intent = new Intent(this, PerfilProveedorActivity.class);
+                intent = new Intent(this, ProveedorPerfilActivity.class);
                 intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, uid);
             } else {
                 Log.d(TAG, Constantes.MSG_OPCION_INVALIDA);

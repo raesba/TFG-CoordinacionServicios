@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios.ui.perfilempresa;
+package com.raesba.tfg_coordinacionservicios.ui.empresaperfil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +10,11 @@ import android.widget.Toast;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.ui.empresadetalle.EmpresaDetalleActivity;
-import com.raesba.tfg_coordinacionservicios.ui.listaproveedor.ListaProveedorActivity;
+import com.raesba.tfg_coordinacionservicios.ui.proveedorlista.ProveedorListaActivity;
+import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
-public class PerfilEmpresaActivity extends AppCompatActivity {
+public class EmpresaPerfilActivity extends AppCompatActivity {
 
     private Button botonInformacion, botonBusqueda, botonTransaccion;
 
@@ -23,7 +24,7 @@ public class PerfilEmpresaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil_empresa);
+        setContentView(R.layout.activity_empresa_perfil);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -38,7 +39,7 @@ public class PerfilEmpresaActivity extends AppCompatActivity {
         botonBusqueda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListaProveedorActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ProveedorListaActivity.class);
                 startActivity(intent);
             }
         });
@@ -46,8 +47,9 @@ public class PerfilEmpresaActivity extends AppCompatActivity {
         botonTransaccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PerfilEmpresaActivity.this, Constantes.MSG_PROCESANDO,
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), TransaccionListaActivity.class);
+                intent.putExtra(Constantes.EXTRA_EMPRESA_UID, uid);
+                startActivity(intent);
             }
         });
 

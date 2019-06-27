@@ -24,7 +24,7 @@ public class EmpresaDetallePresenter extends BasePresenter<EmpresaDetalleContrac
                 }
             }
             @Override
-            public void onFailure(String error) {
+            public void onError(String error) {
                 if (vista != null){
                     vista.mostrarToast(error);
                 }

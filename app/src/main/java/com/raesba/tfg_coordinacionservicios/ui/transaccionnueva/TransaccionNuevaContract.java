@@ -1,17 +1,17 @@
-package com.raesba.tfg_coordinacionservicios.ui.nuevatransaccion;
+package com.raesba.tfg_coordinacionservicios.ui.transaccionnueva;
 
 import com.raesba.tfg_coordinacionservicios.base.InterfaceBasePresenter;
 import com.raesba.tfg_coordinacionservicios.base.InterfaceBaseVista;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
-public interface NuevaTransaccionContract {
+public interface TransaccionNuevaContract {
     interface Vista extends InterfaceBaseVista {
         void mostrarDatosProveedor(Proveedor proveedor);
         void onFinishTransaccion();
     }
 
-    interface Presenter extends InterfaceBasePresenter<NuevaTransaccionContract.Vista> {
+    interface Presenter extends InterfaceBasePresenter<TransaccionNuevaContract.Vista> {
         void getProveedor(String uid);
         void pushTransaccion(Transaccion transaccion);
     }

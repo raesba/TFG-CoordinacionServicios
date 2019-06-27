@@ -4,5 +4,5 @@ import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
 public interface GetProveedorCallback {
     void onSuccess(Proveedor proveedor, boolean currentUser);
-    void onFailure(String error);
+    void onError(String error);
 }

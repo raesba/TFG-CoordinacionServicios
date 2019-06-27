@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios.ui.perfilproveedor;
+package com.raesba.tfg_coordinacionservicios.ui.proveedorperfil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,11 @@ import android.widget.Toast;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.ui.proveedordetalle.ProveedorDetalleActivity;
+import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaActivity;
+import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaAdapter;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
-public class PerfilProveedorActivity extends AppCompatActivity {
+public class ProveedorPerfilActivity extends AppCompatActivity {
 
     private Button botonInformacion, botonCalendario, botonTransaccion;
 
@@ -36,7 +38,7 @@ public class PerfilProveedorActivity extends AppCompatActivity {
         botonCalendario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PerfilProveedorActivity.this, Constantes.MSG_PROCESANDO,
+                Toast.makeText(ProveedorPerfilActivity.this, Constantes.MSG_PROCESANDO,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -44,8 +46,9 @@ public class PerfilProveedorActivity extends AppCompatActivity {
         botonTransaccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PerfilProveedorActivity.this, Constantes.MSG_PROCESANDO,
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), TransaccionListaActivity.class);
+                intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, uid);
+                startActivity(intent);
             }
         });
 

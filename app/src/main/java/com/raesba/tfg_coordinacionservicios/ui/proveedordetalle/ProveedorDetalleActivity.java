@@ -18,7 +18,7 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
-import com.raesba.tfg_coordinacionservicios.ui.nuevatransaccion.NuevaTransaccionActivity;
+import com.raesba.tfg_coordinacionservicios.ui.transaccionnueva.TransaccionNuevaActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
             @Override
             public void onClick(View v) {
                 //TODO:Pasar al presenter
-                Intent intent = new Intent(ProveedorDetalleActivity.this, NuevaTransaccionActivity.class);
+                Intent intent = new Intent(ProveedorDetalleActivity.this, TransaccionNuevaActivity.class);
                 intent.putExtra(Constantes.EXTRA_EMPRESA_UID, databaseManager.getUid());
                 intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, proveedor.getUid());
                 startActivity(intent);
@@ -241,7 +241,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
 
     @Override
     public void mostrarProfesiones(ArrayList<String> profesiones) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item_adapter, profesiones);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_adapter_spinner, profesiones);
         profesion_spinner.setAdapter(adapter);
         this.profesiones = profesiones;
 

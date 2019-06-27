@@ -41,7 +41,17 @@ public final class Constantes {
     public static final String FIREBASE_PROFESIONES_KEY = "profesiones";
 
     public static final String FIREBASE_TRANSACCIONES_KEY = "transacciones";
-
+    public static final String FIREBASE_TRANSACCIONES_ACEPTADO = "aceptado";
+    public static final String FIREBASE_TRANSACCIONES_ID_EMPRESA = "idEmpresa";
+    public static final String FIREBASE_TRANSACCIONES_ID_PROVEEDOR = "idProveedor";
+//    public static final String FIREBASE_TRANSACCIONES_EMAIL = "email";
+//    public static final String FIREBASE_TRANSACCIONES_DIRECCION = "direccion";
+//    public static final String FIREBASE_TRANSACCIONES_POBLACION = "poblacion";
+//    public static final String FIREBASE_TRANSACCIONES_PROVINCIA = "provincia";
+//    public static final String FIREBASE_TRANSACCIONES_TELEFONOFIJO = "telefonoFijo";
+//    public static final String FIREBASE_TRANSACCIONES_MOVIL = "movil";
+//    public static final String FIREBASE_TRANSACCIONES_TIPOUSUARIO = "tipo_usuario";
+//    public static final String FIREBASE_TRANSACCIONES_VERIFICADO = "verificado";
     //Errores
     public static final String ERROR_LOGIN = "Error al hacer el login";
     public static final String ERROR_CAMPO_VACIO = "Los campos no pueden estar vacíos";
@@ -71,6 +81,7 @@ public final class Constantes {
     public final static String EXTRA_PROVEEDOR = "proveedor";
     public final static String EXTRA_EMPRESA_UID = "empresaUid";
     public final static String EXTRA_EMPRESA = "empresa";
+    public static final String EXTRA_TIPO_USUARIO = "tipo_usuario";
 
     // ProveedorDetalleActivity
     public static final String TITULO_DESCRIPCION = "DESCRIPCION" ;

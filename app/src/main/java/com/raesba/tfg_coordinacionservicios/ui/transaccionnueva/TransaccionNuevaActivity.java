@@ -1,15 +1,11 @@
-package com.raesba.tfg_coordinacionservicios.ui.nuevatransaccion;
+package com.raesba.tfg_coordinacionservicios.ui.transaccionnueva;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.firebase.database.Transaction;
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
@@ -17,7 +13,7 @@ import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
-public class NuevaTransaccionActivity extends BaseActivity implements NuevaTransaccionContract.Vista {
+public class TransaccionNuevaActivity extends BaseActivity implements TransaccionNuevaContract.Vista {
 
     private EditText nombre;
     private EditText fecha;
@@ -27,13 +23,13 @@ public class NuevaTransaccionActivity extends BaseActivity implements NuevaTrans
 
     private Transaccion transaccion;
 
-    private NuevaTransaccionPresenter presenter;
+    private TransaccionNuevaPresenter presenter;
     private Proveedor proveedor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nueva_transaccion);
+        setContentView(R.layout.activity_transaccion_nueva);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -45,13 +41,15 @@ public class NuevaTransaccionActivity extends BaseActivity implements NuevaTrans
 
         DatabaseManager databaseManager = DatabaseManager.getInstance();
 
-        presenter = new NuevaTransaccionPresenter(databaseManager);
+        presenter = new TransaccionNuevaPresenter(databaseManager);
 
         transaccion = new Transaccion();
 
         if (getIntent().getExtras() != null){
             if (getIntent().hasExtra(Constantes.EXTRA_PROVEEDOR_UID)){
-                transaccion.setIdProveedor(getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID));
+                String proveedorUid = getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID);
+                transaccion.setIdProveedor(proveedorUid);
+                presenter.getProveedor(proveedorUid);
             }
             if (getIntent().hasExtra(Constantes.EXTRA_EMPRESA_UID)){
                 transaccion.setIdEmpresa(getIntent().getStringExtra(Constantes.EXTRA_EMPRESA_UID));

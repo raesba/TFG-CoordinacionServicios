@@ -20,11 +20,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title_Empresa_Registro"
+                android:id="@+id/title_empresa_registro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="REGISTRO/DATOS EMPRESA"
+                android:text="@string/title_empresa_registro"
                 android:textSize="24sp"
                 android:textStyle="bold" />
             <!--android:visibility="gone"-->

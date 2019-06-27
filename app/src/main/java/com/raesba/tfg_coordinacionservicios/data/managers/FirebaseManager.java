@@ -1,12 +1,14 @@
 package com.raesba.tfg_coordinacionservicios.data.managers;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -14,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
@@ -255,7 +258,7 @@ public class FirebaseManager {
                                 profesiones.add(profesion);
                             }
 
-                            callback.onProfesionesFinish(profesiones);
+                            callback.onSuccess(profesiones);
                         } catch (Exception e){
                             callback.onError(e.getMessage());
                         }
@@ -317,7 +320,7 @@ public class FirebaseManager {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
-                                callback.onFinalizadoCorrectamente(Constantes.MSG_TRANSACCION_ENVIADA);
+                                callback.onSuccess(Constantes.MSG_TRANSACCION_ENVIADA);
                             } else {
                                 callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
                             }
@@ -326,5 +329,42 @@ public class FirebaseManager {
 
             //TODO: (JUANJE) Añadir esta key a proveedor y a empresa
         }
+    }
+
+    public void getTransacciones(int userType, String uid, final GetTransaccionesCallback callback) {
+        String campo = "";
+
+        if (userType == 0){
+            campo = Constantes.FIREBASE_TRANSACCIONES_ID_EMPRESA;
+        } else if (userType == 1){
+            campo = Constantes.FIREBASE_TRANSACCIONES_ID_PROVEEDOR;
+        } else {
+            callback.onError(Constantes.ERROR_LECTURA_BBDD);
+            return;
+        }
+
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_TRANSACCIONES_KEY)
+                .orderByChild(campo)
+                .equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        ArrayList<Transaccion> transacciones = new ArrayList<>();
+
+                        for (Iterator<DataSnapshot> it = dataSnapshot.getChildren().iterator(); it.hasNext(); ) {
+                            DataSnapshot elemento = it.next();
+                            Transaccion transaccion = elemento.getValue(Transaccion.class);
+                            transacciones.add(transaccion);
+                        }
+
+                        callback.onSuccess(transacciones);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        callback.onError(databaseError.getMessage());
+                    }
+                });
     }
 }

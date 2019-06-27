@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios.ui.listaproveedor;
+package com.raesba.tfg_coordinacionservicios.ui.proveedorlista;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -28,7 +28,7 @@ public class ProveedoresAdapter extends
     @NonNull
     @Override
     public ProveedoresViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_lista_proveedor,
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_proveedor_lista,
                 viewGroup, false);
         ProveedoresViewHolder proveedoresViewHolder = new ProveedoresViewHolder(view);
         return proveedoresViewHolder;

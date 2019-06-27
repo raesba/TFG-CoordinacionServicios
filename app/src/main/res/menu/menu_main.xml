@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.raesba.tfg_coordinacionservicios.ui.listaproveedor.ListaProveedorActivity">
+    tools:context="com.raesba.tfg_coordinacionservicios.ui.proveedorlista.ProveedorListaActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

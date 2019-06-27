@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios.ui.nuevatransaccion;
+package com.raesba.tfg_coordinacionservicios.ui.transaccionnueva;
 
 import com.raesba.tfg_coordinacionservicios.base.BasePresenter;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
@@ -7,12 +7,12 @@ import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
-public class NuevaTransaccionPresenter extends BasePresenter<NuevaTransaccionContract.Vista>
-        implements NuevaTransaccionContract.Presenter {
+public class TransaccionNuevaPresenter extends BasePresenter<TransaccionNuevaContract.Vista>
+        implements TransaccionNuevaContract.Presenter {
 
     private DatabaseManager databaseManager;
 
-    public NuevaTransaccionPresenter(DatabaseManager databaseManager) {
+    public TransaccionNuevaPresenter(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
     }
 
@@ -26,7 +26,7 @@ public class NuevaTransaccionPresenter extends BasePresenter<NuevaTransaccionCon
                 }
             }
             @Override
-            public void onFailure(String error) {
+            public void onError(String error) {
                 if (vista != null){
                     vista.mostrarToast(error);
                 }
@@ -38,7 +38,7 @@ public class NuevaTransaccionPresenter extends BasePresenter<NuevaTransaccionCon
     public void pushTransaccion(Transaccion transaccion) {
         databaseManager.pushTransaccion(transaccion, new OnCompletadoCallback() {
             @Override
-            public void onFinalizadoCorrectamente(String mensaje) {
+            public void onSuccess(String mensaje) {
                 if (vista != null){
                     vista.onFinishTransaccion();
                 }

@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios.ui.listaproveedor;
+package com.raesba.tfg_coordinacionservicios.ui.proveedorlista;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,7 @@ import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
 
-public class ListaProveedorActivity extends AppCompatActivity implements ChildEventListener {
+public class ProveedorListaActivity extends AppCompatActivity implements ChildEventListener {
 
     private ArrayList<Proveedor> proveedores;
     private ProveedoresAdapter adapter;
@@ -30,7 +30,7 @@ public class ListaProveedorActivity extends AppCompatActivity implements ChildEv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_proveedor);
+        setContentView(R.layout.activity_proveedor_lista);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

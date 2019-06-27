@@ -19,11 +19,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title_Proveedor_Registro"
+                android:id="@+id/title_proveedor_detalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="REGISTRO/DATOS PROVEEDOR"
+                android:text="@string/title_proveedor_detalle"
                 android:textSize="24sp"
                 android:textStyle="bold" />
                 <!--android:visibility="gone"-->
