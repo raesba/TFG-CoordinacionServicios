@@ -10,10 +10,11 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
-public class TransaccionNuevaActivity extends BaseActivity implements TransaccionNuevaContract.Vista {
+public class TransaccionNuevaActivity extends BaseActivity implements TransaccionNuevaContract.Activity {
 
     private EditText nombre;
     private EditText fecha;
@@ -25,6 +26,7 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
 
     private TransaccionNuevaPresenter presenter;
     private Proveedor proveedor;
+    private Empresa empresa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,6 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
         observaciones = findViewById(R.id.observaciones);
 
         DatabaseManager databaseManager = DatabaseManager.getInstance();
-
         presenter = new TransaccionNuevaPresenter(databaseManager);
 
         transaccion = new Transaccion();
@@ -52,7 +53,9 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
                 presenter.getProveedor(proveedorUid);
             }
             if (getIntent().hasExtra(Constantes.EXTRA_EMPRESA_UID)){
-                transaccion.setIdEmpresa(getIntent().getStringExtra(Constantes.EXTRA_EMPRESA_UID));
+                String empresaUid = getIntent().getStringExtra(Constantes.EXTRA_EMPRESA_UID);
+                transaccion.setIdEmpresa(empresaUid);
+                presenter.getEmpresa(empresaUid);
             }
         }
 
@@ -67,6 +70,8 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
                 transaccion.setObservaciones(observaciones.getText().toString());
                 transaccion.setAceptado(false);
                 transaccion.setPrecioEstimado(Double.valueOf(precioEstimado.getText().toString()));
+                transaccion.setNombreProveedor(proveedor.getNombre());
+                transaccion.setNombreEmpresa(empresa.getRazonSocial());
 
                 presenter.pushTransaccion(transaccion);
             }
@@ -91,6 +96,12 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
         this.proveedor = proveedor;
         this.nombre.setText(proveedor.getNombre());
         this.precioEstimado.setText(String.valueOf(proveedor.getPrecioHora()));
+    }
+
+    @Override
+    public void mostrarDatosEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+
     }
 
     @Override

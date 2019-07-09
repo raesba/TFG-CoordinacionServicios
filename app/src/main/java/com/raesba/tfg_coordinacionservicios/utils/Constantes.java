@@ -82,6 +82,7 @@ public final class Constantes {
     public final static String EXTRA_EMPRESA_UID = "empresaUid";
     public final static String EXTRA_EMPRESA = "empresa";
     public static final String EXTRA_TIPO_USUARIO = "tipo_usuario";
+    public static final String EXTRA_TRANSACCION_UID = "transaccion_uid";
 
     // ProveedorDetalleActivity
     public static final String TITULO_DESCRIPCION = "DESCRIPCION" ;
@@ -90,6 +91,9 @@ public final class Constantes {
     public static final String DIALOGO_OK = "OK";
     public static final String DIALOGO_GUARDAR = "GUARDAR";
     public static final String DIALOGO_CANCELAR = "CANCELAR";
+
+    public static final int USUARIO_TIPO_EMPRESA = 0;
+    public static final int USUARIO_TIPO_PROVEEDOR = 1;
 
 
 //    public final static String

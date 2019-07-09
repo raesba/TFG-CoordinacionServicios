@@ -8,7 +8,7 @@ import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
 import java.util.ArrayList;
 
-public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleContract.Vista>
+public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleContract.Activity>
                                         implements ProveedorDetalleContract.Presenter {
 
     private DatabaseManager databaseManager;

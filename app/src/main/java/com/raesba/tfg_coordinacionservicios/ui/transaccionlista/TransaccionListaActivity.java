@@ -1,13 +1,9 @@
 package com.raesba.tfg_coordinacionservicios.ui.transaccionlista;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
@@ -17,7 +13,7 @@ import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
 
-public class TransaccionListaActivity extends BaseActivity implements TransaccionListaContract.Vista {
+public class TransaccionListaActivity extends BaseActivity implements TransaccionListaContract.Activity {
 
     private RecyclerView listaTransacciones;
     private TransaccionListaPresenter presenter;
@@ -34,10 +30,6 @@ public class TransaccionListaActivity extends BaseActivity implements Transaccio
 
         DatabaseManager databaseManager = DatabaseManager.getInstance();
         presenter = new TransaccionListaPresenter(databaseManager);
-        adapter = new TransaccionListaAdapter();
-
-        listaTransacciones.setAdapter(adapter);
-        listaTransacciones.setLayoutManager(new LinearLayoutManager(this));
 
         String uid = null;
         int userType = 0;
@@ -51,6 +43,10 @@ public class TransaccionListaActivity extends BaseActivity implements Transaccio
             mostrarToast(Constantes.ERROR_LECTURA_BBDD);
             finish();
         }
+        adapter = new TransaccionListaAdapter(userType);
+
+        listaTransacciones.setAdapter(adapter);
+        listaTransacciones.setLayoutManager(new LinearLayoutManager(this));
 
         presenter.getTransacciones(userType, uid);
     }

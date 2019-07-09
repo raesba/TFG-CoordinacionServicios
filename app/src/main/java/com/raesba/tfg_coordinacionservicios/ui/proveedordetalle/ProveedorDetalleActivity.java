@@ -23,7 +23,7 @@ import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
 
-public class ProveedorDetalleActivity extends BaseActivity implements ProveedorDetalleContract.Vista {
+public class ProveedorDetalleActivity extends BaseActivity implements ProveedorDetalleContract.Activity {
 
     private EditText email;
     //    private EditText contrasena;

@@ -5,7 +5,7 @@ import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 
-public class EmpresaDetallePresenter extends BasePresenter<EmpresaDetalleContract.Vista>
+public class EmpresaDetallePresenter extends BasePresenter<EmpresaDetalleContract.Activity>
         implements EmpresaDetalleContract.Presenter {
 
     private DatabaseManager databaseManager;

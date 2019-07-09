@@ -12,6 +12,7 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.ui.proveedordetalle.ProveedorDetalleActivity;
+import com.raesba.tfg_coordinacionservicios.ui.transacciondetalle.TransaccionDetalleActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
@@ -21,9 +22,11 @@ public class TransaccionListaAdapter extends
 
 
     private ArrayList<Transaccion> listaTransacciones;
+    private int userType = -1;
 
-    public TransaccionListaAdapter() {
+    public TransaccionListaAdapter(int userType) {
         this.listaTransacciones = new ArrayList<>();
+        this.userType = userType;
     }
 
     public TransaccionListaAdapter(ArrayList<Transaccion> listaTransacciones) {
@@ -71,7 +74,7 @@ public class TransaccionListaAdapter extends
         }
     }
 
-    public class TransaccionListaViewHolder extends RecyclerView.ViewHolder {
+    public class TransaccionListaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView nombre;
         private TextView direccion;
@@ -87,15 +90,32 @@ public class TransaccionListaAdapter extends
             direccion = itemView.findViewById(R.id.direccion);
             precioHora = itemView.findViewById(R.id.precioEstimado);
 
+            itemView.setOnClickListener(this);
+
         }
 
         public void bindItem(Transaccion transaccion){
-            this.transaccion = this.transaccion;
-            nombre.setText(transaccion.getIdProveedor());
+            this.transaccion = transaccion;
+
+            String texto = "";
+            if (userType == Constantes.USUARIO_TIPO_PROVEEDOR){
+                texto = transaccion.getNombreEmpresa();
+            } else if (userType == Constantes.USUARIO_TIPO_EMPRESA){
+                texto = transaccion.getNombreProveedor();
+            }
+            nombre.setText(texto);
             fecha.setText(transaccion.getFechaDisposicion());
             direccion.setText(transaccion.getDireccion());
             precioHora.setText(String.valueOf(transaccion.getPrecioEstimado()));
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), TransaccionDetalleActivity.class);
+            intent.putExtra(Constantes.EXTRA_TIPO_USUARIO, userType);
+            intent.putExtra(Constantes.EXTRA_TRANSACCION_UID, transaccion.getIdTransaccion());
+            v.getContext().startActivity(intent);
         }
     }
 }

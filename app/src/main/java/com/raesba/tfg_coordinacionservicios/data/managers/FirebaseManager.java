@@ -1,14 +1,12 @@
 package com.raesba.tfg_coordinacionservicios.data.managers;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -16,13 +14,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.UserAuth;
-import com.raesba.tfg_coordinacionservicios.ui.login.LoginCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.LoginCallback;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
@@ -86,37 +85,6 @@ public class FirebaseManager {
 
     public void getUserType(String user, final LoginCallback callback){
 
-//        "tipo_usuario"
-
-          /*firebaseDatabase.getReference().child("usuarios")
-                .orderByChild("email")
-                .equalTo(user)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getValue() != null){
-                            if ( dataSnapshot.getChildrenCount() > 0){
-                                HashMap<String, Object> usuario = (HashMap<String, Object>)
-                                        dataSnapshot.getChildren().iterator().next().getValue();
-                                if (usuario != null){
-                                    long tipoUsuario = (long) usuario.get
-                                            ("tipo_usuario");
-                                    callback.onLoginSuccess
-                                            ((String) usuario.get("uid"),
-                                                    (int) tipoUsuario);
-                                }
-
-                            }
-                        } else {
-                            callback.onLoginFailed(Constantes.ERROR_LECTURA_BBDD);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        callback.onLoginFailed(Constantes.ERROR_CANCELAR_BBDD);
-                    }
-                });*/
         firebaseDatabase.getReference().child(Constantes.FIREBASE_USUARIOS_KEY)
                 .orderByChild(Constantes.FIREBASE_USUARIOS_EMAIL)
                 .equalTo(user)
@@ -130,9 +98,9 @@ public class FirebaseManager {
                                 if (usuario != null){
                                     long tipoUsuario = (long) usuario.get
                                             (Constantes.FIREBASE_USUARIOS_TIPOUSUARIO);
-                                    callback.onLoginSuccess
-                                            ((String) usuario.get(Constantes.FIREBASE_USUARIOS_UID),
-                                                    (int) tipoUsuario);
+                                    callback.onLoginSuccess(
+                                            (String) usuario.get(Constantes.FIREBASE_USUARIOS_UID),
+                                            (int) tipoUsuario);
                                 }
 
                             }
@@ -310,6 +278,7 @@ public class FirebaseManager {
 
     public void pushTransaccion(Transaccion transaccion, final OnCompletadoCallback callback) {
         String key = firebaseDatabase.getReference().child(Constantes.FIREBASE_TRANSACCIONES_KEY).push().getKey();
+        transaccion.setIdTransaccion(key);
 
         if (key != null){
             firebaseDatabase.getReference()
@@ -355,10 +324,35 @@ public class FirebaseManager {
                         for (Iterator<DataSnapshot> it = dataSnapshot.getChildren().iterator(); it.hasNext(); ) {
                             DataSnapshot elemento = it.next();
                             Transaccion transaccion = elemento.getValue(Transaccion.class);
+
+                            if (transaccion.getIdTransaccion() == null){
+                                transaccion.setIdTransaccion(elemento.getKey());
+                            }
+
                             transacciones.add(transaccion);
                         }
 
                         callback.onSuccess(transacciones);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        callback.onError(databaseError.getMessage());
+                    }
+                });
+    }
+
+    public void getTransaccion(String uid, final GetTransaccionCallback callback) {
+        firebaseDatabase.getReference().child(Constantes.FIREBASE_TRANSACCIONES_KEY)
+                .child(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.getValue() != null){
+                            Transaccion transaccion = dataSnapshot.getValue(Transaccion.class);
+                            callback.onSuccess(transaccion);
+                        }
                     }
 
                     @Override

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-public class BaseActivity extends AppCompatActivity implements InterfaceBaseVista {
+public class BaseActivity extends AppCompatActivity implements InterfaceBaseActivity {
     @Override
     public void mostrarToast(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();

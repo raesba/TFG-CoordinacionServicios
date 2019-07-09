@@ -6,6 +6,8 @@ public class Transaccion {
     private long fechaCreacion;
     private String idProveedor;
     private String idEmpresa;
+    private String nombreProveedor;
+    private String nombreEmpresa;
     private String idDisposicion;
     private String fechaDisposicion;
     private boolean aceptado;
@@ -48,6 +50,22 @@ public class Transaccion {
 
     public void setIdEmpresa(String idEmpresa) {
         this.idEmpresa = idEmpresa;
+    }
+
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
     }
 
     public String getIdDisposicion() {

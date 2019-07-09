@@ -1,18 +1,13 @@
 package com.raesba.tfg_coordinacionservicios.ui.transaccionlista;
 
 import com.raesba.tfg_coordinacionservicios.base.BasePresenter;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallback;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
-import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
-import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaContract;
-import com.raesba.tfg_coordinacionservicios.ui.transaccionnueva.TransaccionNuevaContract;
 
 import java.util.ArrayList;
 
-public class TransaccionListaPresenter extends BasePresenter<TransaccionListaContract.Vista>
+public class TransaccionListaPresenter extends BasePresenter<TransaccionListaContract.Activity>
         implements TransaccionListaContract.Presenter {
 
     private DatabaseManager databaseManager;

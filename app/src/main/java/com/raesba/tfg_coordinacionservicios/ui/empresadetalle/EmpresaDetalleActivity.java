@@ -1,7 +1,6 @@
 package com.raesba.tfg_coordinacionservicios.ui.empresadetalle;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +13,7 @@ import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
-public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetalleContract.Vista {
+public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetalleContract.Activity {
 
     private EditText email;
     private EditText nombre;

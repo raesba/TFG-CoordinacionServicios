@@ -27,6 +27,15 @@
     <string name="button_descripcion">Descripción</string>
     <string name="button_guardar">Guardar</string>
 
+    <!--content_transaccion_detallexml-->
+    <string name="button_rechazar">Rechazar</string>
+    <string name="button_cancelar">Cancelar</string>
+    <string name="button_aceptar">Aceptar</string>
+
+    <string name="textView_rechazada">Rechazada</string>
+    <string name="textView_cancelada">Cancelada</string>
+    <string name="textView_aceptada">Aceptada</string>
+
 
     <string name="button_busqueda">Búsqueda</string>
 
@@ -91,6 +100,8 @@
     <string name="textView_movil_lista">Teléfono Móvil</string>
     <string name="textView_profesion_lista">Profesión</string>
     <string name="textView_precioHora_lista">Precio Hora</string>
+    <string name="title_activity_transaccion_detalle">TransaccionDetalleActivity</string>
+
 
 
     <!--<string name="textView"></string>-->

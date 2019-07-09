@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios.ui.login;
+package com.raesba.tfg_coordinacionservicios.data.callbacks;
 
 public interface LoginCallback {
     void onLoginSuccess(String uid, int userType);

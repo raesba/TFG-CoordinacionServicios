@@ -1,15 +1,15 @@
 package com.raesba.tfg_coordinacionservicios.data.managers;
 
-import com.google.firebase.iid.FirebaseInstanceIdReceiver;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
-import com.raesba.tfg_coordinacionservicios.ui.login.LoginCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.LoginCallback;
 
 public class DatabaseManager {
 
@@ -69,5 +69,9 @@ public class DatabaseManager {
 
     public void getTransacciones(int userType, String uid, GetTransaccionesCallback callback) {
         firebaseManager.getTransacciones(userType, uid, callback);
+    }
+
+    public void getTransaccion(String uid, GetTransaccionCallback callback) {
+        firebaseManager.getTransaccion(uid, callback);
     }
 }
