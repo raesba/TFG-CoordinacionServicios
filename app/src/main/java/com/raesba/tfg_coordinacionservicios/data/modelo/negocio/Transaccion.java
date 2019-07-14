@@ -10,7 +10,8 @@ public class Transaccion {
     private String nombreEmpresa;
     private String idDisposicion;
     private String fechaDisposicion;
-    private boolean aceptado;
+    private Disposicion disposicion;
+    private int estadoTransaccion; // 0 pendiente, 1 aceptada, 2 rechazada, 3 cancelada
     private String direccion;
     private double latitud;
     private double longitud;
@@ -84,12 +85,20 @@ public class Transaccion {
         this.fechaDisposicion = fechaDisposicion;
     }
 
-    public boolean isAceptado() {
-        return aceptado;
+    public Disposicion getDisposicion() {
+        return disposicion;
     }
 
-    public void setAceptado(boolean aceptado) {
-        this.aceptado = aceptado;
+    public void setDisposicion(Disposicion disposicion) {
+        this.disposicion = disposicion;
+    }
+
+    public int getEstadoTransaccion() {
+        return estadoTransaccion;
+    }
+
+    public void setEstadoTransaccion(int estadoTransaccion) {
+        this.estadoTransaccion = estadoTransaccion;
     }
 
     public String getDireccion() {

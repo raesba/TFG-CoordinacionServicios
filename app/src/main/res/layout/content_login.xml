@@ -7,9 +7,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.login.LoginActivity"
     tools:showIn="@layout/activity_login">
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".LoginActivity"
-    tools:showIn="@layout/activity_login">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -119,6 +116,8 @@
         android:layout_height="match_parent"
         android:padding="150dp"
         android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
         android:background="#88000000"/>
 
 </FrameLayout>

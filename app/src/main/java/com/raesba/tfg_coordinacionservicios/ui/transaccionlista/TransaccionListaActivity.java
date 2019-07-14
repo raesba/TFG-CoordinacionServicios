@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 public class TransaccionListaActivity extends BaseActivity implements TransaccionListaContract.Activity {
 
     private RecyclerView listaTransacciones;
+    private TextView emptyResults;
     private TransaccionListaPresenter presenter;
     private TransaccionListaAdapter adapter;
 
@@ -27,6 +31,7 @@ public class TransaccionListaActivity extends BaseActivity implements Transaccio
         setSupportActionBar(toolbar);
 
         listaTransacciones = findViewById(R.id.lista_transacciones);
+        emptyResults = findViewById(R.id.empty_results);
 
         DatabaseManager databaseManager = DatabaseManager.getInstance();
         presenter = new TransaccionListaPresenter(databaseManager);
@@ -66,6 +71,13 @@ public class TransaccionListaActivity extends BaseActivity implements Transaccio
 
     @Override
     public void mostrarTransacciones(ArrayList<Transaccion> transacciones) {
-        adapter.addTransacciones(transacciones);
+        if (transacciones.size() == 0){
+            emptyResults.setVisibility(View.VISIBLE);
+            listaTransacciones.setVisibility(View.GONE);
+        } else {
+            emptyResults.setVisibility(View.GONE);
+            listaTransacciones.setVisibility(View.VISIBLE);
+            adapter.addTransacciones(transacciones);
+        }
     }
 }

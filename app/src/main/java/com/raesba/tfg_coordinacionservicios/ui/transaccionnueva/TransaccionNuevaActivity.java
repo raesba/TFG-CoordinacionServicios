@@ -68,7 +68,7 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
                 transaccion.setFechaDisposicion(fecha.getText().toString());
                 transaccion.setDireccion(direccion.getText().toString());
                 transaccion.setObservaciones(observaciones.getText().toString());
-                transaccion.setAceptado(false);
+                transaccion.setEstadoTransaccion(Constantes.TRANSACCION_ESTADO_PENDIENTE);
                 transaccion.setPrecioEstimado(Double.valueOf(precioEstimado.getText().toString()));
                 transaccion.setNombreProveedor(proveedor.getNombre());
                 transaccion.setNombreEmpresa(empresa.getRazonSocial());
@@ -101,7 +101,6 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
     @Override
     public void mostrarDatosEmpresa(Empresa empresa) {
         this.empresa = empresa;
-
     }
 
     @Override

@@ -9,7 +9,7 @@ import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 public interface TransaccionDetalleContract {
     interface Activity extends InterfaceBaseActivity {
         void mostrarTransaccion(Transaccion transaccion);
-        void onFinishTransaccion();
+        void onFinishTransaccion(int estadoTransaccion);
     }
 
     interface Presenter extends InterfaceBasePresenter<TransaccionDetalleContract.Activity> {

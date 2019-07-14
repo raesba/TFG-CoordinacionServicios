@@ -1,14 +1,11 @@
 package com.raesba.tfg_coordinacionservicios.ui.transacciondetalle;
 
 import com.raesba.tfg_coordinacionservicios.base.BasePresenter;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionCallback;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallback;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.OnDefaultCallback;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
-import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
-import com.raesba.tfg_coordinacionservicios.ui.transacciondetalle.TransaccionDetalleContract;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetalleContract.Activity>
         implements TransaccionDetalleContract.Presenter {
@@ -25,6 +22,7 @@ public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetall
             @Override
             public void onSuccess(Transaccion transaccion) {
                 if (vista != null){
+                    vista.setProgessBar(false);
                     vista.mostrarTransaccion(transaccion);
                 }
             }
@@ -39,7 +37,27 @@ public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetall
     }
 
     @Override
-    public void updateEstado(String uid, int estado) {
+    public void updateEstado(String uid, int estadoTransaccion) {
+        if (vista != null){
+            vista.setProgessBar(true);
+        }
 
+        databaseManager.updateTransaccion(uid, estadoTransaccion, new OnDefaultCallback<Integer>(){
+            @Override
+            public void onSuccess(Integer result) {
+                if (vista != null){
+                    vista.setProgessBar(false);
+                    vista.mostrarToast(Constantes.MSG_TRANSACCION_ACTUALIZADA);
+                    vista.onFinishTransaccion(result);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                if (vista != null){
+                    vista.mostrarToast(error);
+                }
+            }
+        });
     }
 }

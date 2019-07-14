@@ -1,25 +1,20 @@
 package com.raesba.tfg_coordinacionservicios.ui.transacciondetalle;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
-import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
-import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
-import com.raesba.tfg_coordinacionservicios.ui.transaccionnueva.TransaccionNuevaPresenter;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
-public class TransaccionDetalleActivity extends BaseActivity implements TransaccionDetalleContract.Activity {
+import java.util.zip.GZIPInputStream;
+
+public class TransaccionDetalleActivity extends BaseActivity implements TransaccionDetalleContract.Activity, View.OnClickListener {
 
     private TextView nombre;
     private TextView fecha;
@@ -44,6 +39,7 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
         setContentView(R.layout.activity_transaccion_detalle);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setBotonBack();
 
         nombre = findViewById(R.id.nombre);
         fecha = findViewById(R.id.fecha);
@@ -61,10 +57,20 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
 
         transaccion = new Transaccion();
 
-
         String uid = null;
         if (getIntent().hasExtra(Constantes.EXTRA_TIPO_USUARIO)){
             userType = getIntent().getIntExtra(Constantes.EXTRA_TIPO_USUARIO, -1);
+
+            if (userType == Constantes.USUARIO_TIPO_PROVEEDOR){
+                aceptar.setVisibility(View.VISIBLE);
+                rechazar.setVisibility(View.VISIBLE);
+                cancelar.setVisibility(View.GONE);
+            } else if (userType == Constantes.USUARIO_TIPO_EMPRESA){
+                aceptar.setVisibility(View.GONE);
+                rechazar.setVisibility(View.GONE);
+                cancelar.setVisibility(View.VISIBLE);
+            }
+
         } else {
             mostrarToast("ERROR");
             finish();
@@ -77,6 +83,10 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
             mostrarToast("ERROR");
             finish();
         }
+
+        aceptar.setOnClickListener(this);
+        rechazar.setOnClickListener(this);
+        cancelar.setOnClickListener(this);
     }
 
     @Override
@@ -90,7 +100,6 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
         presenter.vistaInactiva();
         super.onStop();
     }
-
 
     @Override
     public void mostrarTransaccion(Transaccion transaccion) {
@@ -108,20 +117,58 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
         precioEstimado.setText(String.valueOf(transaccion.getPrecioEstimado()));
         observaciones.setText(transaccion.getObservaciones());
 
-        String estado = "";
-
-        if (transaccion.isAceptado()){
-            estado = "Aceptado";
-        } else {
-            estado = "Pendiente";
-        }
-
-        estadoActual.setText(estado);
-
+        updateEstadoTransaccion(transaccion.getEstadoTransaccion());
     }
 
     @Override
-    public void onFinishTransaccion() {
+    public void onFinishTransaccion(int estadoTransaccion) {
+        transaccion.setEstadoTransaccion(estadoTransaccion);
+        updateEstadoTransaccion(estadoTransaccion);
+    }
 
+    private void updateEstadoTransaccion(int estadoTransaccion) {
+        String estado = "";
+
+        if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_PENDIENTE){
+            estado = "Pendiente";
+        } else if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_ACEPTADA){
+            estado = "Aceptada";
+            esconderBotones();
+        } else if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_RECHAZADA){
+            estado = "Rechazada";
+            esconderBotones();
+        } else if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_CANCELADA){
+            estado = "Cancelada";
+            esconderBotones();
+        }
+
+        estadoActual.setText(estado);
+    }
+
+    private void esconderBotones(){
+        aceptar.setVisibility(View.GONE);
+        rechazar.setVisibility(View.GONE);
+        cancelar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int estadoTransaccion = -1;
+
+        switch (v.getId()){
+            case R.id.button_aceptar:
+                estadoTransaccion = Constantes.TRANSACCION_ESTADO_ACEPTADA;
+                break;
+            case R.id.button_rechazar:
+                estadoTransaccion = Constantes.TRANSACCION_ESTADO_RECHAZADA;
+                break;
+            case R.id.button_cancelar:
+                estadoTransaccion = Constantes.TRANSACCION_ESTADO_CANCELADA;
+                break;
+        }
+
+        if (estadoTransaccion != -1){
+            presenter.updateEstado(transaccion.getIdTransaccion(), estadoTransaccion);
+        }
     }
 }

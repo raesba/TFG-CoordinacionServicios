@@ -44,6 +44,7 @@ public final class Constantes {
     public static final String FIREBASE_TRANSACCIONES_ACEPTADO = "aceptado";
     public static final String FIREBASE_TRANSACCIONES_ID_EMPRESA = "idEmpresa";
     public static final String FIREBASE_TRANSACCIONES_ID_PROVEEDOR = "idProveedor";
+    public static final String FIREBASE_TRANSACCIONES_ESTADO_TRANSACCION = "estadoTransaccion";
 //    public static final String FIREBASE_TRANSACCIONES_EMAIL = "email";
 //    public static final String FIREBASE_TRANSACCIONES_DIRECCION = "direccion";
 //    public static final String FIREBASE_TRANSACCIONES_POBLACION = "poblacion";
@@ -70,6 +71,7 @@ public final class Constantes {
     public static final String MSG_PROCESANDO ="EN CONSTRUCCIÓN.....";
     public static final String MSG_GUARDADO ="Datos guardados";
     public static final String MSG_TRANSACCION_ENVIADA = "Transacción enviada con éxito";
+    public static final String MSG_TRANSACCION_ACTUALIZADA = "Transaccion actualizada con éxito";
 
     //LoginActivity
     public static final String PREGUNTA_QUIEN = "¿Eres empresa o proveedor?";
@@ -94,6 +96,11 @@ public final class Constantes {
 
     public static final int USUARIO_TIPO_EMPRESA = 0;
     public static final int USUARIO_TIPO_PROVEEDOR = 1;
+
+    public static final int TRANSACCION_ESTADO_PENDIENTE = 0;
+    public static final int TRANSACCION_ESTADO_ACEPTADA = 1;
+    public static final int TRANSACCION_ESTADO_RECHAZADA = 2;
+    public static final int TRANSACCION_ESTADO_CANCELADA = 3;
 
 
 //    public final static String

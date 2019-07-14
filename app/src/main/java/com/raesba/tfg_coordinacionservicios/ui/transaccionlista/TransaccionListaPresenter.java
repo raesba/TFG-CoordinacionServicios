@@ -22,6 +22,7 @@ public class TransaccionListaPresenter extends BasePresenter<TransaccionListaCon
             @Override
             public void onSuccess(ArrayList<Transaccion> transacciones) {
                 if (vista != null){
+                    vista.setProgessBar(false);
                     vista.mostrarTransacciones(transacciones);
                 }
             }
@@ -29,6 +30,7 @@ public class TransaccionListaPresenter extends BasePresenter<TransaccionListaCon
             @Override
             public void onError(String error) {
                 if (vista != null){
+                    vista.setProgessBar(false);
                     vista.mostrarToast(error);
                 }
             }

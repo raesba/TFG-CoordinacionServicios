@@ -17,6 +17,7 @@ import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.OnDefaultCallback;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
@@ -358,6 +359,24 @@ public class FirebaseManager {
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         callback.onError(databaseError.getMessage());
+                    }
+                });
+    }
+
+    public void updateTransaccion(String uid, final int estadoTransaccion, final OnDefaultCallback callback) {
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_TRANSACCIONES_KEY)
+                .child(uid)
+                .child(Constantes.FIREBASE_TRANSACCIONES_ESTADO_TRANSACCION)
+                .setValue(estadoTransaccion)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            callback.onSuccess(estadoTransaccion);
+                        } else {
+                            callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
+                        }
                     }
                 });
     }
