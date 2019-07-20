@@ -1,32 +1,36 @@
-package com.raesba.tfg_coordinacionservicios.ui.proveedordetalle;
+package com.raesba.tfg_coordinacionservicios.ui.proveedorlista;
 
 import com.raesba.tfg_coordinacionservicios.base.BasePresenter;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedoresCallback;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
 import java.util.ArrayList;
 
-public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleContract.Activity>
-                                        implements ProveedorDetalleContract.Presenter {
+public class ProveedorListaPresenter extends BasePresenter<ProveedorListaContract.Activity>
+        implements ProveedorListaContract.Presenter {
 
     private DatabaseManager databaseManager;
 
-    public ProveedorDetallePresenter(DatabaseManager databaseManager) {
+    public ProveedorListaPresenter(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
     }
 
     @Override
-    public void getDatosProveedor(String uid) {
-        databaseManager.getProveedor(uid, new GetProveedorCallback() {
+    public void getProveedores(String profesion) {
+        if (vista != null){
+            vista.setProgessBar(true);
+        }
+        databaseManager.getProveedores(profesion, new GetProveedoresCallback() {
             @Override
-            public void onSuccess(Proveedor proveedor, boolean currentUser) {
+            public void onSuccess(ArrayList<Proveedor> proveedores) {
                 if (vista != null){
                     vista.setProgessBar(false);
-                    vista.mostrarDatosProveedor(proveedor, currentUser);
+                    vista.mostrarProveedores(proveedores);
                 }
             }
+
             @Override
             public void onError(String error) {
                 if (vista != null){
@@ -54,10 +58,5 @@ public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleCon
                 }
             }
         });
-    }
-
-    @Override
-    public void updateProveedor(Proveedor proveedor) {
-        databaseManager.updateProveedor(proveedor);
     }
 }

@@ -40,8 +40,9 @@ public class ProveedoresAdapter extends
     }
 
     public void addProveedor(Proveedor nuevoProveedor) {
+        int prevSize = getItemCount();
         this.listaProveedores.add(nuevoProveedor);
-        this.notifyItemInserted(getItemCount() - 1);
+        this.notifyItemInserted(prevSize);
     }
 
     @Override
@@ -59,6 +60,17 @@ public class ProveedoresAdapter extends
                 break;
             }
         }
+    }
+
+    public void addProveedores(ArrayList<Proveedor> proveedores) {
+        int prevSize = getItemCount();
+        this.listaProveedores.addAll(proveedores);
+        this.notifyItemRangeInserted(prevSize, proveedores.size());
+    }
+
+    public void clear() {
+        this.listaProveedores.clear();
+        this.notifyDataSetChanged();
     }
 
     public class ProveedoresViewHolder extends RecyclerView.ViewHolder

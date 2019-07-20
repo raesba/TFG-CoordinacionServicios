@@ -9,25 +9,29 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedoresCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.LoginCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnDefaultCallback;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.UserAuth;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.LoginCallback;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.CompletionService;
 
 public class FirebaseManager {
 
@@ -379,5 +383,55 @@ public class FirebaseManager {
                         }
                     }
                 });
+    }
+
+    public void getProveedores(String profesion, final GetProveedoresCallback callback) {
+        if (profesion != null){
+            firebaseDatabase.getReference()
+                    .child(Constantes.FIREBASE_PROVEEDORES_KEY)
+                    .orderByChild(Constantes.FIREBASE_PROVEEDORES_PROFESION)
+                    .equalTo(profesion)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            ArrayList<Proveedor> proveedores = new ArrayList<>();
+
+                            for (DataSnapshot item : dataSnapshot.getChildren()){
+                                Proveedor proveedor = item.getValue(Proveedor.class);
+                                proveedores.add(proveedor);
+                            }
+
+                            callback.onSuccess(proveedores);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            callback.onError(databaseError.getMessage());
+                        }
+                    });
+
+        } else {
+            firebaseDatabase.getReference()
+                    .child(Constantes.FIREBASE_PROVEEDORES_KEY)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            ArrayList<Proveedor> proveedores = new ArrayList<>();
+
+                            for (DataSnapshot item : dataSnapshot.getChildren()){
+                                Proveedor proveedor = item.getValue(Proveedor.class);
+                                proveedores.add(proveedor);
+                            }
+
+                            callback.onSuccess(proveedores);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            callback.onError(databaseError.getMessage());
+                        }
+                    });
+        }
     }
 }

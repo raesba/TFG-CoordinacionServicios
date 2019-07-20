@@ -1,7 +1,7 @@
 package com.raesba.tfg_coordinacionservicios.ui.transaccionlista;
 
-import com.raesba.tfg_coordinacionservicios.base.InterfaceBasePresenter;
 import com.raesba.tfg_coordinacionservicios.base.InterfaceBaseActivity;
+import com.raesba.tfg_coordinacionservicios.base.InterfaceBasePresenter;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.raesba.tfg_coordinacionservicios.ui.proveedordetalle;
+package com.raesba.tfg_coordinacionservicios.ui.proveedorlista;
 
 import com.raesba.tfg_coordinacionservicios.base.InterfaceBaseActivity;
 import com.raesba.tfg_coordinacionservicios.base.InterfaceBasePresenter;
@@ -6,17 +6,14 @@ import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
 import java.util.ArrayList;
 
-public interface ProveedorDetalleContract {
+public interface ProveedorListaContract {
     interface Activity extends InterfaceBaseActivity {
-
-        void mostrarDatosProveedor(Proveedor proveedor, boolean currentUser);
+        void mostrarProveedores(ArrayList<Proveedor> proveedores);
         void mostrarProfesiones(ArrayList<String> profesiones);
     }
 
-    interface Presenter extends InterfaceBasePresenter<Activity> {
-
-        void getDatosProveedor(String uid);
+    interface Presenter extends InterfaceBasePresenter<ProveedorListaContract.Activity> {
+        void getProveedores(String profesion);
         void getProfesiones();
-        void updateProveedor(Proveedor proveedor);
     }
 }

@@ -104,6 +104,7 @@
 
     <!--content_transaccion_lista.xml-->
     <string name="resultados_vacios">No hay resultados</string>
+    <string name="en_construccion">EN CONSTRUCCIÓN</string>
 
     <!--<string name="textView"></string>-->
     <!--<string name="editText"></string>-->

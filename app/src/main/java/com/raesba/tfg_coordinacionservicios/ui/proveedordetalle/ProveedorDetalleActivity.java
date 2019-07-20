@@ -60,6 +60,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
         setContentView(R.layout.activity_proveedor_detalle);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setBotonBack();
 
         databaseManager = DatabaseManager.getInstance();
 
@@ -111,8 +112,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
                 proveedor.setProfesion(profesiones.get(profesion_spinner.getSelectedItemPosition()));
                 proveedor.setPrecioHora(Float.parseFloat(precioHora.getText().toString()));
 
-                //TODO:Pasar al presenter
-                databaseManager.updateProveedor(proveedor);
+                presenter.updateProveedor(proveedor);
 
                 Toast.makeText(getApplicationContext(), Constantes.MSG_GUARDADO, Toast.LENGTH_LONG).show();
 
@@ -123,7 +123,6 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
         nuevaTransaccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:Pasar al presenter
                 Intent intent = new Intent(ProveedorDetalleActivity.this, TransaccionNuevaActivity.class);
                 intent.putExtra(Constantes.EXTRA_EMPRESA_UID, databaseManager.getUid());
                 intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, proveedor.getUid());

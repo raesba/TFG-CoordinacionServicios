@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.ui.proveedordetalle.ProveedorDetalleActivity;
 import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaActivity;
-import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaAdapter;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 public class ProveedorPerfilActivity extends AppCompatActivity {

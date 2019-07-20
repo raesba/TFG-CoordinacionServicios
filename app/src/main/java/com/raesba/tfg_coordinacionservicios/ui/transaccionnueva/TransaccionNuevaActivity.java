@@ -34,6 +34,7 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
         setContentView(R.layout.activity_transaccion_nueva);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setBotonBack();
 
         nombre = findViewById(R.id.nombre);
         fecha = findViewById(R.id.fecha);

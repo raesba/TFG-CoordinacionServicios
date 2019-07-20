@@ -1,31 +1,34 @@
 package com.raesba.tfg_coordinacionservicios.ui.proveedorlista;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.raesba.tfg_coordinacionservicios.R;
+import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
+import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
-import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
 
-public class ProveedorListaActivity extends AppCompatActivity implements ChildEventListener {
+public class ProveedorListaActivity extends BaseActivity implements ProveedorListaContract.Activity {
 
     private ArrayList<Proveedor> proveedores;
     private ProveedoresAdapter adapter;
 
-    private DatabaseReference databaseReference;
+    private Spinner filtroProfessiones;
+    private TextView emptyResults;
+    private RecyclerView listaProveedores;
+
+    private ProveedorListaPresenter presenter;
+    private ArrayList<String> profesiones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +36,41 @@ public class ProveedorListaActivity extends AppCompatActivity implements ChildEv
         setContentView(R.layout.activity_proveedor_lista);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setBotonBack();
 
-        RecyclerView recyclerView = findViewById(R.id.lista_proveedores);
         // Recycler view es una lista pero mejor ListView
+        listaProveedores = findViewById(R.id.lista_proveedores);
+        emptyResults = findViewById(R.id.empty_results);
+        filtroProfessiones = findViewById(R.id.filtro_profesiones);
+        filtroProfessiones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position == 0){
+                    adapter.clear();
+                    presenter.getProveedores(null);
+                } else {
+                    String profesionSeleccionada = profesiones.get(position);
+                    adapter.clear();
+                    presenter.getProveedores(profesionSeleccionada);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                adapter.clear();
+                presenter.getProveedores(null);
+            }
+        });
+
+        DatabaseManager databaseManager = DatabaseManager.getInstance();
+        presenter = new ProveedorListaPresenter(databaseManager);
 
         proveedores = new ArrayList<>();
 
-        boolean test = false;
-
-        /*databaseReference = FirebaseDatabase.getInstance().getReference().
-                child("proveedores");*/
-
-        databaseReference = FirebaseDatabase.getInstance().getReference().
-                child(Constantes.FIREBASE_PROVEEDORES_KEY);
-
         adapter = new ProveedoresAdapter(proveedores);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        listaProveedores.setAdapter(adapter);
+        listaProveedores.setLayoutManager(new LinearLayoutManager(this));
 
         /*View.OnClickListener mi_listener = new View.OnClickListener() {
             @Override
@@ -63,73 +84,67 @@ public class ProveedorListaActivity extends AppCompatActivity implements ChildEv
             }
         };*/
 
-        getProveedores();
+        presenter.getProfesiones();
     }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onStart() {
+        super.onStart();
+        presenter.vistaActiva(this);
+    }
 
-        if (requestCode == 0){
+    @Override
+    protected void onStop() {
+        presenter.vistaInactiva();
+        super.onStop();
+    }
+//
+//    @Override
+//    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//        Proveedor proveedor = dataSnapshot.getValue(Proveedor.class);
+//        adapter.addProveedor(proveedor);
+//    }
+//
+//    @Override
+//    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//        Proveedor proveedor = dataSnapshot.getValue(Proveedor.class);
+//        adapter.updateProveedor(proveedor);
+//    }
+//
+//    @Override
+//    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//    }
+//
+//    @Override
+//    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//    }
+//
+//    @Override
+//    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//    }
 
-            if (resultCode == RESULT_OK){
 
-                Proveedor proveedor = (Proveedor) data.getExtras().getSerializable(Constantes.EXTRA_PROVEEDOR);
-                adapter.addProveedor(proveedor);
-            }
+    @Override
+    public void mostrarProveedores(ArrayList<Proveedor> proveedores) {
+        if (proveedores.size() == 0){
+            emptyResults.setVisibility(View.VISIBLE);
+            listaProveedores.setVisibility(View.GONE);
+        } else {
+            emptyResults.setVisibility(View.GONE);
+            listaProveedores.setVisibility(View.VISIBLE);
+            adapter.addProveedores(proveedores);
         }
     }
 
-    private void getProveedores(){
-        databaseReference.addChildEventListener(this);
-    }
-
     @Override
-    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-        Proveedor proveedor = dataSnapshot.getValue(Proveedor.class);
-        adapter.addProveedor(proveedor);
+    public void mostrarProfesiones(ArrayList<String> profesiones) {
+        profesiones.add(0, "Sin filtro");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_adapter_spinner, profesiones);
+        filtroProfessiones.setAdapter(adapter);
+        this.profesiones = profesiones;
     }
-
-    @Override
-    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        Proveedor proveedor = dataSnapshot.getValue(Proveedor.class);
-        adapter.updateProveedor(proveedor);
-    }
-
-    @Override
-    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-    }
-
-    @Override
-    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-    }
-
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 }

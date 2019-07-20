@@ -25,7 +25,6 @@ public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetal
     private EditText movil;
 
     private Empresa empresa;
-    private DatabaseManager databaseManager;
     private EmpresaDetallePresenter presenter;
 
     @Override
@@ -34,6 +33,7 @@ public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetal
         setContentView(R.layout.activity_empresa_detalle);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setBotonBack();
 
         nombre = findViewById(R.id.nombre);
         email = findViewById(R.id.email);
@@ -44,7 +44,7 @@ public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetal
         telefonoFijo = findViewById(R.id.telefonoFijo);
         movil = findViewById(R.id.movil);
 
-        databaseManager = DatabaseManager.getInstance();
+        DatabaseManager databaseManager = DatabaseManager.getInstance();
         presenter = new EmpresaDetallePresenter(databaseManager);
 
         if (getIntent().getExtras() != null){
@@ -71,7 +71,7 @@ public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetal
                 empresa.setTelefonoFijo(telefonoFijo.getText().toString());
                 empresa.setMovil(movil.getText().toString());
 
-                databaseManager.updateEmpresa(empresa);
+                presenter.updateEmpresa(empresa);
 
                 Toast.makeText(getApplicationContext(), Constantes.MSG_GUARDADO, Toast.LENGTH_LONG).show();
 

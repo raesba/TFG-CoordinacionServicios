@@ -12,8 +12,6 @@ import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
-import java.util.zip.GZIPInputStream;
-
 public class TransaccionDetalleActivity extends BaseActivity implements TransaccionDetalleContract.Activity, View.OnClickListener {
 
     private TextView nombre;

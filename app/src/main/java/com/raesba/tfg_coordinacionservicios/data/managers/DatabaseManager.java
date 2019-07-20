@@ -3,14 +3,15 @@ package com.raesba.tfg_coordinacionservicios.data.managers;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedoresCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.LoginCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnDefaultCallback;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
-import com.raesba.tfg_coordinacionservicios.data.callbacks.LoginCallback;
 
 public class DatabaseManager {
 
@@ -78,5 +79,10 @@ public class DatabaseManager {
 
     public void updateTransaccion(String uid, int estadoTransaccion, OnDefaultCallback callback) {
         firebaseManager.updateTransaccion(uid, estadoTransaccion, callback);
+    }
+
+    public void getProveedores(String profesion, GetProveedoresCallback callback) {
+        firebaseManager.getProveedores(profesion, callback);
+
     }
 }

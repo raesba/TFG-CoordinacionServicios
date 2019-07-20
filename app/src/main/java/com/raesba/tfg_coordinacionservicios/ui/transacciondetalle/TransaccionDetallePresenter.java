@@ -30,6 +30,7 @@ public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetall
             @Override
             public void onError(String error) {
                 if (vista != null){
+                    vista.setProgessBar(false);
                     vista.mostrarToast(error);
                 }
             }
@@ -56,6 +57,7 @@ public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetall
             public void onError(String error) {
                 if (vista != null){
                     vista.mostrarToast(error);
+                    vista.setProgessBar(false);
                 }
             }
         });

@@ -20,16 +20,23 @@ public class EmpresaDetallePresenter extends BasePresenter<EmpresaDetalleContrac
             @Override
             public void onSuccess(Empresa empresa) {
                 if (vista != null){
+                    vista.setProgessBar(false);
                     vista.mostrarDatosEmpresa(empresa);
                 }
             }
             @Override
             public void onError(String error) {
                 if (vista != null){
+                    vista.setProgessBar(false);
                     vista.mostrarToast(error);
                 }
             }
         });
+    }
+
+    @Override
+    public void updateEmpresa(Empresa empresa) {
+        databaseManager.updateEmpresa(empresa);
     }
 }
 
