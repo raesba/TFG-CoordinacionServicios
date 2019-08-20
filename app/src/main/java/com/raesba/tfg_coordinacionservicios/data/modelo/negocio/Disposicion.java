@@ -5,9 +5,6 @@ public class Disposicion {
     private String idDisposicion;
     private String fechaDisponible;
     private String idProveedor;
-    private String profesion;
-    private long horaInicio;
-    private long horaFin;
 
     public Disposicion() {
     }
@@ -34,29 +31,5 @@ public class Disposicion {
 
     public void setIdProveedor(String idProveedor) {
         this.idProveedor = idProveedor;
-    }
-
-    public String getProfesion() {
-        return profesion;
-    }
-
-    public void setProfesion(String profesion) {
-        this.profesion = profesion;
-    }
-
-    public long getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(long horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public long getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(long horaFin) {
-        this.horaFin = horaFin;
     }
 }

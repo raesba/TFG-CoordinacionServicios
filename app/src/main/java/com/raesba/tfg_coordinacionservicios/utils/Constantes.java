@@ -23,6 +23,7 @@ public final class Constantes {
     public static final String FIREBASE_PROVEEDORES_DESCRIPCION = "descripcion";
     public static final String FIREBASE_PROVEEDORES_TIPOUSUARIO = "tipo_usuario";
     public static final String FIREBASE_PROVEEDORES_VERIFICADO = "verificado";
+    public static final String FIREBASE_PROVEEDORES_DISPOSICIONES = "disposiciones";
 
     public static final String FIREBASE_EMPRESAS_KEY = "empresas";
     public static final String FIREBASE_EMPRESAS_UID = "uid";
@@ -102,6 +103,9 @@ public final class Constantes {
     public static final int TRANSACCION_ESTADO_RECHAZADA = 2;
     public static final int TRANSACCION_ESTADO_CANCELADA = 3;
 
+    public static final String PREGUNTA_DISPONIBLE = "¿Está disponible el día seleccionado?";
+    public static final String DIALOGO_DISPONIBLE = "Disponible";
+    public static final String DIALOGO_NO_DISPONIBLE = "Ocupado";
 
 //    public final static String
 

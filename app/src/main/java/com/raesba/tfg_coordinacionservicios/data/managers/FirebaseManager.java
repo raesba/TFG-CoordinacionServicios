@@ -9,9 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
@@ -31,7 +29,6 @@ import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.concurrent.CompletionService;
 
 public class FirebaseManager {
 
@@ -433,5 +430,23 @@ public class FirebaseManager {
                         }
                     });
         }
+    }
+
+    public void pushDisposiciones(String uid, HashMap<String, Boolean> disposiciones) {
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_PROVEEDORES_KEY)
+                .child(uid)
+                .child(Constantes.FIREBASE_PROVEEDORES_DISPOSICIONES)
+                .setValue(disposiciones)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+//                            callback.onSuccess(estadoTransaccion);
+                        } else {
+//                            callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
+                        }
+                    }
+                });
     }
 }

@@ -13,6 +13,7 @@
 
     <string name="title_activity_transaccion_nueva">Nueva Transacción</string>
     <string name="title_activity_transaccion_lista">Listado de Transacciones</string>
+    <string name="title_activity_transaccion_detalle">Detalle Transacción</string>
 
     <!--Botones-->
     <!--content_login.xml-->
@@ -100,11 +101,11 @@
     <string name="textView_movil_lista">Teléfono Móvil</string>
     <string name="textView_profesion_lista">Profesión</string>
     <string name="textView_precioHora_lista">Precio Hora</string>
-    <string name="title_activity_transaccion_detalle">TransaccionDetalleActivity</string>
 
     <!--content_transaccion_lista.xml-->
     <string name="resultados_vacios">No hay resultados</string>
     <string name="en_construccion">EN CONSTRUCCIÓN</string>
+    <string name="title_activity_proveedor_calendario">ProveedorCalendarioActivity</string>
 
     <!--<string name="textView"></string>-->
     <!--<string name="editText"></string>-->

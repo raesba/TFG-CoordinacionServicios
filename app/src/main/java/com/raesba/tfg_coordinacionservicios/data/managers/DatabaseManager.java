@@ -13,6 +13,8 @@ import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 
+import java.util.HashMap;
+
 public class DatabaseManager {
 
     private static DatabaseManager instance;
@@ -23,7 +25,6 @@ public class DatabaseManager {
         if (instance == null){
             instance = new DatabaseManager();
         }
-
         return instance;
     }
 
@@ -83,6 +84,9 @@ public class DatabaseManager {
 
     public void getProveedores(String profesion, GetProveedoresCallback callback) {
         firebaseManager.getProveedores(profesion, callback);
+    }
 
+    public void pushDisposiciones(String uid, HashMap<String, Boolean> disposiciones) {
+        firebaseManager.pushDisposiciones(uid, disposiciones);
     }
 }

@@ -116,8 +116,7 @@
             android:layout_marginLeft="49dp"
             android:textColor="@color/design_default_color_primary"
             android:textSize="18sp"
-            android:text="@string/textView_telefono_lista"
- />
+            android:text="@string/textView_telefono_lista" />
     </LinearLayout>
 
     <LinearLayout

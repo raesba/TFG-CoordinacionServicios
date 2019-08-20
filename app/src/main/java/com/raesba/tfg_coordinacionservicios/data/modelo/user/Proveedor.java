@@ -1,6 +1,7 @@
 package com.raesba.tfg_coordinacionservicios.data.modelo.user;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class Proveedor extends Usuario implements Serializable  {
 
@@ -9,6 +10,7 @@ public class Proveedor extends Usuario implements Serializable  {
     private String profesion;
     private float precioHora;
     private String descripcion;
+    private HashMap<String, Long> disposiciones;
 
     public Proveedor() {
     }
@@ -51,5 +53,13 @@ public class Proveedor extends Usuario implements Serializable  {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public HashMap<String, Long> getDisposiciones() {
+        return disposiciones;
+    }
+
+    public void setDisposiciones(HashMap<String, Long> disposiciones) {
+        this.disposiciones = disposiciones;
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.raesba.tfg_coordinacionservicios.R;
+import com.raesba.tfg_coordinacionservicios.ui.proveedorcalendario.ProveedorCalendarioActivity;
 import com.raesba.tfg_coordinacionservicios.ui.proveedordetalle.ProveedorDetalleActivity;
 import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
@@ -37,8 +38,9 @@ public class ProveedorPerfilActivity extends AppCompatActivity {
         botonCalendario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProveedorPerfilActivity.this, Constantes.MSG_PROCESANDO,
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), ProveedorCalendarioActivity.class);
+                intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, uid);
+                startActivity(intent);
             }
         });
 
