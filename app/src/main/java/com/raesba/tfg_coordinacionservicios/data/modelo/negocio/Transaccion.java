@@ -1,6 +1,8 @@
 package com.raesba.tfg_coordinacionservicios.data.modelo.negocio;
 
-public class Transaccion {
+import java.io.Serializable;
+
+public class Transaccion implements Serializable {
 
     private String idTransaccion;
     private long fechaCreacion;

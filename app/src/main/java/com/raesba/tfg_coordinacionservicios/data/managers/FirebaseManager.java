@@ -1,6 +1,7 @@
 package com.raesba.tfg_coordinacionservicios.data.managers;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -11,6 +12,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetDisposicionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
@@ -20,6 +22,7 @@ import com.raesba.tfg_coordinacionservicios.data.callbacks.GetTransaccionesCallb
 import com.raesba.tfg_coordinacionservicios.data.callbacks.LoginCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnCompletadoCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.OnDefaultCallback;
+import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Disposicion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
@@ -29,6 +32,7 @@ import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class FirebaseManager {
 
@@ -37,8 +41,10 @@ public class FirebaseManager {
     private FirebaseAuth auth;
     private FirebaseDatabase firebaseDatabase;
 
-    public static FirebaseManager getInstance(){
-        if (instance == null){
+    private Proveedor proveedorActual; // Soy yo (Current user)
+
+    public static FirebaseManager getInstance() {
+        if (instance == null) {
             instance = new FirebaseManager();
         }
 
@@ -50,11 +56,11 @@ public class FirebaseManager {
         this.firebaseDatabase = FirebaseDatabase.getInstance();
     }
 
-    public void checkLogin(final String user, String password, final LoginCallback callback){
+    public void checkLogin(final String user, String password, final LoginCallback callback) {
         auth.signInWithEmailAndPassword(user, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     getUserType(user, callback);
                 } else {
                     callback.onLoginFailed(Constantes.ERROR_LOGIN);
@@ -64,11 +70,11 @@ public class FirebaseManager {
     }
 
     public void createUser(final String user, String password, final long tipoUsuario, final LoginCallback
-            callback){
+            callback) {
         auth.createUserWithEmailAndPassword(user, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     FirebaseUser userAuthentication = auth.getCurrentUser();
                     UserAuth userAuth = new UserAuth();
 
@@ -85,7 +91,7 @@ public class FirebaseManager {
         });
     }
 
-    public void getUserType(String user, final LoginCallback callback){
+    public void getUserType(String user, final LoginCallback callback) {
 
         firebaseDatabase.getReference().child(Constantes.FIREBASE_USUARIOS_KEY)
                 .orderByChild(Constantes.FIREBASE_USUARIOS_EMAIL)
@@ -93,11 +99,11 @@ public class FirebaseManager {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getValue() != null){
-                            if ( dataSnapshot.getChildrenCount() > 0){
+                        if (dataSnapshot.getValue() != null) {
+                            if (dataSnapshot.getChildrenCount() > 0) {
                                 HashMap<String, Object> usuario = (HashMap<String, Object>)
                                         dataSnapshot.getChildren().iterator().next().getValue();
-                                if (usuario != null){
+                                if (usuario != null) {
                                     long tipoUsuario = (long) usuario.get
                                             (Constantes.FIREBASE_USUARIOS_TIPOUSUARIO);
                                     callback.onLoginSuccess(
@@ -118,7 +124,7 @@ public class FirebaseManager {
                 });
     }
 
-    public void getProveedor(String uid, final GetProveedorCallback callback){
+    public void getProveedor(String uid, final GetProveedorCallback callback) {
         firebaseDatabase.getReference().child(Constantes.FIREBASE_PROVEEDORES_KEY)
                 .orderByChild(Constantes.FIREBASE_PROVEEDORES_UID)
                 .equalTo(uid).limitToFirst(1)
@@ -126,16 +132,18 @@ public class FirebaseManager {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.getValue() != null){
+                        if (dataSnapshot.getValue() != null) {
                             Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
                             Proveedor proveedor = iterator.next().getValue(Proveedor.class);
 
                             boolean currentUser;
-                            if (proveedor.getUid().equals(auth.getCurrentUser().getUid())){
+                            if (proveedor.getUid().equals(auth.getCurrentUser().getUid())) {
                                 currentUser = true;
                             } else {
                                 currentUser = false;
                             }
+
+                            proveedorActual = proveedor;
 
                             callback.onSuccess(proveedor, currentUser);
                         }
@@ -148,7 +156,7 @@ public class FirebaseManager {
                 });
     }
 
-    private void createNewUserInDatabase(final UserAuth userAuth, final LoginCallback callback){
+    private void createNewUserInDatabase(final UserAuth userAuth, final LoginCallback callback) {
 
         String key = firebaseDatabase.getReference()
                 .child(Constantes.FIREBASE_USUARIOS_KEY)
@@ -164,7 +172,7 @@ public class FirebaseManager {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             createUsuarioConTipo(userAuth, callback);
                         } else {
                             callback.onLoginFailed(Constantes.ERROR_ESCRITURA_BBDD_USUARIOS);
@@ -173,13 +181,13 @@ public class FirebaseManager {
                 });
     }
 
-    private void createUsuarioConTipo(final UserAuth userAuth, final LoginCallback callback){
+    private void createUsuarioConTipo(final UserAuth userAuth, final LoginCallback callback) {
         String tipoUsuarioKey = Constantes.FIREBASE_PROVEEDORES_KEY;
 
-        if (userAuth.getTipo_usuario() == 0){
+        if (userAuth.getTipo_usuario() == 0) {
             // HAGO REGISTRO EMPRESA
             tipoUsuarioKey = Constantes.FIREBASE_EMPRESAS_KEY;
-        } else if (userAuth.getTipo_usuario() == 1){
+        } else if (userAuth.getTipo_usuario() == 1) {
             // HAGO REGISTRO PROVEEDOR
             tipoUsuarioKey = Constantes.FIREBASE_PROVEEDORES_KEY;
         } else {
@@ -194,7 +202,7 @@ public class FirebaseManager {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             callback.onLoginSuccess(userAuth.getUid(), userAuth.getTipo_usuario());
                         } else {
                             callback.onLoginFailed(Constantes.ERROR_ESCRITURA_BBDD_PROVEEDOR_EMPRESA);
@@ -219,17 +227,17 @@ public class FirebaseManager {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        try{
+                        try {
                             ArrayList<String> profesiones = new ArrayList<>();
                             // Iterator<DataSnapshot> listaSnapshots = dataSnapshot.getChildren().iterator();
                             // Bucle for/each, quiere decir -> Para cada elemento "profesion", del tipo DataSnapshot, del iterador "dataSnapshot.getChildren"
-                            for (DataSnapshot profesionDataSnapshot : dataSnapshot.getChildren()){
+                            for (DataSnapshot profesionDataSnapshot : dataSnapshot.getChildren()) {
                                 String profesion = (String) profesionDataSnapshot.getValue();
                                 profesiones.add(profesion);
                             }
 
                             callback.onSuccess(profesiones);
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             callback.onError(e.getMessage());
                         }
                     }
@@ -249,7 +257,7 @@ public class FirebaseManager {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.getValue() != null){
+                        if (dataSnapshot.getValue() != null) {
                             Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
                             Empresa empresa = iterator.next().getValue(Empresa.class);
                             callback.onSuccess(empresa);
@@ -270,8 +278,8 @@ public class FirebaseManager {
                 .setValue(empresa);
     }
 
-    public String  getUid() {
-        if (auth.getCurrentUser() != null){
+    public String getUid() {
+        if (auth.getCurrentUser() != null) {
             return auth.getCurrentUser().getUid();
         } else {
             return "";
@@ -282,7 +290,7 @@ public class FirebaseManager {
         String key = firebaseDatabase.getReference().child(Constantes.FIREBASE_TRANSACCIONES_KEY).push().getKey();
         transaccion.setIdTransaccion(key);
 
-        if (key != null){
+        if (key != null) {
             firebaseDatabase.getReference()
                     .child(Constantes.FIREBASE_TRANSACCIONES_KEY)
                     .child(key)
@@ -290,24 +298,22 @@ public class FirebaseManager {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 callback.onSuccess(Constantes.MSG_TRANSACCION_ENVIADA);
                             } else {
                                 callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
                             }
                         }
                     });
-
-            //TODO: (JUANJE) Añadir esta key a proveedor y a empresa
         }
     }
 
     public void getTransacciones(int userType, String uid, final GetTransaccionesCallback callback) {
         String campo = "";
 
-        if (userType == 0){
+        if (userType == 0) {
             campo = Constantes.FIREBASE_TRANSACCIONES_ID_EMPRESA;
-        } else if (userType == 1){
+        } else if (userType == 1) {
             campo = Constantes.FIREBASE_TRANSACCIONES_ID_PROVEEDOR;
         } else {
             callback.onError(Constantes.ERROR_LECTURA_BBDD);
@@ -327,7 +333,7 @@ public class FirebaseManager {
                             DataSnapshot elemento = it.next();
                             Transaccion transaccion = elemento.getValue(Transaccion.class);
 
-                            if (transaccion.getIdTransaccion() == null){
+                            if (transaccion.getIdTransaccion() == null) {
                                 transaccion.setIdTransaccion(elemento.getKey());
                             }
 
@@ -351,7 +357,7 @@ public class FirebaseManager {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.getValue() != null){
+                        if (dataSnapshot.getValue() != null) {
                             Transaccion transaccion = dataSnapshot.getValue(Transaccion.class);
                             callback.onSuccess(transaccion);
                         }
@@ -373,7 +379,7 @@ public class FirebaseManager {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             callback.onSuccess(estadoTransaccion);
                         } else {
                             callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
@@ -383,7 +389,7 @@ public class FirebaseManager {
     }
 
     public void getProveedores(String profesion, final GetProveedoresCallback callback) {
-        if (profesion != null){
+        if (profesion != null) {
             firebaseDatabase.getReference()
                     .child(Constantes.FIREBASE_PROVEEDORES_KEY)
                     .orderByChild(Constantes.FIREBASE_PROVEEDORES_PROFESION)
@@ -394,7 +400,7 @@ public class FirebaseManager {
 
                             ArrayList<Proveedor> proveedores = new ArrayList<>();
 
-                            for (DataSnapshot item : dataSnapshot.getChildren()){
+                            for (DataSnapshot item : dataSnapshot.getChildren()) {
                                 Proveedor proveedor = item.getValue(Proveedor.class);
                                 proveedores.add(proveedor);
                             }
@@ -416,7 +422,7 @@ public class FirebaseManager {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             ArrayList<Proveedor> proveedores = new ArrayList<>();
 
-                            for (DataSnapshot item : dataSnapshot.getChildren()){
+                            for (DataSnapshot item : dataSnapshot.getChildren()) {
                                 Proveedor proveedor = item.getValue(Proveedor.class);
                                 proveedores.add(proveedor);
                             }
@@ -432,47 +438,67 @@ public class FirebaseManager {
         }
     }
 
-    public void pushDisposiciones(String uid, HashMap<String, Boolean> disposiciones) {
+    public void pushDisposiciones(final String uid, final HashMap<String, Boolean> disposiciones, final GetDisposicionesCallback callback) {
+
+        if (proveedorActual == null) {
+            getProveedor(uid, new GetProveedorCallback() {
+                @Override
+                public void onSuccess(Proveedor proveedor, boolean currentUser) {
+                    pushDisposiciones(disposiciones, callback);
+                }
+
+                @Override
+                public void onError(String error) {
+                    Log.e("Error", Constantes.ERROR_LECTURA_BBDD);
+                }
+            });
+        } else {
+            pushDisposiciones(disposiciones, callback);
+        }
+    }
+
+    private void pushDisposiciones(HashMap<String, Boolean> disposiciones, final GetDisposicionesCallback callback) {
+
+        final HashMap<String, Boolean> disposicionesPrevias = proveedorActual.getDisposiciones();
+
+        for (Map.Entry<String, Boolean> entry : disposiciones.entrySet()) {
+            Disposicion disposicion = new Disposicion();
+
+            disposicion.setFecha(Long.parseLong(entry.getKey()));
+            disposicion.setEstado(entry.getValue());
+            disposicion.setUidProveedor(proveedorActual.getUid());
+            disposicion.setProfesionProveedor(proveedorActual.getProfesion());
+            disposicion.setUpdatedAt(System.currentTimeMillis());
+
+            String key = firebaseDatabase.getReference().child(Constantes.FIREBASE_DISPOSICION_KEY).push().getKey();
+            disposicion.setUid(key);
+
+            if (key != null) {
+                firebaseDatabase.getReference()
+                        .child(Constantes.FIREBASE_DISPOSICION_KEY)
+                        .child(key)
+                        .setValue(disposicion);
+            }
+
+            disposicionesPrevias.put(entry.getKey(), entry.getValue());
+        }
+
+        proveedorActual.setDisposiciones(disposicionesPrevias);
+
         firebaseDatabase.getReference()
                 .child(Constantes.FIREBASE_PROVEEDORES_KEY)
-                .child(uid)
+                .child(proveedorActual.getClave())
                 .child(Constantes.FIREBASE_PROVEEDORES_DISPOSICIONES)
-                .setValue(disposiciones)
+                .setValue(disposicionesPrevias)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-//                            callback.onSuccess(Constantes.MSG_DISPOSICION_GUARDADA);
+                        if (task.isSuccessful()) {
+                            callback.onSuccess(disposicionesPrevias);
                         } else {
-//                            callback.onError(Constantes.ERROR_ESCRITURA_DISPOSICION);
+                            callback.onError(Constantes.ERROR_ESCRITURA_DISPOSICION);
                         }
                     }
                 });
     }
-
-        /*public void pushDisposiciones(String uid, HashMap<String, Boolean> disposicion) {
-        String key = firebaseDatabase.getReference().child(Constantes.FIREBASE_DISPOSICION_KEY).push().getKey();
-        disposicion.setIdDisposicion(key);
-
-
-        if (key != null){
-            firebaseDatabase.getReference()
-                    .child(Constantes.FIREBASE_DISPOSICION_KEY)
-                    .child(key)
-                    .setValue(disposicion)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                callback.onSuccess(Constantes.MSG_DISPOSICION_GUARDADA );
-                            } else {
-                                callback.onError(Constantes.ERROR_ESCRITURA_DISPOSICION);
-                            }
-                        }
-                    });
-
-        }
-    }*/
-
-
 }

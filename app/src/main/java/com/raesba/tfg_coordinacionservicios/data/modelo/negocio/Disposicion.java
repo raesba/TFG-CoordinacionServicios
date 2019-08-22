@@ -1,35 +1,73 @@
 package com.raesba.tfg_coordinacionservicios.data.modelo.negocio;
 
-public class Disposicion {
+import java.io.Serializable;
 
-    private String idDisposicion;
-    private String fechaDisponible;
-    private String idProveedor;
+public class Disposicion implements Serializable {
+
+    private String uid;
+    private long fecha;
+    private boolean estado;
+    private String uidProveedor;
+    private String uidTransaccion;
+    private String profesionProveedor;
+    private long updatedAt;
 
     public Disposicion() {
     }
 
-    public String getIdDisposicion() {
-        return idDisposicion;
+    public String getUid() {
+        return uid;
     }
 
-    public void setIdDisposicion(String idDisposicion) {
-        this.idDisposicion = idDisposicion;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getFechaDisponible() {
-        return fechaDisponible;
+    public long getFecha() {
+        return fecha;
     }
 
-    public void setFechaDisponible(String fechaDisponible) {
-        this.fechaDisponible = fechaDisponible;
+    public void setFecha(long fecha) {
+        this.fecha = fecha;
     }
 
-    public String getIdProveedor() {
-        return idProveedor;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setIdProveedor(String idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getUidProveedor() {
+        return uidProveedor;
+    }
+
+    public void setUidProveedor(String uidProveedor) {
+        this.uidProveedor = uidProveedor;
+    }
+
+    public String getUidTransaccion() {
+        return uidTransaccion;
+    }
+
+    public void setUidTransaccion(String uidTransaccion) {
+        this.uidTransaccion = uidTransaccion;
+    }
+
+    public String getProfesionProveedor() {
+        return profesionProveedor;
+    }
+
+    public void setProfesionProveedor(String profesionProveedor) {
+        this.profesionProveedor = profesionProveedor;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

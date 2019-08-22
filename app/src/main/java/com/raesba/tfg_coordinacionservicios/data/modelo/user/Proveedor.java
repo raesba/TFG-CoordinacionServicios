@@ -10,7 +10,7 @@ public class Proveedor extends Usuario implements Serializable  {
     private String profesion;
     private float precioHora;
     private String descripcion;
-    private HashMap<String, Long> disposiciones;
+    private HashMap<String, Boolean> disposiciones;
 
     public Proveedor() {
     }
@@ -55,11 +55,11 @@ public class Proveedor extends Usuario implements Serializable  {
         this.descripcion = descripcion;
     }
 
-    public HashMap<String, Long> getDisposiciones() {
+    public HashMap<String, Boolean> getDisposiciones() {
         return disposiciones;
     }
 
-    public void setDisposiciones(HashMap<String, Long> disposiciones) {
+    public void setDisposiciones(HashMap<String, Boolean> disposiciones) {
         this.disposiciones = disposiciones;
     }
 }

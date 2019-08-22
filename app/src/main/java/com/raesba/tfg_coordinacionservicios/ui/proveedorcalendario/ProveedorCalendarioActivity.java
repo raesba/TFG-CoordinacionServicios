@@ -11,15 +11,16 @@ import android.widget.Button;
 import android.widget.CalendarView;
 
 import com.raesba.tfg_coordinacionservicios.R;
+import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
-import com.raesba.tfg_coordinacionservicios.data.managers.FirebaseManager;
+import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaContract;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 import com.raesba.tfg_coordinacionservicios.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProveedorCalendarioActivity extends AppCompatActivity {
+public class ProveedorCalendarioActivity extends BaseActivity implements ProveedorCalendarioContract.Activity {
 
     private CalendarView calendario;
     private Button guardarCalendario;
@@ -30,8 +31,9 @@ public class ProveedorCalendarioActivity extends AppCompatActivity {
 
     private String disposicionActual;
 
-    private DatabaseManager databaseManager;
     private String uid;
+
+    private ProveedorCalendarioPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,8 @@ public class ProveedorCalendarioActivity extends AppCompatActivity {
             uid = getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID);
         }
 
-        databaseManager = DatabaseManager.getInstance();
+        DatabaseManager databaseManager = DatabaseManager.getInstance();
+        presenter = new ProveedorCalendarioPresenter(databaseManager);
 
         long hoy = Utils.getToday();
 
@@ -70,9 +73,21 @@ public class ProveedorCalendarioActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.vistaActiva(this);
+    }
+
+    @Override
+    protected void onStop() {
+        presenter.vistaInactiva();
+        super.onStop();
+    }
+
     private void guardarCalendarioSelecciodo() {
         if (!uid.equals("")){
-            databaseManager.pushDisposiciones(uid, disposiciones);
+            presenter.pushDisposiciones(uid, disposiciones);
         }
     }
 
@@ -115,5 +130,9 @@ public class ProveedorCalendarioActivity extends AppCompatActivity {
                 .show();
     }
 
-
+    @Override
+    public void mostrarDisposiciones(HashMap<String, Boolean> disposiciones) {
+        mostrarToast("Disposiciones guardadas");
+        finish();
+    }
 }

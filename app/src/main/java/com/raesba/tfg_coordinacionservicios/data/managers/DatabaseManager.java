@@ -1,5 +1,6 @@
 package com.raesba.tfg_coordinacionservicios.data.managers;
 
+import com.raesba.tfg_coordinacionservicios.data.callbacks.GetDisposicionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
@@ -86,7 +87,7 @@ public class DatabaseManager {
         firebaseManager.getProveedores(profesion, callback);
     }
 
-    public void pushDisposiciones(String uid, HashMap<String, Boolean> disposiciones) {
-        firebaseManager.pushDisposiciones(uid, disposiciones);
+    public void pushDisposiciones(String uid, HashMap<String, Boolean> disposiciones, GetDisposicionesCallback callback) {
+        firebaseManager.pushDisposiciones(uid, disposiciones, callback);
     }
 }
