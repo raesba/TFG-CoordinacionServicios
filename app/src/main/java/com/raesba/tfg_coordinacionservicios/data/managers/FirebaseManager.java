@@ -442,11 +442,37 @@ public class FirebaseManager {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-//                            callback.onSuccess(estadoTransaccion);
+//                            callback.onSuccess(Constantes.MSG_DISPOSICION_GUARDADA);
                         } else {
-//                            callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
+//                            callback.onError(Constantes.ERROR_ESCRITURA_DISPOSICION);
                         }
                     }
                 });
     }
+
+        /*public void pushDisposiciones(String uid, HashMap<String, Boolean> disposicion) {
+        String key = firebaseDatabase.getReference().child(Constantes.FIREBASE_DISPOSICION_KEY).push().getKey();
+        disposicion.setIdDisposicion(key);
+
+
+        if (key != null){
+            firebaseDatabase.getReference()
+                    .child(Constantes.FIREBASE_DISPOSICION_KEY)
+                    .child(key)
+                    .setValue(disposicion)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                callback.onSuccess(Constantes.MSG_DISPOSICION_GUARDADA );
+                            } else {
+                                callback.onError(Constantes.ERROR_ESCRITURA_DISPOSICION);
+                            }
+                        }
+                    });
+
+        }
+    }*/
+
+
 }

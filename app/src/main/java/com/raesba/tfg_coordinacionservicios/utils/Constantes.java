@@ -54,6 +54,10 @@ public final class Constantes {
 //    public static final String FIREBASE_TRANSACCIONES_MOVIL = "movil";
 //    public static final String FIREBASE_TRANSACCIONES_TIPOUSUARIO = "tipo_usuario";
 //    public static final String FIREBASE_TRANSACCIONES_VERIFICADO = "verificado";
+
+    public static final String FIREBASE_DISPOSICION_KEY = "disposiciones";
+    public static final String FIREBASE_DISPOSICION_ID_PROVEEDOR = "idProveedor";
+
     //Errores
     public static final String ERROR_LOGIN = "Error al hacer el login";
     public static final String ERROR_CAMPO_VACIO = "Los campos no pueden estar vacíos";
@@ -64,6 +68,7 @@ public final class Constantes {
     public static final String ERROR_ESCRITURA_BBDD_PROVEEDOR_EMPRESA = "Error al escribir en la base de datos de proveedor/empresa";
     public static final String ERROR_TIPOUSUARIO_NO_VALIDO = "Error por tipo de usuario no válido";
     public static final String ERROR_ESCRITURA_TRANSACCION = "No se ha podido escribir la transacción";
+    public static final String ERROR_ESCRITURA_DISPOSICION = "No se ha podido escribir la disposición/disposiciones";
 
     //Mensajes
     public static final String MSG_OPCION_INVALIDA ="Opción no válida";
@@ -72,7 +77,8 @@ public final class Constantes {
     public static final String MSG_PROCESANDO ="EN CONSTRUCCIÓN.....";
     public static final String MSG_GUARDADO ="Datos guardados";
     public static final String MSG_TRANSACCION_ENVIADA = "Transacción enviada con éxito";
-    public static final String MSG_TRANSACCION_ACTUALIZADA = "Transaccion actualizada con éxito";
+    public static final String MSG_TRANSACCION_ACTUALIZADA = "Transacción actualizada con éxito";
+    public static final String MSG_DISPOSICION_GUARDADA = "Disposición guardada con éxito";
 
     //LoginActivity
     public static final String PREGUNTA_QUIEN = "¿Eres empresa o proveedor?";
