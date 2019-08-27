@@ -40,7 +40,7 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
         setBotonBack();
 
         nombre = findViewById(R.id.nombre);
-        fecha = findViewById(R.id.fecha);
+        fecha = findViewById(R.id.fechaDisposicion);
         direccion = findViewById(R.id.direccion);
         precioEstimado = findViewById(R.id.precioEstimado);
         observaciones = findViewById(R.id.observaciones);
@@ -74,8 +74,8 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
             finish();
         }
 
-        if (getIntent().hasExtra(Constantes.EXTRA_TRANSACCION_UID)){
-            uid = getIntent().getStringExtra(Constantes.EXTRA_TRANSACCION_UID);
+        if (getIntent().hasExtra(Constantes.EXTRA_TRANSACCION_ID)){
+            uid = getIntent().getStringExtra(Constantes.EXTRA_TRANSACCION_ID);
             presenter.getTransaccion(uid);
         } else {
             mostrarToast("ERROR");

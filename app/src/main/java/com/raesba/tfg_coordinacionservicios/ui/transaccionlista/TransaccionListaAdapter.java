@@ -64,7 +64,7 @@ public class TransaccionListaAdapter extends
         for (int i = 0; i< listaTransacciones.size(); i++){
             Transaccion transaccionAntigua = listaTransacciones.get(i);
 
-//            if (transaccionAntigua.getUid().equals(transaccionActualizada.getUid())){
+//            if (transaccionAntigua.getIdDisposicion().equals(transaccionActualizada.getIdDisposicion())){
 //                listaTransacciones.set(i, transaccionActualizada);
 //                this.notifyItemChanged(i);
 //                break;
@@ -78,15 +78,17 @@ public class TransaccionListaAdapter extends
         private TextView direccion;
         private TextView fecha;
         private TextView precioHora;
+        private TextView estado;
 
         private Transaccion transaccion;
 
         public TransaccionListaViewHolder(@NonNull View itemView) {
             super(itemView);
             nombre = itemView.findViewById(R.id.nombre);
-            fecha = itemView.findViewById(R.id.fecha);
+            fecha = itemView.findViewById(R.id.fechaDisposicion);
             direccion = itemView.findViewById(R.id.direccion);
             precioHora = itemView.findViewById(R.id.precioEstimado);
+            estado = itemView.findViewById(R.id.estado_actual);
 
             itemView.setOnClickListener(this);
 
@@ -96,23 +98,42 @@ public class TransaccionListaAdapter extends
             this.transaccion = transaccion;
 
             String texto = "";
+            String estado_texto = "";
+
             if (userType == Constantes.USUARIO_TIPO_PROVEEDOR){
                 texto = transaccion.getNombreEmpresa();
             } else if (userType == Constantes.USUARIO_TIPO_EMPRESA){
                 texto = transaccion.getNombreProveedor();
             }
+
+            estado_texto = updateEstadoTransaccion(transaccion.getEstadoTransaccion());
+
             nombre.setText(texto);
             fecha.setText(transaccion.getFechaDisposicion());
             direccion.setText(transaccion.getDireccion());
             precioHora.setText(String.valueOf(transaccion.getPrecioEstimado()));
+            estado.setText(estado_texto);
+        }
 
+        private String updateEstadoTransaccion(int estadoTransaccion) {
+            String estado = "";
+            if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_PENDIENTE){
+                estado = "Pendiente";
+            } else if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_ACEPTADA){
+                estado = "Aceptada";
+            } else if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_RECHAZADA){
+                estado = "Rechazada";
+            } else if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_CANCELADA){
+                estado = "Cancelada";
+            }
+            return (estado);
         }
 
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), TransaccionDetalleActivity.class);
             intent.putExtra(Constantes.EXTRA_TIPO_USUARIO, userType);
-            intent.putExtra(Constantes.EXTRA_TRANSACCION_UID, transaccion.getIdTransaccion());
+            intent.putExtra(Constantes.EXTRA_TRANSACCION_ID, transaccion.getIdTransaccion());
             v.getContext().startActivity(intent);
         }
     }

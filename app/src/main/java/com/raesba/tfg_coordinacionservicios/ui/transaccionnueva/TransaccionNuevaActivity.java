@@ -37,7 +37,7 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
         setBotonBack();
 
         nombre = findViewById(R.id.nombre);
-        fecha = findViewById(R.id.fecha);
+        fecha = findViewById(R.id.fechaDisposicion);
         direccion = findViewById(R.id.direccion);
         precioEstimado = findViewById(R.id.precioEstimado);
         observaciones = findViewById(R.id.observaciones);
@@ -50,12 +50,12 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
         if (getIntent().getExtras() != null){
             if (getIntent().hasExtra(Constantes.EXTRA_PROVEEDOR_UID)){
                 String proveedorUid = getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID);
-                transaccion.setIdProveedor(proveedorUid);
+                transaccion.setUidProveedor(proveedorUid);
                 presenter.getProveedor(proveedorUid);
             }
             if (getIntent().hasExtra(Constantes.EXTRA_EMPRESA_UID)){
                 String empresaUid = getIntent().getStringExtra(Constantes.EXTRA_EMPRESA_UID);
-                transaccion.setIdEmpresa(empresaUid);
+                transaccion.setUidEmpresa(empresaUid);
                 presenter.getEmpresa(empresaUid);
             }
         }

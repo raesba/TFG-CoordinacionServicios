@@ -106,6 +106,7 @@
     <string name="resultados_vacios">No hay resultados</string>
     <string name="en_construccion">EN CONSTRUCCIÓN</string>
     <string name="title_activity_proveedor_calendario">ProveedorCalendarioActivity</string>
+    <string name="sin_filtro">Sin filtro</string>
 
     <!--<string name="textView"></string>-->
     <!--<string name="editText"></string>-->

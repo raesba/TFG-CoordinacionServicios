@@ -6,8 +6,8 @@ public class Transaccion implements Serializable {
 
     private String idTransaccion;
     private long fechaCreacion;
-    private String idProveedor;
-    private String idEmpresa;
+    private String uidProveedor;
+    private String uidEmpresa;
     private String nombreProveedor;
     private String nombreEmpresa;
     private String idDisposicion;
@@ -39,20 +39,20 @@ public class Transaccion implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public String getIdProveedor() {
-        return idProveedor;
+    public String getUidProveedor() {
+        return uidProveedor;
     }
 
-    public void setIdProveedor(String idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setUidProveedor(String uidProveedor) {
+        this.uidProveedor = uidProveedor;
     }
 
-    public String getIdEmpresa() {
-        return idEmpresa;
+    public String getUidEmpresa() {
+        return uidEmpresa;
     }
 
-    public void setIdEmpresa(String idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public void setUidEmpresa(String uidEmpresa) {
+        this.uidEmpresa = uidEmpresa;
     }
 
     public String getNombreProveedor() {

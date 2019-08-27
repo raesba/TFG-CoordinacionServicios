@@ -312,9 +312,9 @@ public class FirebaseManager {
         String campo = "";
 
         if (userType == 0) {
-            campo = Constantes.FIREBASE_TRANSACCIONES_ID_EMPRESA;
+            campo = Constantes.FIREBASE_TRANSACCIONES_UID_EMPRESA;
         } else if (userType == 1) {
-            campo = Constantes.FIREBASE_TRANSACCIONES_ID_PROVEEDOR;
+            campo = Constantes.FIREBASE_TRANSACCIONES_UID_PROVEEDOR;
         } else {
             callback.onError(Constantes.ERROR_LECTURA_BBDD);
             return;
@@ -464,14 +464,14 @@ public class FirebaseManager {
         for (Map.Entry<String, Boolean> entry : disposiciones.entrySet()) {
             Disposicion disposicion = new Disposicion();
 
-            disposicion.setFecha(Long.parseLong(entry.getKey()));
-            disposicion.setEstado(entry.getValue());
+            disposicion.setFechaDisposicion(Long.parseLong(entry.getKey()));
+            disposicion.setEstadoDisposicion(entry.getValue());
             disposicion.setUidProveedor(proveedorActual.getUid());
             disposicion.setProfesionProveedor(proveedorActual.getProfesion());
             disposicion.setUpdatedAt(System.currentTimeMillis());
 
             String key = firebaseDatabase.getReference().child(Constantes.FIREBASE_DISPOSICION_KEY).push().getKey();
-            disposicion.setUid(key);
+            disposicion.setIdDisposicion(key);
 
             if (key != null) {
                 firebaseDatabase.getReference()

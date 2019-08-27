@@ -54,6 +54,7 @@
                 android:layout_marginTop="10dp"
                 android:focusable="true"
                 android:hint="@string/editText_usuario"
+                android:text="e@e.es"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#ffff25e6"
                 android:textStyle="italic" />-->
@@ -75,6 +76,7 @@
                 android:layout_marginTop="10dp"
                 android:focusable="true"
                 android:hint="@string/editText_contrasena"
+                android:text="12345678"
                 android:inputType="textPassword"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#ffff25e6"

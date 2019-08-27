@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class Disposicion implements Serializable {
 
-    private String uid;
-    private long fecha;
-    private boolean estado;
+    private String idDisposicion;
+    private long fechaDisposicion;
+    private boolean estadoDisposicion;
     private String uidProveedor;
     private String uidTransaccion;
     private String profesionProveedor;
@@ -15,28 +15,28 @@ public class Disposicion implements Serializable {
     public Disposicion() {
     }
 
-    public String getUid() {
-        return uid;
+    public String getIdDisposicion() {
+        return idDisposicion;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setIdDisposicion(String idDisposicion) {
+        this.idDisposicion = idDisposicion;
     }
 
-    public long getFecha() {
-        return fecha;
+    public long getFechaDisposicion() {
+        return fechaDisposicion;
     }
 
-    public void setFecha(long fecha) {
-        this.fecha = fecha;
+    public void setFechaDisposicion(long fechaDisposicion) {
+        this.fechaDisposicion = fechaDisposicion;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public boolean isEstadoDisposicion() {
+        return estadoDisposicion;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setEstadoDisposicion(boolean estadoDisposicion) {
+        this.estadoDisposicion = estadoDisposicion;
     }
 
     public String getUidProveedor() {

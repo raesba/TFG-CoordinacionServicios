@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.raesba.tfg_coordinacionservicios.R;
@@ -14,15 +16,21 @@ import com.raesba.tfg_coordinacionservicios.ui.proveedordetalle.ProveedorDetalle
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ProveedoresAdapter extends
-        RecyclerView.Adapter<ProveedoresAdapter.ProveedoresViewHolder>{
+        RecyclerView.Adapter<ProveedoresAdapter.ProveedoresViewHolder> implements Filterable {
 
 
     private ArrayList<Proveedor> listaProveedores;
+    private ArrayList<Proveedor> listaProveedoresFiltrados;
+    private long diaFiltrado;
+    private Filter mFilter = new FiltroProveedor();
 
-    public ProveedoresAdapter(ArrayList<Proveedor> listaProveedores) {
-        this.listaProveedores = listaProveedores;
+    public ProveedoresAdapter() {
+        this.listaProveedores = new ArrayList<>();
+        this.listaProveedoresFiltrados = new ArrayList<>();
     }
 
     @NonNull
@@ -36,18 +44,18 @@ public class ProveedoresAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull ProveedoresViewHolder proveedoresViewHolder, int i) {
-        proveedoresViewHolder.bindItem(listaProveedores.get(i));
+        proveedoresViewHolder.bindItem(listaProveedoresFiltrados.get(i));
     }
 
-    public void addProveedor(Proveedor nuevoProveedor) {
-        int prevSize = getItemCount();
-        this.listaProveedores.add(nuevoProveedor);
-        this.notifyItemInserted(prevSize);
-    }
+//    public void addProveedor(Proveedor nuevoProveedor) {
+//        int prevSize = getItemCount();
+//        this.listaProveedores.add(nuevoProveedor);
+//        this.notifyItemInserted(prevSize);
+//    }
 
     @Override
     public int getItemCount() {
-        return listaProveedores.size();
+        return listaProveedoresFiltrados.size();
     }
 
     public void updateProveedor(Proveedor proveedorActualizado) {
@@ -65,12 +73,67 @@ public class ProveedoresAdapter extends
     public void addProveedores(ArrayList<Proveedor> proveedores) {
         int prevSize = getItemCount();
         this.listaProveedores.addAll(proveedores);
+        this.listaProveedoresFiltrados.addAll(proveedores);
         this.notifyItemRangeInserted(prevSize, proveedores.size());
+
+        if (diaFiltrado != 0){
+            mFilter.filter(String.valueOf(diaFiltrado));
+        }
     }
 
     public void clear() {
         this.listaProveedores.clear();
+        this.listaProveedoresFiltrados.clear();
         this.notifyDataSetChanged();
+    }
+
+    public void filtroPorDia(long diaFiltrado) {
+        this.diaFiltrado = diaFiltrado;
+        mFilter.filter(String.valueOf(diaFiltrado));
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class FiltroProveedor extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final List<Proveedor> listaCompleta = listaProveedores;
+
+            int count = listaCompleta.size();
+            final ArrayList<Proveedor> listaFiltrada = new ArrayList<>(count);
+
+            for (int i = 0; i < count; i++) {
+                Proveedor proveedor = listaCompleta.get(i);
+
+                if (proveedor.getDisposiciones() != null){
+                    HashMap<String, Boolean> disposiciones = proveedor.getDisposiciones();
+
+                    if (disposiciones.containsKey(String.valueOf(constraint))){
+                        listaFiltrada.add(proveedor);
+                    }
+                }
+            }
+
+            results.values = listaFiltrada;
+            results.count = listaFiltrada.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listaProveedoresFiltrados = (ArrayList<Proveedor>) results.values;
+            notifyDataSetChanged();
+        }
     }
 
     public class ProveedoresViewHolder extends RecyclerView.ViewHolder
