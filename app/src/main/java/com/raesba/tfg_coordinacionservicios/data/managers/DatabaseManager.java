@@ -79,8 +79,8 @@ public class DatabaseManager {
         firebaseManager.getTransaccion(uid, callback);
     }
 
-    public void updateTransaccion(String uid, int estadoTransaccion, OnDefaultCallback callback) {
-        firebaseManager.updateTransaccion(uid, estadoTransaccion, callback);
+    public void updateTransaccion(String uid, long fechaDisposicion, int estadoTransaccion, OnDefaultCallback<Integer> callback) {
+        firebaseManager.updateTransaccion(uid, fechaDisposicion, estadoTransaccion, callback);
     }
 
     public void getProveedores(String profesion, GetProveedoresCallback callback) {
@@ -89,5 +89,9 @@ public class DatabaseManager {
 
     public void pushDisposiciones(String uid, HashMap<String, Boolean> disposiciones, GetDisposicionesCallback callback) {
         firebaseManager.pushDisposiciones(uid, disposiciones, callback);
+    }
+
+    public void getDisposiciones(String uid, GetDisposicionesCallback callback) {
+        firebaseManager.getDisposiciones(uid, callback);
     }
 }

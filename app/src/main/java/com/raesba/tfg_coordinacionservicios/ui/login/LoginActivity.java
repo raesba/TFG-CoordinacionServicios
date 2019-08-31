@@ -11,12 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.LoginCallback;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.ui.empresaperfil.EmpresaPerfilActivity;
+import com.raesba.tfg_coordinacionservicios.ui.lopd.LOPDActivity;
 import com.raesba.tfg_coordinacionservicios.ui.proveedorperfil.ProveedorPerfilActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
@@ -28,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Button entrar;
     private Button registrarse;
+    private TextView lopd;
 
     private ProgressBar progressBar;
 
@@ -51,6 +54,15 @@ public class LoginActivity extends AppCompatActivity {
         entrar = findViewById(R.id.entrar);
         registrarse = findViewById(R.id.registrarse);
         progressBar = findViewById(R.id.progress_bar);
+        lopd = findViewById(R.id.lopd);
+
+        lopd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LOPDActivity.class);
+                startActivity(intent);
+            }
+        });
 
         entrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(Constantes.PREGUNTA_QUIEN)
+                .setMessage(Constantes.DIALOGO_LOPD)
                 .setPositiveButton(Constantes.DIALOGO_EMPRESA, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

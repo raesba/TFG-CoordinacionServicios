@@ -45,7 +45,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
     private Button botonDescripcion;
 
     private boolean newProvider = false;
-
+    private long diaFiltrado;
     private Proveedor proveedor;
 
     private DatabaseManager databaseManager;
@@ -84,6 +84,9 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
             if (getIntent().hasExtra(Constantes.EXTRA_PROVEEDOR_UID)){
                 String uid = getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID);
                 presenter.getDatosProveedor(uid);
+            }
+            if (getIntent().hasExtra(Constantes.EXTRA_DIA_FILTRADO)){
+                diaFiltrado = getIntent().getLongExtra(Constantes.EXTRA_DIA_FILTRADO, 0);
             }
         } else {
             Toast.makeText(this, Constantes.ERROR_LECTURA_BBDD, Toast.LENGTH_LONG).show();
@@ -126,6 +129,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
                 Intent intent = new Intent(ProveedorDetalleActivity.this, TransaccionNuevaActivity.class);
                 intent.putExtra(Constantes.EXTRA_EMPRESA_UID, databaseManager.getUid());
                 intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, proveedor.getUid());
+                intent.putExtra(Constantes.EXTRA_DIA_FILTRADO, diaFiltrado);
                 startActivity(intent);
             }
         });

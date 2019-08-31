@@ -11,7 +11,7 @@ public class Transaccion implements Serializable {
     private String nombreProveedor;
     private String nombreEmpresa;
     private String idDisposicion;
-    private String fechaDisposicion;
+    private long fechaDisposicion;
     private Disposicion disposicion;
     private int estadoTransaccion; // 0 pendiente, 1 aceptada, 2 rechazada, 3 cancelada
     private String direccion;
@@ -79,11 +79,11 @@ public class Transaccion implements Serializable {
         this.idDisposicion = idDisposicion;
     }
 
-    public String getFechaDisposicion() {
+    public long getFechaDisposicion() {
         return fechaDisposicion;
     }
 
-    public void setFechaDisposicion(String fechaDisposicion) {
+    public void setFechaDisposicion(long fechaDisposicion) {
         this.fechaDisposicion = fechaDisposicion;
     }
 

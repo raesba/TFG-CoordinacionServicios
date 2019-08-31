@@ -1,20 +1,24 @@
 package com.raesba.tfg_coordinacionservicios.ui.proveedorcalendario;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
-import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaContract;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.utils.EventDecorator;
 import com.raesba.tfg_coordinacionservicios.utils.Utils;
 
 import java.util.HashMap;
@@ -22,7 +26,7 @@ import java.util.Map;
 
 public class ProveedorCalendarioActivity extends BaseActivity implements ProveedorCalendarioContract.Activity {
 
-    private CalendarView calendario;
+    private MaterialCalendarView calendario;
     private Button guardarCalendario;
 
     private static final long MAX_DATE_60_DIAS = 5184000000L;
@@ -30,6 +34,7 @@ public class ProveedorCalendarioActivity extends BaseActivity implements Proveed
     private HashMap<String, Boolean> disposiciones = new HashMap<>();
 
     private String disposicionActual;
+    private CalendarDay calendarDayActual;
 
     private String uid;
 
@@ -43,6 +48,8 @@ public class ProveedorCalendarioActivity extends BaseActivity implements Proveed
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setBotonBack();
+
         calendario = findViewById(R.id.calendario);
         guardarCalendario = findViewById(R.id.guardar_calendario);
         guardarCalendario.setOnClickListener(new View.OnClickListener() {
@@ -52,22 +59,27 @@ public class ProveedorCalendarioActivity extends BaseActivity implements Proveed
             }
         });
 
+
+        final DatabaseManager databaseManager = DatabaseManager.getInstance();
+        presenter = new ProveedorCalendarioPresenter(databaseManager);
+
         if (getIntent().hasExtra(Constantes.EXTRA_PROVEEDOR_UID)){
             uid = getIntent().getStringExtra(Constantes.EXTRA_PROVEEDOR_UID);
         }
 
-        DatabaseManager databaseManager = DatabaseManager.getInstance();
-        presenter = new ProveedorCalendarioPresenter(databaseManager);
-
         long hoy = Utils.getToday();
 
-        calendario.setMinDate(hoy);
-        calendario.setMaxDate(hoy + MAX_DATE_60_DIAS);
+        CalendarDay today = CalendarDay.today();
+        calendario.state().edit()
+                .setMinimumDate(today)
+                .setMaximumDate(Utils.getCalendarDay(hoy + MAX_DATE_60_DIAS))
+                .commit();
 
-        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendario.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                disposicionActual = String.valueOf(Utils.getDay(year, month, dayOfMonth));
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                disposicionActual = String.valueOf(Utils.getDay(date.getYear(), date.getMonth()-1, date.getDay()));
+                calendarDayActual = date;
                 createDialog();
             }
         });
@@ -77,6 +89,7 @@ public class ProveedorCalendarioActivity extends BaseActivity implements Proveed
     protected void onStart() {
         super.onStart();
         presenter.vistaActiva(this);
+        presenter.getDisposiciones(uid);
     }
 
     @Override
@@ -105,7 +118,10 @@ public class ProveedorCalendarioActivity extends BaseActivity implements Proveed
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         disposiciones.put(disposicionActual, true);
+                        calendario.addDecorator(new EventDecorator(Color.GREEN, calendarDayActual));
                         disposicionActual = "";
+                        calendarDayActual = null;
+
                         imprimeDisposiciones();
                         dialog.dismiss();
                     }
@@ -114,8 +130,10 @@ public class ProveedorCalendarioActivity extends BaseActivity implements Proveed
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         disposiciones.put(disposicionActual, false);
+                        calendario.addDecorator(new EventDecorator(Color.RED, calendarDayActual));
                         imprimeDisposiciones();
                         disposicionActual = "";
+                        calendarDayActual = null;
                         dialog.dismiss();
                     }
                 })
@@ -131,8 +149,23 @@ public class ProveedorCalendarioActivity extends BaseActivity implements Proveed
     }
 
     @Override
-    public void mostrarDisposiciones(HashMap<String, Boolean> disposiciones) {
-        mostrarToast("Disposiciones guardadas");
-        finish();
+    public void mostrarDisposiciones(HashMap<String, Boolean> disposiciones, boolean guardadas) {
+
+        if (disposiciones != null){
+            for (Map.Entry<String, Boolean> entry: disposiciones.entrySet()){
+                CalendarDay day = Utils.getCalendarDay(Long.parseLong(entry.getKey()));
+
+                if (entry.getValue()){
+                    calendario.addDecorator(new EventDecorator(Color.GREEN, day));
+                } else {
+                    calendario.addDecorator(new EventDecorator(Color.RED, day));
+                }
+            }
+        }
+
+        if (guardadas){
+            mostrarToast("Disposiciones guardadas");
+            finish();
+        }
     }
 }

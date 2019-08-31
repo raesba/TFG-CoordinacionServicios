@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public interface ProveedorCalendarioContract {
     interface Activity extends InterfaceBaseActivity {
-        void mostrarDisposiciones(HashMap<String, Boolean> disposiciones);
+        void mostrarDisposiciones(HashMap<String, Boolean> disposiciones, boolean guardadas);
     }
 
     interface Presenter extends InterfaceBasePresenter<ProveedorCalendarioContract.Activity> {

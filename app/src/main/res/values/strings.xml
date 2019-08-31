@@ -107,6 +107,8 @@
     <string name="en_construccion">EN CONSTRUCCIÓN</string>
     <string name="title_activity_proveedor_calendario">ProveedorCalendarioActivity</string>
     <string name="sin_filtro">Sin filtro</string>
+    <string name="title_activity_lopd">LOPDActivity</string>
+    <string name="lopd_message"><u>Términos de uso y Condiciones</u></string>
 
     <!--<string name="textView"></string>-->
     <!--<string name="editText"></string>-->

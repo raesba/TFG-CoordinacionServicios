@@ -79,6 +79,7 @@ public final class Constantes {
     public static final String MSG_TRANSACCION_ENVIADA = "Transacción enviada con éxito";
     public static final String MSG_TRANSACCION_ACTUALIZADA = "Transacción actualizada con éxito";
     public static final String MSG_DISPOSICION_GUARDADA = "Disposición guardada con éxito";
+    public static final String MSG_LOPD = "Ley de protección de datos";
 
     //LoginActivity
     public static final String PREGUNTA_QUIEN = "¿Eres empresa o proveedor?";
@@ -93,6 +94,7 @@ public final class Constantes {
     public static final String EXTRA_TIPO_USUARIO = "tipo_usuario";
     public static final String EXTRA_TRANSACCION_ID = "transaccion_id";
     public static final String EXTRA_DISPOSICION_ID = "disposicion_id";
+    public static final String EXTRA_DIA_FILTRADO = "dia_filtrado";
 
     // ProveedorDetalleActivity
     public static final String TITULO_DESCRIPCION = "DESCRIPCION" ;
@@ -113,6 +115,7 @@ public final class Constantes {
     public static final String PREGUNTA_DISPONIBLE = "¿Está disponible el día seleccionado?";
     public static final String DIALOGO_DISPONIBLE = "Disponible";
     public static final String DIALOGO_NO_DISPONIBLE = "Ocupado";
+    public static final String DIALOGO_LOPD = "Continuando con el registro, acepta la política de uso y los términos y condiciones";
 
 //    public final static String
 

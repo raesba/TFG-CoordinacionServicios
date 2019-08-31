@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.lopd.LOPDActivity"
+            android:label="@string/title_activity_lopd"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".ui.proveedorcalendario.ProveedorCalendarioActivity"
             android:label="@string/title_activity_proveedor_calendario"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="TFG - Coordinación de Servicios"

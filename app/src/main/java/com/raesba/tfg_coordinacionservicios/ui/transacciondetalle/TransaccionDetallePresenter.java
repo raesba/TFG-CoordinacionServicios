@@ -21,7 +21,7 @@ public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetall
         databaseManager.getTransaccion(uid, new GetTransaccionCallback() {
             @Override
             public void onSuccess(Transaccion transaccion) {
-                if (vista != null){
+                if (vista != null) {
                     vista.setProgessBar(false);
                     vista.mostrarTransaccion(transaccion);
                 }
@@ -29,7 +29,7 @@ public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetall
 
             @Override
             public void onError(String error) {
-                if (vista != null){
+                if (vista != null) {
                     vista.setProgessBar(false);
                     vista.mostrarToast(error);
                 }
@@ -38,15 +38,15 @@ public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetall
     }
 
     @Override
-    public void updateEstado(String uid, int estadoTransaccion) {
-        if (vista != null){
+    public void updateEstado(String uid, long fechaDisposicion, int estadoTransaccion) {
+        if (vista != null) {
             vista.setProgessBar(true);
         }
 
-        databaseManager.updateTransaccion(uid, estadoTransaccion, new OnDefaultCallback<Integer>(){
+        databaseManager.updateTransaccion(uid, fechaDisposicion, estadoTransaccion, new OnDefaultCallback<Integer>() {
             @Override
             public void onSuccess(Integer result) {
-                if (vista != null){
+                if (vista != null) {
                     vista.setProgessBar(false);
                     vista.mostrarToast(Constantes.MSG_TRANSACCION_ACTUALIZADA);
                     vista.onFinishTransaccion(result);
@@ -55,7 +55,7 @@ public class TransaccionDetallePresenter extends BasePresenter<TransaccionDetall
 
             @Override
             public void onError(String error) {
-                if (vista != null){
+                if (vista != null) {
                     vista.mostrarToast(error);
                     vista.setProgessBar(false);
                 }

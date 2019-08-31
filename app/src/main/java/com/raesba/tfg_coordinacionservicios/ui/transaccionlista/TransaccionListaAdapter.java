@@ -12,6 +12,7 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.ui.transacciondetalle.TransaccionDetalleActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -109,7 +110,7 @@ public class TransaccionListaAdapter extends
             estado_texto = updateEstadoTransaccion(transaccion.getEstadoTransaccion());
 
             nombre.setText(texto);
-            fecha.setText(transaccion.getFechaDisposicion());
+            fecha.setText(Utils.getDayText(transaccion.getFechaDisposicion()));
             direccion.setText(transaccion.getDireccion());
             precioHora.setText(String.valueOf(transaccion.getPrecioEstimado()));
             estado.setText(estado_texto);

@@ -82,6 +82,14 @@
                 android:textColorHint="#ffff25e6"
                 android:textStyle="italic" />
 
+            <TextView
+                android:id="@+id/lopd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/lopd_message"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

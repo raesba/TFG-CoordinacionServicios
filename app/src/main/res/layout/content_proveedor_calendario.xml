@@ -14,11 +14,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <CalendarView
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendario"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            app:mcv_showOtherDates="all"
+            app:mcv_selectionColor="#BDAFAF"/>
 
         <Button
             android:id="@+id/guardar_calendario"

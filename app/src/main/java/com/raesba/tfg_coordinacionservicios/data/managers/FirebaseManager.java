@@ -47,7 +47,6 @@ public class FirebaseManager {
         if (instance == null) {
             instance = new FirebaseManager();
         }
-
         return instance;
     }
 
@@ -370,7 +369,7 @@ public class FirebaseManager {
                 });
     }
 
-    public void updateTransaccion(String uid, final int estadoTransaccion, final OnDefaultCallback callback) {
+    public void updateTransaccion(final String uid, final long fechaDisposicion, final int estadoTransaccion, final OnDefaultCallback<Integer> callback) {
         firebaseDatabase.getReference()
                 .child(Constantes.FIREBASE_TRANSACCIONES_KEY)
                 .child(uid)
@@ -380,6 +379,37 @@ public class FirebaseManager {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            updateEstadoDisposicion(fechaDisposicion, estadoTransaccion, callback);
+                        } else {
+                            callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
+                        }
+                    }
+                });
+
+
+    }
+
+    private void updateEstadoDisposicion(final long fechaDisposicion, final int estadoTransaccion, final OnDefaultCallback<Integer> callback){
+        final boolean estado;
+        if(estadoTransaccion == Constantes.TRANSACCION_ESTADO_ACEPTADA){
+            estado = false;
+        }else{
+            estado=true;
+        }
+
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_PROVEEDORES_KEY)
+                .child(proveedorActual.getClave())
+                .child(Constantes.FIREBASE_PROVEEDORES_DISPOSICIONES)
+                .child(String.valueOf(fechaDisposicion))
+                .setValue(estado)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (proveedorActual != null && proveedorActual.getDisposiciones() != null){
+                                proveedorActual.getDisposiciones().put(String.valueOf(fechaDisposicion), estado);
+                            }
                             callback.onSuccess(estadoTransaccion);
                         } else {
                             callback.onError(Constantes.ERROR_ESCRITURA_TRANSACCION);
@@ -457,9 +487,9 @@ public class FirebaseManager {
         }
     }
 
-    private void pushDisposiciones(HashMap<String, Boolean> disposiciones, final GetDisposicionesCallback callback) {
+    private void pushDisposiciones(final HashMap<String, Boolean> disposiciones, final GetDisposicionesCallback callback) {
 
-        final HashMap<String, Boolean> disposicionesPrevias = proveedorActual.getDisposiciones();
+        final HashMap<String, Boolean> disposicionesPrevias = proveedorActual.getDisposiciones() != null ? proveedorActual.getDisposiciones() : new HashMap<String, Boolean>();
 
         for (Map.Entry<String, Boolean> entry : disposiciones.entrySet()) {
             Disposicion disposicion = new Disposicion();
@@ -500,5 +530,23 @@ public class FirebaseManager {
                         }
                     }
                 });
+    }
+
+    public void getDisposiciones(String uid, final GetDisposicionesCallback callback) {
+        if (proveedorActual == null) {
+            getProveedor(uid, new GetProveedorCallback() {
+                @Override
+                public void onSuccess(Proveedor proveedor, boolean currentUser) {
+                    callback.onSuccess(proveedorActual.getDisposiciones());
+                }
+
+                @Override
+                public void onError(String error) {
+                    Log.e("Error", Constantes.ERROR_LECTURA_BBDD);
+                }
+            });
+        } else {
+            callback.onSuccess(proveedorActual.getDisposiciones());
+        }
     }
 }

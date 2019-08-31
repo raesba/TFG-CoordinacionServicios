@@ -12,6 +12,6 @@ public interface TransaccionDetalleContract {
 
     interface Presenter extends InterfaceBasePresenter<TransaccionDetalleContract.Activity> {
         void getTransaccion(String uid);
-        void updateEstado(String uid, int estado);
+        void updateEstado(String uid, long fechaDisposicion, int estadoTransaccion);
     }
 }

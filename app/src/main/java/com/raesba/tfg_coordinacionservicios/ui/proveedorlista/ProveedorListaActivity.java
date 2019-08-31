@@ -131,10 +131,8 @@ public class ProveedorListaActivity extends BaseActivity implements ProveedorLis
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Log.d("HOLA", "YEAR:" + year + " " + "MONTH:" + month + " " + "DAY:" + dayOfMonth);
 
         diaFiltrado = Utils.getDay(year, month, dayOfMonth);
-        Log.d("HOLA", "DIA MODIFICADO: " + diaFiltrado);
 
         filtroDisposiciones.setText(dayOfMonth + "/" + (month+1) + "/" + year);
 

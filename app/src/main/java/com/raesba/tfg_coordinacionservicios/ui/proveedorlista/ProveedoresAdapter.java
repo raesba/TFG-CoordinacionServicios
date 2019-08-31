@@ -190,6 +190,7 @@ public class ProveedoresAdapter extends
         public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), ProveedorDetalleActivity.class);
             intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, proveedor.getUid());
+            intent.putExtra(Constantes.EXTRA_DIA_FILTRADO, diaFiltrado);
             v.getContext().startActivity(intent);
         }
     }

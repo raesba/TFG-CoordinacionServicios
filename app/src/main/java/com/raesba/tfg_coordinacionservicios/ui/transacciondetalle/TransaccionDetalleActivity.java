@@ -11,6 +11,7 @@ import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.utils.Utils;
 
 public class TransaccionDetalleActivity extends BaseActivity implements TransaccionDetalleContract.Activity, View.OnClickListener {
 
@@ -110,7 +111,7 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
             texto = transaccion.getNombreProveedor();
         }
         nombre.setText(texto);
-        fecha.setText(transaccion.getFechaDisposicion());
+        fecha.setText(Utils.getDayText(transaccion.getFechaDisposicion()));
         direccion.setText(transaccion.getDireccion());
         precioEstimado.setText(String.valueOf(transaccion.getPrecioEstimado()));
         observaciones.setText(transaccion.getObservaciones());
@@ -166,7 +167,7 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
         }
 
         if (estadoTransaccion != -1){
-            presenter.updateEstado(transaccion.getIdTransaccion(), estadoTransaccion);
+            presenter.updateEstado(transaccion.getIdTransaccion(), transaccion.getFechaDisposicion(), estadoTransaccion);
         }
     }
 }

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
@@ -13,20 +15,29 @@ import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
+import com.raesba.tfg_coordinacionservicios.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TransaccionNuevaActivity extends BaseActivity implements TransaccionNuevaContract.Activity {
 
     private EditText nombre;
-    private EditText fecha;
+    private Spinner fecha;
     private EditText direccion;
     private EditText precioEstimado;
     private EditText observaciones;
+
+    private long diaFiltrado;
 
     private Transaccion transaccion;
 
     private TransaccionNuevaPresenter presenter;
     private Proveedor proveedor;
     private Empresa empresa;
+
+    private ArrayList<Long> disposicionesLong = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +69,9 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
                 transaccion.setUidEmpresa(empresaUid);
                 presenter.getEmpresa(empresaUid);
             }
+            if (getIntent().hasExtra(Constantes.EXTRA_DIA_FILTRADO)){
+                diaFiltrado = getIntent().getLongExtra(Constantes.EXTRA_DIA_FILTRADO, 0);
+            }
         }
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -65,8 +79,10 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
             @Override
             public void onClick(View view) {
 
+                long disposicionSeleccionada = disposicionesLong.get(fecha.getSelectedItemPosition());
+
                 transaccion.setFechaCreacion(System.currentTimeMillis());
-                transaccion.setFechaDisposicion(fecha.getText().toString());
+                transaccion.setFechaDisposicion(disposicionSeleccionada);
                 transaccion.setDireccion(direccion.getText().toString());
                 transaccion.setObservaciones(observaciones.getText().toString());
                 transaccion.setEstadoTransaccion(Constantes.TRANSACCION_ESTADO_PENDIENTE);
@@ -97,6 +113,7 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
         this.proveedor = proveedor;
         this.nombre.setText(proveedor.getNombre());
         this.precioEstimado.setText(String.valueOf(proveedor.getPrecioHora()));
+        mostrarDisposiciones(proveedor.getDisposiciones());
     }
 
     @Override
@@ -107,5 +124,33 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
     @Override
     public void onFinishTransaccion() {
         finish();
+    }
+
+    private void mostrarDisposiciones(HashMap<String, Boolean> disposiciones){
+
+        ArrayList<String> disposicionesDisponibles = new ArrayList<>();
+        long hoy = Utils.getToday();
+
+        for (Map.Entry<String, Boolean> entry: disposiciones.entrySet()){
+
+            long fechaLong = Long.parseLong(entry.getKey());
+
+            if (entry.getValue() && (fechaLong >= hoy)){
+                disposicionesDisponibles.add(Utils.getDayText(fechaLong));
+                disposicionesLong.add(fechaLong);
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_adapter_spinner, disposicionesDisponibles);
+        fecha.setAdapter(adapter);
+
+        if (diaFiltrado != 0){
+            for (int i = 0; i <disposicionesLong.size(); i++){
+                if (diaFiltrado == disposicionesLong.get(i)){
+                    fecha.setSelection(i);
+                    break;
+                }
+            }
+        }
     }
 }
