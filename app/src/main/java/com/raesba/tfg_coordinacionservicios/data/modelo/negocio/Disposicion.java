@@ -6,10 +6,10 @@ public class Disposicion implements Serializable {
 
     private String idDisposicion;
     private long fechaDisposicion;
-    private boolean estadoDisposicion;
     private String uidProveedor;
     private String uidTransaccion;
     private String profesionProveedor;
+    private boolean estadoDisposicion;
     private long updatedAt;
 
     public Disposicion() {

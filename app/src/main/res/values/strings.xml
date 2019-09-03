@@ -10,10 +10,13 @@
     <string name="title_activity_proveedor_perfil">Menu Proveedor</string>
     <string name="title_activity_proveedor_detalle">Detalle Proveedor</string>
     <string name="title_activity_proveedor_lista">Listado de Proveedores</string>
+    <string name="title_activity_proveedor_calendario">Calendario Disponibilidad</string>
 
     <string name="title_activity_transaccion_nueva">Nueva Transacción</string>
     <string name="title_activity_transaccion_lista">Listado de Transacciones</string>
     <string name="title_activity_transaccion_detalle">Detalle Transacción</string>
+
+    <string name="title_activity_lopd">LOPD</string>
 
     <!--Botones-->
     <!--content_login.xml-->
@@ -22,7 +25,7 @@
     <string name="button_transaccion">Transacción</string>
     <string name="button_login">Entrar</string>
     <string name="button_registro">Registrarse</string>
-
+    <string name="button_busqueda">Búsqueda</string>
 
     <!--content_proveedor_detallexml-->
     <string name="button_descripcion">Descripción</string>
@@ -37,11 +40,7 @@
     <string name="textView_cancelada">Cancelada</string>
     <string name="textView_aceptada">Aceptada</string>
 
-
-    <string name="button_busqueda">Búsqueda</string>
-
-    <!--EditText y TextView
-    content_login.xml-->
+    <!--content_login.xml-->
     <string name="textView_titulo_Login">Coordinación de Servicios</string>
     <string name="textView_usuario">Usuario</string>
     <string name="editText_usuario">Introduzca Email</string>
@@ -77,6 +76,17 @@
     <string name="editText_precioHora">Indica tu Coste Horario</string>
     <string name="textView_euro"> " €"</string>
 
+    <!--item_proveedor_lista.xml-->
+    <string name="textView_precioHora">Precio Hora: </string>
+    <string name="textView_email_lista">Correo electrónico</string>
+    <string name="textView_direccion_lista">Dirección</string>
+    <string name="textView_poblacion_lista">Población</string>
+    <string name="textView_provincia_lista">Provincia</string>
+    <string name="textView_telefono_lista">Teléfono Fijo</string>
+    <string name="textView_movil_lista">Teléfono Móvil</string>
+    <string name="textView_profesion_lista">Profesión</string>
+    <string name="textView_precioHora_lista">Precio Hora</string>
+
     <!--content_transaccion_nueva.xml-->
     <string name="title_transaccion_nueva">CONTRATACIÓN DE SERVICIOS</string>
     <string name="textView_fecha">Fecha: </string>
@@ -91,40 +101,13 @@
         Escriba las observaciones o detalles importantes de los trabajos a realizar</string>
     <string name="textView_observaciones">Observaciones: </string>
 
-    <!--item_proveedor_lista.xml-->
-    <string name="textView_precioHora">Precio Hora: </string>
-    <string name="textView_email_lista">Correo electrónico</string>
-    <string name="textView_direccion_lista">Dirección</string>
-    <string name="textView_poblacion_lista">Población</string>
-    <string name="textView_provincia_lista">Provincia</string>
-    <string name="textView_telefono_lista">Teléfono Fijo</string>
-    <string name="textView_movil_lista">Teléfono Móvil</string>
-    <string name="textView_profesion_lista">Profesión</string>
-    <string name="textView_precioHora_lista">Precio Hora</string>
-
     <!--content_transaccion_lista.xml-->
-    <string name="resultados_vacios">No hay resultados</string>
-    <string name="en_construccion">EN CONSTRUCCIÓN</string>
-    <string name="title_activity_proveedor_calendario">ProveedorCalendarioActivity</string>
     <string name="sin_filtro">Sin filtro</string>
-    <string name="title_activity_lopd">LOPDActivity</string>
+    <string name="resultados_vacios">No hay resultados</string>
+
+    <!--varios-->
+    <string name="en_construccion">EN CONSTRUCCIÓN</string>
     <string name="lopd_message"><u>Términos de uso y Condiciones</u></string>
 
-    <!--<string name="textView"></string>-->
-    <!--<string name="editText"></string>-->
-    <!--<string name="textView"></string>-->
-    <!--<string name="editText"></string>-->
-    <!--<string name="textView"></string>-->
-    <!--<string name="editText"></string>-->
-    <!--<string name="textView"></string>-->
-    <!--<string name="editText"></string>-->
-    <!--<string name="textView"></string>-->
-    <!--<string name="editText"></string>-->
-    <!--<string name="textView"></string>-->
-    <!--<string name="editText"></string>-->
-    <!--<string name="textView"></string>-->
-    <!--<string name="editText"></string>-->
-    <!--<string name="textView"></string>-->
-    <!--<string name="editText"></string>-->
 
 </resources>
