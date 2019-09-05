@@ -2,6 +2,7 @@ package com.raesba.tfg_coordinacionservicios.ui.proveedorperfil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,6 +18,9 @@ import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 public class ProveedorPerfilActivity extends AppCompatActivity {
 
     private Button botonInformacion, botonCalendario, botonTransaccion;
+
+    public static final int REQUEST_CODE_INFORMACION = 101;
+    public static final int RESULT_CODE_BAJA = 202;
 
     private String uid;
 
@@ -59,11 +63,21 @@ public class ProveedorPerfilActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), ProveedorDetalleActivity.class);
                 intent.putExtra(Constantes.EXTRA_PROVEEDOR_UID, uid);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_INFORMACION);
             }
         });
 
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_INFORMACION){
+            if (resultCode == RESULT_CODE_BAJA){
+                finish();
+            }
+        }
+    }
 }

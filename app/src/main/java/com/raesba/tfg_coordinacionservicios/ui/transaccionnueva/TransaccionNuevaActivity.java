@@ -28,6 +28,7 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
     private EditText direccion;
     private EditText precioEstimado;
     private EditText observaciones;
+    private FloatingActionButton fab;
 
     private long diaFiltrado;
 
@@ -74,7 +75,7 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
             }
         }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,29 +129,34 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
 
     private void mostrarDisposiciones(HashMap<String, Boolean> disposiciones){
 
-        ArrayList<String> disposicionesDisponibles = new ArrayList<>();
-        long hoy = Utils.getToday();
+        if (disposiciones != null){
+            ArrayList<String> disposicionesDisponibles = new ArrayList<>();
+            long hoy = Utils.getToday();
 
-        for (Map.Entry<String, Boolean> entry: disposiciones.entrySet()){
+            for (Map.Entry<String, Boolean> entry: disposiciones.entrySet()){
 
-            long fechaLong = Long.parseLong(entry.getKey());
+                long fechaLong = Long.parseLong(entry.getKey());
 
-            if (entry.getValue() && (fechaLong >= hoy)){
-                disposicionesDisponibles.add(Utils.getDayText(fechaLong));
-                disposicionesLong.add(fechaLong);
-            }
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_adapter_spinner, disposicionesDisponibles);
-        fecha.setAdapter(adapter);
-
-        if (diaFiltrado != 0){
-            for (int i = 0; i <disposicionesLong.size(); i++){
-                if (diaFiltrado == disposicionesLong.get(i)){
-                    fecha.setSelection(i);
-                    break;
+                if (entry.getValue() && (fechaLong >= hoy)){
+                    disposicionesDisponibles.add(Utils.getDayText(fechaLong));
+                    disposicionesLong.add(fechaLong);
                 }
             }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_adapter_spinner, disposicionesDisponibles);
+            fecha.setAdapter(adapter);
+
+            if (diaFiltrado != 0){
+                for (int i = 0; i <disposicionesLong.size(); i++){
+                    if (diaFiltrado == disposicionesLong.get(i)){
+                        fecha.setSelection(i);
+                        break;
+                    }
+                }
+            }
+        } else {
+            mostrarToast(Constantes.MSG_SIN_DISPOSICIONES);
+            finish();
         }
     }
 }

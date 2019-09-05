@@ -15,6 +15,8 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
+import com.raesba.tfg_coordinacionservicios.ui.empresaperfil.EmpresaPerfilActivity;
+import com.raesba.tfg_coordinacionservicios.ui.proveedorperfil.ProveedorPerfilActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetalleContract.Activity {
@@ -114,7 +116,8 @@ public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetal
 
     @Override
     public void resultadoBaja() {
-
+        setResult(EmpresaPerfilActivity.RESULT_CODE_BAJA);
+        finish();
     }
 
     @Override

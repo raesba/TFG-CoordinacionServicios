@@ -2,6 +2,7 @@ package com.raesba.tfg_coordinacionservicios.ui.empresaperfil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,6 +20,8 @@ public class EmpresaPerfilActivity extends AppCompatActivity {
 
     private String uid;
 
+    public static final int REQUEST_CODE_INFORMACION = 101;
+    public static final int RESULT_CODE_BAJA = 202;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +60,20 @@ public class EmpresaPerfilActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), EmpresaDetalleActivity.class);
                 intent.putExtra(Constantes.EXTRA_EMPRESA_UID, uid);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_INFORMACION);
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == REQUEST_CODE_INFORMACION){
+            if (resultCode == RESULT_CODE_BAJA){
+                finish();
+            }
+        }
+    }
 
 }

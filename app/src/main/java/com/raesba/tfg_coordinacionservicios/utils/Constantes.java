@@ -155,4 +155,5 @@ public final class Constantes {
             "\n" +
             "12. Estos Términos y Condiciones de Uso se rigen íntegramente por la legislación española. Para la resolución de cualquier conflicto relativo a su interpretación o aplicación, el Usuario se somete expresamente a la jurisdicción de los tribunales de Madrid (España). \n";
 
+    public static final String MSG_SIN_DISPOSICIONES = "No hay disposiciones para este proveedor";
 }

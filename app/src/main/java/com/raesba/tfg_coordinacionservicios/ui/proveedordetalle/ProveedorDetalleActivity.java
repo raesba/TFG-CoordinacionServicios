@@ -20,6 +20,7 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
+import com.raesba.tfg_coordinacionservicios.ui.proveedorperfil.ProveedorPerfilActivity;
 import com.raesba.tfg_coordinacionservicios.ui.transaccionnueva.TransaccionNuevaActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
@@ -263,6 +264,7 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
 
     @Override
     public void resultadoBaja() {
+        setResult(ProveedorPerfilActivity.RESULT_CODE_BAJA);
         finish();
     }
 
