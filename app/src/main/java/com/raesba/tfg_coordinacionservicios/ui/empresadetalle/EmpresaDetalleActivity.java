@@ -1,7 +1,11 @@
 package com.raesba.tfg_coordinacionservicios.ui.empresadetalle;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +31,8 @@ public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetal
     private Empresa empresa;
     private EmpresaDetallePresenter presenter;
 
+    private String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +55,7 @@ public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetal
 
         if (getIntent().getExtras() != null){
             if (getIntent().hasExtra(Constantes.EXTRA_EMPRESA_UID)){
-                String uid = getIntent().getStringExtra(Constantes.EXTRA_EMPRESA_UID);
+                uid = getIntent().getStringExtra(Constantes.EXTRA_EMPRESA_UID);
                 presenter.getDatosEmpresa(uid);
             }
         } else {
@@ -104,5 +110,61 @@ public class EmpresaDetalleActivity extends BaseActivity implements EmpresaDetal
         provincia.setText(empresa.getProvincia());
         telefonoFijo.setText(empresa.getTelefonoFijo());
         movil.setText(empresa.getMovil());
+    }
+
+    @Override
+    public void resultadoBaja() {
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_baja, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_dar_baja) {
+            createDialogBaja();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void createDialogBaja(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(Constantes.PREGUNTA_BAJA)
+                .setMessage(Constantes.MENSAJE_BAJA)
+                .setPositiveButton(Constantes.DIALOGO_BORRAR, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        presenter.darDeBaja(uid);
+                    }
+                })
+                .setNegativeButton(Constantes.DIALOGO_CANCELAR, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 }

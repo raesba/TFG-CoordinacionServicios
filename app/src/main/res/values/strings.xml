@@ -108,6 +108,7 @@
     <!--varios-->
     <string name="en_construccion">EN CONSTRUCCIÓN</string>
     <string name="lopd_message"><u>Términos de uso y Condiciones</u></string>
+    <string name="action_baja">Dar de baja</string>
 
 
 </resources>

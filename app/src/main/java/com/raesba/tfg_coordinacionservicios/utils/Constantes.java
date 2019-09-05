@@ -117,6 +117,10 @@ public final class Constantes {
     public static final String DIALOGO_NO_DISPONIBLE = "Ocupado";
     public static final String DIALOGO_LOPD = "Continuando con el registro, acepta la política de uso y los términos y condiciones";
 
+    public static final String PREGUNTA_BAJA = "¿Está seguro de eliminar la cuenta?";
+    public static final String MENSAJE_BAJA = "Esta acción no se puede deshacer.";
+    public static final String DIALOGO_BORRAR = "Borrar";
+
 
     public static final String MSG_LOPD = "TÉRMINOS Y CONDICIONES DE USO APP\n" +
             "\n" +

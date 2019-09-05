@@ -2,8 +2,10 @@ package com.raesba.tfg_coordinacionservicios.ui.empresadetalle;
 
 import com.raesba.tfg_coordinacionservicios.base.BasePresenter;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetEmpresaCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.OnDefaultCallback;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Empresa;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 public class EmpresaDetallePresenter extends BasePresenter<EmpresaDetalleContract.Activity>
         implements EmpresaDetalleContract.Presenter {
@@ -38,5 +40,22 @@ public class EmpresaDetallePresenter extends BasePresenter<EmpresaDetalleContrac
     public void updateEmpresa(Empresa empresa) {
         databaseManager.updateEmpresa(empresa);
     }
+
+    public void darDeBaja(String uid) {
+        databaseManager.darDeBaja(uid, Constantes.USUARIO_TIPO_PROVEEDOR, new OnDefaultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                if (vista != null){
+                    vista.resultadoBaja();
+                }
+            }
+
+            @Override
+            public void onError(String mensaje) {
+
+            }
+        });
+    }
+
 }
 

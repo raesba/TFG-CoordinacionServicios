@@ -8,6 +8,7 @@ public interface EmpresaDetalleContract {
     interface Activity extends InterfaceBaseActivity {
 
         void mostrarDatosEmpresa(Empresa empresa);
+        void resultadoBaja();
     }
 
     interface Presenter extends InterfaceBasePresenter<Activity> {

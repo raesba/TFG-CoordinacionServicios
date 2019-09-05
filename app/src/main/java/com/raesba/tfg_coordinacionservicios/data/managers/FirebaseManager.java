@@ -389,12 +389,12 @@ public class FirebaseManager {
 
     }
 
-    private void updateEstadoDisposicion(final long fechaDisposicion, final int estadoTransaccion, final OnDefaultCallback<Integer> callback){
+    private void updateEstadoDisposicion(final long fechaDisposicion, final int estadoTransaccion, final OnDefaultCallback<Integer> callback) {
         final boolean estado;
-        if(estadoTransaccion == Constantes.TRANSACCION_ESTADO_ACEPTADA){
+        if (estadoTransaccion == Constantes.TRANSACCION_ESTADO_ACEPTADA) {
             estado = false;
-        }else{
-            estado=true;
+        } else {
+            estado = true;
         }
 
         firebaseDatabase.getReference()
@@ -407,7 +407,7 @@ public class FirebaseManager {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            if (proveedorActual != null && proveedorActual.getDisposiciones() != null){
+                            if (proveedorActual != null && proveedorActual.getDisposiciones() != null) {
                                 proveedorActual.getDisposiciones().put(String.valueOf(fechaDisposicion), estado);
                             }
                             callback.onSuccess(estadoTransaccion);
@@ -548,5 +548,159 @@ public class FirebaseManager {
         } else {
             callback.onSuccess(proveedorActual.getDisposiciones());
         }
+    }
+
+    public void darDeBaja(String uid, int tipoUsuario, OnDefaultCallback<Boolean> callback) {
+        //BORRAR USUARIO
+        //BORRAR EMPRESA/PROVEEDOR
+        //BORRAR TRANSACCIONES
+        //BORRAR DISPOSCIONES
+        //BORRAR FIREBASE AUTH
+
+        borrarUsuario(uid, tipoUsuario, callback);
+
+    }
+
+    public void borrarUsuario(final String uid, final int tipoUsuario, final OnDefaultCallback<Boolean> callback) {
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_USUARIOS_KEY)
+                .orderByChild(Constantes.FIREBASE_USUARIOS_UID)
+                .equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            item.getRef().removeValue();
+                            break;
+                        }
+
+                        borrarEmpresaOProveedor(uid, tipoUsuario, callback);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        callback.onError("Error borrando el usuario");
+                    }
+                });
+
+    }
+
+    private void borrarEmpresaOProveedor(final String uid, final int tipoUsuario, final OnDefaultCallback<Boolean> callback) {
+        String tipoUsuarioKey;
+
+        if (tipoUsuario == Constantes.USUARIO_TIPO_EMPRESA) {
+            // HAGO REGISTRO EMPRESA
+            tipoUsuarioKey = Constantes.FIREBASE_EMPRESAS_KEY;
+        } else if (tipoUsuario == Constantes.USUARIO_TIPO_PROVEEDOR) {
+            // HAGO REGISTRO PROVEEDOR
+            tipoUsuarioKey = Constantes.FIREBASE_PROVEEDORES_KEY;
+        } else {
+            callback.onError(Constantes.ERROR_TIPOUSUARIO_NO_VALIDO);
+            return;
+        }
+
+        firebaseDatabase.getReference()
+                .child(tipoUsuarioKey)
+                .orderByChild(Constantes.FIREBASE_USUARIOS_UID)
+                .equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            item.getRef().removeValue();
+                            break;
+                        }
+
+                        borrarTransacciones(uid, tipoUsuario, callback);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        callback.onError("Error borrando la empresa/proveedor");
+                    }
+                });
+
+    }
+
+    private void borrarTransacciones(final String uid, final int tipoUsuario, final OnDefaultCallback<Boolean> callback) {
+        String tipoUsuarioKey;
+
+        if (tipoUsuario == Constantes.USUARIO_TIPO_EMPRESA) {
+            // HAGO REGISTRO EMPRESA
+            tipoUsuarioKey = Constantes.FIREBASE_TRANSACCIONES_UID_EMPRESA;
+        } else if (tipoUsuario == Constantes.USUARIO_TIPO_PROVEEDOR) {
+            // HAGO REGISTRO PROVEEDOR
+            tipoUsuarioKey = Constantes.FIREBASE_TRANSACCIONES_UID_PROVEEDOR;
+        } else {
+            callback.onError(Constantes.ERROR_TIPOUSUARIO_NO_VALIDO);
+            return;
+        }
+
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_TRANSACCIONES_KEY)
+                .orderByChild(tipoUsuarioKey)
+                .equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            item.getRef().removeValue();
+                        }
+
+                        if (tipoUsuario == Constantes.USUARIO_TIPO_PROVEEDOR) {
+                            borrarDisposiciones(uid, callback);
+                        } else {
+                            borrarFirebaseAuth(callback);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        callback.onError("Error borrando las transacciones");
+                    }
+                });
+
+    }
+
+    private void borrarFirebaseAuth(final OnDefaultCallback<Boolean> callback) {
+
+        if (auth.getCurrentUser() != null) {
+            auth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(true);
+                    } else {
+                        callback.onError("Error borrando el firebase auth");
+                    }
+                }
+            });
+        } else {
+            callback.onError("El usuario es nulo");
+        }
+    }
+
+    private void borrarDisposiciones(final String uid, final OnDefaultCallback<Boolean> callback) {
+        firebaseDatabase.getReference()
+                .child(Constantes.FIREBASE_DISPOSICION_KEY)
+                .orderByChild(Constantes.FIREBASE_DISPOSICION_UID_PROVEEDOR)
+                .equalTo(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            item.getRef().removeValue();
+                        }
+
+                        borrarFirebaseAuth(callback);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        callback.onError("Error borrando las disposiciones");
+                    }
+                });
+
     }
 }

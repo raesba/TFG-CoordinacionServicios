@@ -11,6 +11,7 @@ public interface ProveedorDetalleContract {
 
         void mostrarDatosProveedor(Proveedor proveedor, boolean currentUser);
         void mostrarProfesiones(ArrayList<String> profesiones);
+        void resultadoBaja();
     }
 
     interface Presenter extends InterfaceBasePresenter<Activity> {
@@ -18,5 +19,6 @@ public interface ProveedorDetalleContract {
         void getDatosProveedor(String uid);
         void getProfesiones();
         void updateProveedor(Proveedor proveedor);
+        void darDeBaja(String uid);
     }
 }

@@ -3,8 +3,10 @@ package com.raesba.tfg_coordinacionservicios.ui.proveedordetalle;
 import com.raesba.tfg_coordinacionservicios.base.BasePresenter;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProfesionesCallback;
 import com.raesba.tfg_coordinacionservicios.data.callbacks.GetProveedorCallback;
+import com.raesba.tfg_coordinacionservicios.data.callbacks.OnDefaultCallback;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
+import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
 
@@ -59,5 +61,22 @@ public class ProveedorDetallePresenter extends BasePresenter<ProveedorDetalleCon
     @Override
     public void updateProveedor(Proveedor proveedor) {
         databaseManager.updateProveedor(proveedor);
+    }
+
+    @Override
+    public void darDeBaja(String uid) {
+        databaseManager.darDeBaja(uid, Constantes.USUARIO_TIPO_PROVEEDOR, new OnDefaultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                if (vista != null){
+                    vista.resultadoBaja();
+                }
+            }
+
+            @Override
+            public void onError(String mensaje) {
+
+            }
+        });
     }
 }

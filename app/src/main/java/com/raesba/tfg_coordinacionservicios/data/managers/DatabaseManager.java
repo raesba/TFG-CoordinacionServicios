@@ -94,4 +94,8 @@ public class DatabaseManager {
     public void getDisposiciones(String uid, GetDisposicionesCallback callback) {
         firebaseManager.getDisposiciones(uid, callback);
     }
+
+    public void darDeBaja(String uid, int tipoUsuario, OnDefaultCallback<Boolean> callback) {
+        firebaseManager.darDeBaja(uid, tipoUsuario, callback);
+    }
 }
