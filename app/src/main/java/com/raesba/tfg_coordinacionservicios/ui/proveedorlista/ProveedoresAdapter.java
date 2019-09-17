@@ -28,9 +28,12 @@ public class ProveedoresAdapter extends
     private long diaFiltrado;
     private Filter mFilter = new FiltroProveedor();
 
-    public ProveedoresAdapter() {
+    private ProveedorListaContract.Activity callback;
+
+    public ProveedoresAdapter(ProveedorListaContract.Activity callback) {
         this.listaProveedores = new ArrayList<>();
         this.listaProveedoresFiltrados = new ArrayList<>();
+        this.callback = callback;
     }
 
     @NonNull
@@ -116,7 +119,7 @@ public class ProveedoresAdapter extends
                 if (proveedor.getDisposiciones() != null){
                     HashMap<String, Boolean> disposiciones = proveedor.getDisposiciones();
 
-                    if (disposiciones.containsKey(String.valueOf(constraint))){
+                    if (disposiciones.containsKey(filterString) && disposiciones.get(filterString)){
                         listaFiltrada.add(proveedor);
                     }
                 }
@@ -133,6 +136,7 @@ public class ProveedoresAdapter extends
         protected void publishResults(CharSequence constraint, FilterResults results) {
             listaProveedoresFiltrados = (ArrayList<Proveedor>) results.values;
             notifyDataSetChanged();
+            callback.comprobarListaVacia();
         }
     }
 

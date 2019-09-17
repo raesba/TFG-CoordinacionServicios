@@ -250,15 +250,19 @@ public class ProveedorDetalleActivity extends BaseActivity implements ProveedorD
 
     @Override
     public void mostrarProfesiones(ArrayList<String> profesiones) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_adapter_spinner, profesiones);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_adapter_spinner, profesiones);
         profesion_spinner.setAdapter(adapter);
         this.profesiones = profesiones;
 
-        for (int i = 0; i <profesiones.size(); i++){
-            if (proveedor.getProfesion().equals(profesiones.get(i))){
-                profesion_spinner.setSelection(i);
-                break;
+        if (proveedor.getProfesion() != null){
+            for (int i = 0; i <profesiones.size(); i++){
+                if (proveedor.getProfesion().equals(profesiones.get(i))){
+                        profesion_spinner.setSelection(i);
+                    break;
+                }
             }
+        } else {
+            profesion_spinner.setSelection(profesiones.size()-1);
         }
     }
 

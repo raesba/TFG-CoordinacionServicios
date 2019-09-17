@@ -6,30 +6,44 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
+import com.raesba.tfg_coordinacionservicios.data.modelo.user.Proveedor;
+import com.raesba.tfg_coordinacionservicios.ui.proveedorlista.ProveedoresAdapter;
 import com.raesba.tfg_coordinacionservicios.ui.transacciondetalle.TransaccionDetalleActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 import com.raesba.tfg_coordinacionservicios.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class TransaccionListaAdapter extends
-        RecyclerView.Adapter<TransaccionListaAdapter.TransaccionListaViewHolder>{
+        RecyclerView.Adapter<TransaccionListaAdapter.TransaccionListaViewHolder> implements Filterable {
 
 
     private ArrayList<Transaccion> listaTransacciones;
+    private ArrayList<Transaccion> listaTransaccionesFiltrados;
     private int userType = -1;
+    private Filter mFilter = new FiltroTransacciones();
 
-    public TransaccionListaAdapter(int userType) {
+    private TransaccionListaContract.Activity callback;
+    private ArrayList<Integer> transaccionesEstados;
+
+    public TransaccionListaAdapter(int userType, TransaccionListaContract.Activity callback) {
         this.listaTransacciones = new ArrayList<>();
+        this.listaTransaccionesFiltrados = new ArrayList<>();
+        this.transaccionesEstados = new ArrayList<Integer>();
+        this.transaccionesEstados.add(0);
+        this.transaccionesEstados.add(1);
+        this.transaccionesEstados.add(2);
+        this.transaccionesEstados.add(3);
         this.userType = userType;
-    }
-
-    public TransaccionListaAdapter(ArrayList<Transaccion> listaTransacciones) {
-        this.listaTransacciones = listaTransacciones;
+        this.callback = callback;
     }
 
     @NonNull
@@ -43,7 +57,7 @@ public class TransaccionListaAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull TransaccionListaAdapter.TransaccionListaViewHolder transaccionesViewHolder, int i) {
-        transaccionesViewHolder.bindItem(listaTransacciones.get(i));
+        transaccionesViewHolder.bindItem(listaTransaccionesFiltrados.get(i));
     }
 
     public void addTransaccion(Transaccion nuevoTransaccion) {
@@ -53,12 +67,13 @@ public class TransaccionListaAdapter extends
 
     public void addTransacciones(ArrayList<Transaccion> transacciones){
         this.listaTransacciones.addAll(transacciones);
+        this.listaTransaccionesFiltrados.addAll(transacciones);
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return listaTransacciones.size();
+        return listaTransaccionesFiltrados.size();
     }
 
     public void updateTransaccion(Transaccion transaccionActualizada) {
@@ -70,6 +85,57 @@ public class TransaccionListaAdapter extends
 //                this.notifyItemChanged(i);
 //                break;
 //            }
+        }
+    }
+
+    public void filtrarTransacciones(ArrayList<Integer> transaccionesEstados){
+        this.transaccionesEstados.clear();
+        this.transaccionesEstados.addAll(transaccionesEstados);
+        mFilter.filter("");
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class FiltroTransacciones extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final List<Transaccion> listaCompleta = listaTransacciones;
+
+            int count = listaCompleta.size();
+            final ArrayList<Transaccion> listaFiltrada = new ArrayList<>(count);
+
+            if (transaccionesEstados != null){
+                for (int i = 0; i < count; i++) {
+                    Transaccion transaccion = listaCompleta.get(i);
+
+                    if (transaccionesEstados.contains(transaccion.getEstadoTransaccion())){
+                        listaFiltrada.add(transaccion);
+                    }
+                }
+            } else {
+                listaFiltrada.addAll(listaCompleta);
+            }
+
+            results.values = listaFiltrada;
+            results.count = listaFiltrada.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listaTransaccionesFiltrados = (ArrayList<Transaccion>) results.values;
+            notifyDataSetChanged();
+            callback.comprobarListaVacia();
         }
     }
 

@@ -10,6 +10,7 @@ public interface ProveedorListaContract {
     interface Activity extends InterfaceBaseActivity {
         void mostrarProveedores(ArrayList<Proveedor> proveedores);
         void mostrarProfesiones(ArrayList<String> profesiones);
+        void comprobarListaVacia();
     }
 
     interface Presenter extends InterfaceBasePresenter<ProveedorListaContract.Activity> {

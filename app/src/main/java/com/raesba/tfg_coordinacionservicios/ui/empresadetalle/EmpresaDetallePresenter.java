@@ -42,7 +42,7 @@ public class EmpresaDetallePresenter extends BasePresenter<EmpresaDetalleContrac
     }
 
     public void darDeBaja(String uid) {
-        databaseManager.darDeBaja(uid, Constantes.USUARIO_TIPO_PROVEEDOR, new OnDefaultCallback<Boolean>() {
+        databaseManager.darDeBaja(uid, Constantes.USUARIO_TIPO_EMPRESA, new OnDefaultCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
                 if (vista != null){

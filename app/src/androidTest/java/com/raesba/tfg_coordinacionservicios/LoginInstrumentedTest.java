@@ -46,7 +46,7 @@ public class LoginInstrumentedTest {
     public void checkLoginCorrecto() {
         Espresso.onView(withId(R.id.email)).perform(clearText());
         Espresso.onView(withId(R.id.password)).perform(clearText());
-        Espresso.onView(withId(R.id.email)).perform(typeText("raesba@gmail.com"));
+        Espresso.onView(withId(R.id.email)).perform(typeText("proveedor@gmail.com"));
         Espresso.onView(withId(R.id.email)).perform(closeSoftKeyboard());
         Espresso.onView(withId(R.id.password)).perform(typeText("12345678"));
         Espresso.onView(withId(R.id.email)).perform(closeSoftKeyboard());

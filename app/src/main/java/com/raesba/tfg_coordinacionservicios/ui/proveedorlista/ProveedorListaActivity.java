@@ -79,7 +79,7 @@ public class ProveedorListaActivity extends BaseActivity implements ProveedorLis
         DatabaseManager databaseManager = DatabaseManager.getInstance();
         presenter = new ProveedorListaPresenter(databaseManager);
 
-        adapter = new ProveedoresAdapter();
+        adapter = new ProveedoresAdapter(this);
         listaProveedores.setAdapter(adapter);
         listaProveedores.setLayoutManager(new LinearLayoutManager(this));
 
@@ -111,22 +111,35 @@ public class ProveedorListaActivity extends BaseActivity implements ProveedorLis
 
     @Override
     public void mostrarProveedores(ArrayList<Proveedor> proveedores) {
-        if (proveedores.size() == 0) {
-            emptyResults.setVisibility(View.VISIBLE);
-            listaProveedores.setVisibility(View.GONE);
-        } else {
-            emptyResults.setVisibility(View.GONE);
-            listaProveedores.setVisibility(View.VISIBLE);
+        if (proveedores.size() != 0) {
             adapter.addProveedores(proveedores);
         }
+
+        comprobarListaVacia();
     }
 
     @Override
     public void mostrarProfesiones(ArrayList<String> profesiones) {
         profesiones.add(0, "Sin filtro");
+
+        if (profesiones.get(profesiones.size()-1).equals("Sin profesión")){
+            profesiones.remove(profesiones.size()-1);
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_adapter_spinner, profesiones);
         filtroProfessiones.setAdapter(adapter);
         this.profesiones = profesiones;
+    }
+
+    @Override
+    public void comprobarListaVacia() {
+        if (adapter.getItemCount() == 0) {
+            emptyResults.setVisibility(View.VISIBLE);
+            listaProveedores.setVisibility(View.GONE);
+        } else {
+            emptyResults.setVisibility(View.GONE);
+            listaProveedores.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

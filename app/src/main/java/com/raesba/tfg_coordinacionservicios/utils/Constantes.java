@@ -79,6 +79,7 @@ public final class Constantes {
     public static final String MSG_TRANSACCION_ENVIADA = "Transacción enviada con éxito";
     public static final String MSG_TRANSACCION_ACTUALIZADA = "Transacción actualizada con éxito";
     public static final String MSG_DISPOSICION_GUARDADA = "Disposición guardada con éxito";
+    public static final String MSG_SIN_DISPOSICIONES = "No hay disposiciones para este proveedor";
 
 
     //LoginActivity
@@ -107,6 +108,8 @@ public final class Constantes {
     public static final int USUARIO_TIPO_EMPRESA = 0;
     public static final int USUARIO_TIPO_PROVEEDOR = 1;
 
+    // Varios
+
     public static final int TRANSACCION_ESTADO_PENDIENTE = 0;
     public static final int TRANSACCION_ESTADO_ACEPTADA = 1;
     public static final int TRANSACCION_ESTADO_RECHAZADA = 2;
@@ -120,6 +123,14 @@ public final class Constantes {
     public static final String PREGUNTA_BAJA = "¿Está seguro de eliminar la cuenta?";
     public static final String MENSAJE_BAJA = "Esta acción no se puede deshacer.";
     public static final String DIALOGO_BORRAR = "Borrar";
+
+    public static final String PREGUNTA_FILTRADO = "Seleccione las transacciones a mostrar";
+    public static final String DIALOGO_FILTRAR = "Filtrar";
+
+    public static final String TRANSANCIONES_ACEPTADAS = "Aceptadas";
+    public static final String TRANSANCIONES_RECHAZADAS = "Rechazadas";
+    public static final String TRANSANCIONES_CANCELADAS = "Canceladas";
+    public static final String TRANSANCIONES_PENDIENTES = "Pendientes";
 
 
     public static final String MSG_LOPD = "TÉRMINOS Y CONDICIONES DE USO APP\n" +
@@ -155,5 +166,5 @@ public final class Constantes {
             "\n" +
             "12. Estos Términos y Condiciones de Uso se rigen íntegramente por la legislación española. Para la resolución de cualquier conflicto relativo a su interpretación o aplicación, el Usuario se somete expresamente a la jurisdicción de los tribunales de Madrid (España). \n";
 
-    public static final String MSG_SIN_DISPOSICIONES = "No hay disposiciones para este proveedor";
+
 }

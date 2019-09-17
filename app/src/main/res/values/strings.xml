@@ -109,6 +109,8 @@
     <string name="en_construccion">EN CONSTRUCCIÓN</string>
     <string name="lopd_message"><u>Términos de uso y Condiciones</u></string>
     <string name="action_baja">Dar de baja</string>
+    <string name="texto_filtro">Opciones de Filtrado (Fecha y Profesión)</string>
+    <string name="action_filtrado">Filtrar transacciones</string>
 
 
 </resources>

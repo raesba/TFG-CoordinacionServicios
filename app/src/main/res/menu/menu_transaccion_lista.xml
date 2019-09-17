@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaActivity">
+    <item
+        android:id="@+id/action_filtrado"
+        android:orderInCategory="100"
+        android:title="@string/action_filtrado"
+        app:showAsAction="never" />
+</menu>

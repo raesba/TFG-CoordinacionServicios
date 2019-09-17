@@ -3,6 +3,7 @@ package com.raesba.tfg_coordinacionservicios.ui.transaccionnueva;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 import com.raesba.tfg_coordinacionservicios.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -131,24 +133,32 @@ public class TransaccionNuevaActivity extends BaseActivity implements Transaccio
 
         if (disposiciones != null){
             ArrayList<String> disposicionesDisponibles = new ArrayList<>();
+            ArrayList<Long> disposicionesLongOrdenadas = new ArrayList<>();
             long hoy = Utils.getToday();
 
             for (Map.Entry<String, Boolean> entry: disposiciones.entrySet()){
+                disposicionesLongOrdenadas.add(Long.parseLong(entry.getKey()));
+            }
 
-                long fechaLong = Long.parseLong(entry.getKey());
+            Collections.sort(disposicionesLongOrdenadas);
 
-                if (entry.getValue() && (fechaLong >= hoy)){
+            for (int i = 0; i<disposicionesLongOrdenadas.size(); i++){
+                Long fechaLong = disposicionesLongOrdenadas.get(i);
+                Boolean valorDisposicion = disposiciones.get(String.valueOf(fechaLong));
+
+                if (valorDisposicion && (fechaLong >= hoy)){
                     disposicionesDisponibles.add(Utils.getDayText(fechaLong));
-                    disposicionesLong.add(fechaLong);
+                    this.disposicionesLong.add(fechaLong);
                 }
+
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_adapter_spinner, disposicionesDisponibles);
             fecha.setAdapter(adapter);
 
             if (diaFiltrado != 0){
-                for (int i = 0; i <disposicionesLong.size(); i++){
-                    if (diaFiltrado == disposicionesLong.get(i)){
+                for (int i = 0; i <this.disposicionesLong.size(); i++){
+                    if (diaFiltrado == this.disposicionesLong.get(i)){
                         fecha.setSelection(i);
                         break;
                     }
