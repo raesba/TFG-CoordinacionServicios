@@ -19,6 +19,8 @@ import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 import com.raesba.tfg_coordinacionservicios.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class TransaccionListaAdapter extends
 
     private ArrayList<Transaccion> listaTransacciones;
     private ArrayList<Transaccion> listaTransaccionesFiltrados;
-    private int userType = -1;
+    private int userType;
     private Filter mFilter = new FiltroTransacciones();
 
     private TransaccionListaContract.Activity callback;
@@ -37,7 +39,7 @@ public class TransaccionListaAdapter extends
     public TransaccionListaAdapter(int userType, TransaccionListaContract.Activity callback) {
         this.listaTransacciones = new ArrayList<>();
         this.listaTransaccionesFiltrados = new ArrayList<>();
-        this.transaccionesEstados = new ArrayList<Integer>();
+        this.transaccionesEstados = new ArrayList<>();
         this.transaccionesEstados.add(0);
         this.transaccionesEstados.add(1);
         this.transaccionesEstados.add(2);
@@ -68,7 +70,33 @@ public class TransaccionListaAdapter extends
     public void addTransacciones(ArrayList<Transaccion> transacciones){
         this.listaTransacciones.addAll(transacciones);
         this.listaTransaccionesFiltrados.addAll(transacciones);
+        ordenarLista();
+
         notifyDataSetChanged();
+    }
+
+    private void ordenarLista(){
+        Collections.sort(listaTransaccionesFiltrados, new Comparator<Transaccion>() {
+            @Override
+            public int compare(Transaccion o1, Transaccion o2) {
+                long fecha1 = o1.getFechaDisposicion();
+                long fecha2 = o2.getFechaDisposicion();
+
+                if (fecha1 > fecha2){
+                    return 1;
+                } else if (fecha1<fecha2){
+                    return -1;
+                } else {
+                    if (o1.getFechaCreacion() > o2.getFechaCreacion()){
+                        return 1;
+                    } else if (o1.getFechaCreacion() < o2.getFechaCreacion()){
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -99,11 +127,19 @@ public class TransaccionListaAdapter extends
         return mFilter;
     }
 
+    public void updateTransaccion(String uidTransaccion, int nuevoEstado) {
+        for (int i = 0; i< listaTransaccionesFiltrados.size(); i++){
+            if (listaTransaccionesFiltrados.get(i).getIdTransaccion().equals(uidTransaccion)){
+                listaTransaccionesFiltrados.get(i).setEstadoTransaccion(nuevoEstado);
+                notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
     private class FiltroTransacciones extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-
-            String filterString = constraint.toString().toLowerCase();
 
             FilterResults results = new FilterResults();
 
@@ -134,6 +170,9 @@ public class TransaccionListaAdapter extends
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             listaTransaccionesFiltrados = (ArrayList<Transaccion>) results.values;
+
+            ordenarLista();
+
             notifyDataSetChanged();
             callback.comprobarListaVacia();
         }
@@ -198,10 +237,7 @@ public class TransaccionListaAdapter extends
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), TransaccionDetalleActivity.class);
-            intent.putExtra(Constantes.EXTRA_TIPO_USUARIO, userType);
-            intent.putExtra(Constantes.EXTRA_TRANSACCION_ID, transaccion.getIdTransaccion());
-            v.getContext().startActivity(intent);
+            callback.mostrarTransaccion(transaccion);
         }
     }
 }

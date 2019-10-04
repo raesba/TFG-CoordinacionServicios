@@ -167,4 +167,6 @@ public final class Constantes {
             "12. Estos Términos y Condiciones de Uso se rigen íntegramente por la legislación española. Para la resolución de cualquier conflicto relativo a su interpretación o aplicación, el Usuario se somete expresamente a la jurisdicción de los tribunales de Madrid (España). \n";
 
 
+    public static final String EXTRA_ESTADO_TRANSACCION = "estadoTransaccionTexto";
+    public static final String EXTRA_UID_TRANSACCION = "uidTransaccion";
 }

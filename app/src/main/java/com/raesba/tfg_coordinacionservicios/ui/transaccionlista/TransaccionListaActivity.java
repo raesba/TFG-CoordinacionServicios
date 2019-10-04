@@ -1,7 +1,9 @@
 package com.raesba.tfg_coordinacionservicios.ui.transaccionlista;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
+import com.raesba.tfg_coordinacionservicios.ui.transacciondetalle.TransaccionDetalleActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 public class TransaccionListaActivity extends BaseActivity implements TransaccionListaContract.Activity {
 
     private static final String TAG = "TransaccionListaAct: ";
+    private static final int REQUEST_CODE_DETALLE = 101;
 
     private RecyclerView listaTransacciones;
     private TextView emptyResults;
@@ -31,6 +35,8 @@ public class TransaccionListaActivity extends BaseActivity implements Transaccio
 
     private boolean[] transaccionesFiltroEditado = {true, true, true, true};
     private boolean[] transaccionesFiltroActual = {true, true, true, true};
+
+    private int userType = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,6 @@ public class TransaccionListaActivity extends BaseActivity implements Transaccio
         presenter = new TransaccionListaPresenter(databaseManager);
 
         String uid = null;
-        int userType = 0;
         if (getIntent().hasExtra(Constantes.EXTRA_EMPRESA_UID)){
             uid = getIntent().getStringExtra(Constantes.EXTRA_EMPRESA_UID);
             userType = 0;
@@ -80,6 +85,22 @@ public class TransaccionListaActivity extends BaseActivity implements Transaccio
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_DETALLE){
+            if (resultCode == RESULT_OK){
+                if (data != null){
+                    int nuevoEstado = data.getIntExtra(Constantes.EXTRA_ESTADO_TRANSACCION, -1);
+                    String uidTransaccion = data.getStringExtra(Constantes.EXTRA_UID_TRANSACCION);
+
+                    adapter.updateTransaccion(uidTransaccion, nuevoEstado);
+                }
+            }
+        }
+    }
+
+    @Override
     public void mostrarTransacciones(ArrayList<Transaccion> transacciones) {
         if (transacciones.size() == 0){
             emptyResults.setVisibility(View.VISIBLE);
@@ -89,6 +110,14 @@ public class TransaccionListaActivity extends BaseActivity implements Transaccio
             listaTransacciones.setVisibility(View.VISIBLE);
             adapter.addTransacciones(transacciones);
         }
+    }
+
+    @Override
+    public void mostrarTransaccion(Transaccion transaccion) {
+        Intent intent = new Intent(this, TransaccionDetalleActivity.class);
+        intent.putExtra(Constantes.EXTRA_TIPO_USUARIO, userType);
+        intent.putExtra(Constantes.EXTRA_TRANSACCION_ID, transaccion.getIdTransaccion());
+        startActivityForResult(intent, REQUEST_CODE_DETALLE);
     }
 
     @Override

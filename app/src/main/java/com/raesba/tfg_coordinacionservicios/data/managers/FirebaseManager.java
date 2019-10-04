@@ -1,5 +1,6 @@
 package com.raesba.tfg_coordinacionservicios.data.managers;
 
+import android.icu.text.SymbolTable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -307,8 +308,8 @@ public class FirebaseManager {
         }
     }
 
-    public void getTransacciones(int userType, String uid, final GetTransaccionesCallback callback) {
-        String campo = "";
+    public void getTransacciones(int userType, final String uid, final GetTransaccionesCallback callback) {
+        String campo;
 
         if (userType == 0) {
             campo = Constantes.FIREBASE_TRANSACCIONES_UID_EMPRESA;
@@ -319,6 +320,23 @@ public class FirebaseManager {
             return;
         }
 
+        final String finalCampo = campo;
+
+        borrarTransacciones(uid, userType, true, new OnDefaultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                getTransacciones(uid, finalCampo, callback);
+            }
+
+            @Override
+            public void onError(String mensaje) {
+                callback.onError(mensaje);
+            }
+        });
+    }
+
+
+    private void getTransacciones(String uid, String campo, final GetTransaccionesCallback callback){
         firebaseDatabase.getReference()
                 .child(Constantes.FIREBASE_TRANSACCIONES_KEY)
                 .orderByChild(campo)
@@ -347,6 +365,7 @@ public class FirebaseManager {
                         callback.onError(databaseError.getMessage());
                     }
                 });
+
     }
 
     public void getTransaccion(String uid, final GetTransaccionCallback callback) {
@@ -561,7 +580,7 @@ public class FirebaseManager {
 
     }
 
-    public void borrarUsuario(final String uid, final int tipoUsuario, final OnDefaultCallback<Boolean> callback) {
+    private void borrarUsuario(final String uid, final int tipoUsuario, final OnDefaultCallback<Boolean> callback) {
         firebaseDatabase.getReference()
                 .child(Constantes.FIREBASE_USUARIOS_KEY)
                 .orderByChild(Constantes.FIREBASE_USUARIOS_UID)
@@ -611,7 +630,7 @@ public class FirebaseManager {
                             break;
                         }
 
-                        borrarTransacciones(uid, tipoUsuario, callback);
+                        borrarTransacciones(uid, tipoUsuario, false, callback);
                     }
 
                     @Override
@@ -622,7 +641,7 @@ public class FirebaseManager {
 
     }
 
-    private void borrarTransacciones(final String uid, final int tipoUsuario, final OnDefaultCallback<Boolean> callback) {
+    private void borrarTransacciones(final String uid, final int tipoUsuario, final boolean anteriores, final OnDefaultCallback<Boolean> callback) {
         String tipoUsuarioKey;
 
         if (tipoUsuario == Constantes.USUARIO_TIPO_EMPRESA) {
@@ -644,15 +663,26 @@ public class FirebaseManager {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot item : dataSnapshot.getChildren()) {
-                            item.getRef().removeValue();
+                            Transaccion transaccion = item.getValue(Transaccion.class);
+
+                            if (anteriores){
+                                if (transaccion != null && transaccion.getFechaDisposicion() < System.currentTimeMillis()){
+                                    item.getRef().removeValue();
+                                }
+                            } else {
+                                item.getRef().removeValue();
+                            }
                         }
 
-                        if (tipoUsuario == Constantes.USUARIO_TIPO_PROVEEDOR) {
-                            borrarDisposiciones(uid, callback);
+                        if (!anteriores){
+                            if (tipoUsuario == Constantes.USUARIO_TIPO_PROVEEDOR) {
+                                borrarDisposiciones(uid, callback);
+                            } else {
+                                borrarFirebaseAuth(callback);
+                            }
                         } else {
-                            borrarFirebaseAuth(callback);
+                            callback.onSuccess(true);
                         }
-
                     }
 
                     @Override

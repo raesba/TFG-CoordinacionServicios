@@ -1,5 +1,6 @@
 package com.raesba.tfg_coordinacionservicios.ui.transacciondetalle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.raesba.tfg_coordinacionservicios.R;
 import com.raesba.tfg_coordinacionservicios.base.BaseActivity;
 import com.raesba.tfg_coordinacionservicios.data.managers.DatabaseManager;
 import com.raesba.tfg_coordinacionservicios.data.modelo.negocio.Transaccion;
+import com.raesba.tfg_coordinacionservicios.ui.transaccionlista.TransaccionListaActivity;
 import com.raesba.tfg_coordinacionservicios.utils.Constantes;
 import com.raesba.tfg_coordinacionservicios.utils.Utils;
 
@@ -31,6 +33,7 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
     private TransaccionDetallePresenter presenter;
 
     int userType = -1;
+    private boolean transaccionModificada = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,20 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
     }
 
     @Override
+    public void onBackPressed() {
+        if (transaccionModificada){
+            Intent intent = new Intent(this, TransaccionListaActivity.class);
+            intent.putExtra(Constantes.EXTRA_UID_TRANSACCION, transaccion.getIdTransaccion());
+            intent.putExtra(Constantes.EXTRA_ESTADO_TRANSACCION, transaccion.getEstadoTransaccion());
+
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void mostrarTransaccion(Transaccion transaccion) {
         this.transaccion = transaccion;
 
@@ -122,6 +139,7 @@ public class TransaccionDetalleActivity extends BaseActivity implements Transacc
     @Override
     public void onFinishTransaccion(int estadoTransaccion) {
         transaccion.setEstadoTransaccion(estadoTransaccion);
+        transaccionModificada = true;
         updateEstadoTransaccion(estadoTransaccion);
     }
 

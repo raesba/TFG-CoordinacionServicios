@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public interface TransaccionListaContract {
     interface Activity extends InterfaceBaseActivity {
         void mostrarTransacciones(ArrayList<Transaccion> transacciones);
+        void mostrarTransaccion(Transaccion transaccion);
         void comprobarListaVacia();
     }
 
